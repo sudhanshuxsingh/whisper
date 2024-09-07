@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^5.4.1",
+    "mongoose": "^8.6.1",
     "next": "14.2.8",
     "react": "^18",
     "react-dom": "^18",
-    "whishper": "file:"
+    "whishper": "file:",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",
