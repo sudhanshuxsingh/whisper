@@ -7,7 +7,7 @@ import {
   animate,
 } from "framer-motion";
 import { useEffect } from 'react';
-const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
+const COLORS_TOP = ["#853AC8", "#DCB6F1","#423DF5"];
 const GrainyAuroraBox = () => {
   const color = useMotionValue(COLORS_TOP[0]);
   useEffect(() => {
@@ -31,7 +31,7 @@ export default GrainyAuroraBox
 const Noise = () => {
   return (
     <div
-      className="absolute inset-0 w-full h-full opacity-10  rounded-xl"
+      className="absolute inset-0 w-full h-full opacity-5  rounded-xl"
       style={{
         backgroundImage: `url(${NOISE.src})`,
         backgroundSize: "30%",
@@ -39,7 +39,3 @@ const Noise = () => {
     ></div>
   );
 };
-
-
-//
-            // background:"radial-gradient(219.12% 110.92% at 50% 102.84%, #020202 31.71%, #1F0C3E 47.92%, #522191 66.28%, #853AC8 77.24%, #DCB6F1 100%)",

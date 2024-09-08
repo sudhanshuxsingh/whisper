@@ -13,6 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             enableSystem
             disableTransitionOnChange
           >
+            <h2>Header</h2>
             {children}
           </ThemeProvider>
         </body>
