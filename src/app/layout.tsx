@@ -9,11 +9,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <body>
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
           >
-            {/* <h1 className='h-10 bg-red-800'>Page Header</h1> */}
             {children}
           </ThemeProvider>
         </body>

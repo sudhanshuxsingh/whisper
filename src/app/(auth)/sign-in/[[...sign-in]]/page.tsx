@@ -2,28 +2,28 @@
 import Image from "next/image";
 import WHISPER_LOGO_BLACK from '@/assets/logo/whisper_black.svg';
 import WHISPER_LOGO_WHITE from '@/assets/logo/whisper_white.svg';
-import Container from "@/components/ui/Container";
+import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useSignIn } from "@clerk/nextjs";
+// import { useSignIn } from "@clerk/nextjs";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import GrainyAuroraBox from "@/components/ui/grainy-aurora-box";
+// import { useRouter } from "next/navigation";
 
 
-
+const isLoaded=true
 export default function Page() {
-  const {signIn,isLoaded,setActive}=useSignIn()
+  // const {signIn,isLoaded,setActive}=useSignIn()
   const [identifier,setIdentifier]=useState<string>("")
-  const [pendingVerification,setPendingVerification]=useState()
-  const router=useRouter()
+  // const [pendingVerification,setPendingVerification]=useState()
+  // const router=useRouter()
   return (
-    <Container className="h-screen w-screen grid md:grid-cols-2 lg:grid-cols-3">
-      <div className="hidden rounded-2xl md:block h-[90vh] my-auto bg-red-400 lg:col-span-2">
-      </div>
+    <Container className="h-screen w-screen grid md:grid-cols-2 lg:grid-cols-3 max-w-8xl">
+      <GrainyAuroraBox/>
       <div className="grid place-items-center h-full">
-        <div className="w-full px-6 md:px-12">
+        <div className="w-full px-6 md:px-12 max-w-md">
           <div className="flex gap-6 flex-col items-center mb-8">
             <div className="">
               <Image alt="Whisper" src={WHISPER_LOGO_WHITE} className="dark:block hidden"/>
@@ -55,6 +55,6 @@ export default function Page() {
           <p className="text-muted-foreground text-sm mt-4">Don&apos;t have account? <span>Sign up</span></p>
         </div>
       </div>
-    </Container>
+    </Container>  
   )
 }
