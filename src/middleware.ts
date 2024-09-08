@@ -8,7 +8,6 @@ const isAuthRoute=createRouteMatcher([
 ])
 
 const isPublicRoute=createRouteMatcher([
-  '/home',
   '/whisper',
   '/'
 ])
