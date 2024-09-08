@@ -23,7 +23,7 @@ export default function Page() {
   const signInWithOAuth = (strategy: OAuthStrategy) => {
     return signIn?.authenticateWithRedirect({
       strategy,
-      redirectUrl:'/sso',
+      redirectUrl:`/sso?${new URLSearchParams({_r:redirect??'/'})}`,
       redirectUrlComplete: redirect ?? '/',
       continueSignUp:true
     })

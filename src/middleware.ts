@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 const isAuthRoute=createRouteMatcher([
   '/sign-in',
   '/sign-up',
-  '/sso-callback'
+  '/sso'
 ])
 
 const isPublicRoute=createRouteMatcher([

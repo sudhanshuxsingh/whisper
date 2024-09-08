@@ -2,12 +2,13 @@
 'use client'
 import { useSignIn, useSignUp } from '@clerk/nextjs';
 import { useEffect } from 'react';
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useSearchParams } from "next/navigation";
 function SSOCallback() {
   const { signIn } = useSignIn();
   const { signUp,setActive } = useSignUp();
   const searchParams = useSearchParams()
+  const router = useRouter();
   const redirectPath = searchParams.get('_r')
   useEffect(() => {
     const handleOAuthCallback = async () => {
@@ -23,7 +24,6 @@ function SSOCallback() {
                     session: res.createdSessionId,
                 })
                 }
-                return;
             }
             const userNeedsToBeCreated = signIn.firstFactorVerification.status === 'transferable'
             if (userNeedsToBeCreated) {
@@ -36,13 +36,12 @@ function SSOCallback() {
                         session: res.createdSessionId,
                     })
                 }
-                return;
             }
-            console.log('user created successfully')
-            redirect(redirectPath ?? '/')
+            console.log('user created successfully',redirectPath)
+            router.push(redirectPath ?? '/')
         } catch (error) {
             console.log(error)
-            redirect('/sign-up')
+            router.push('/sign-up')
         }
     }
     handleOAuthCallback()
