@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { OAuthStrategy } from '@clerk/types'
+import { OAuthStrategy, SignInResource } from '@clerk/types'
 import { useSignIn } from '@clerk/nextjs'
 import { useState } from "react";
 import GrainyAuroraBox from "@/components/ui/grainy-aurora-box";
@@ -15,11 +15,14 @@ import Link from "next/link";
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
 import GoogleLogo from '@/assets/logo/google.png'
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 export default function Page() {
   const { signIn, isLoaded}=useSignIn()
   const searchParams = useSearchParams()
   const redirect = searchParams.get('_r')
   const [identifier,setIdentifier]=useState<string>("")
+  const [password,setPassword]=useState<string>("")
+  const router = useRouter();
   const signInWithOAuth = (strategy: OAuthStrategy) => {
     return signIn?.authenticateWithRedirect({
       strategy,
@@ -27,6 +30,20 @@ export default function Page() {
       redirectUrlComplete: redirect ?? '/',
       continueSignUp:true
     })
+  }
+  const handleSignIn=async()=>{
+    try {
+      const res:SignInResource|undefined =await signIn?.create({
+        password,
+        strategy:'password',
+        identifier
+      })
+      if(res?.status==="complete"){
+        router.push(redirect ?? '/')
+      }
+    } catch (error) {
+      console.log({error})
+    }
   }
   return (
     <Container className="h-screen w-screen grid md:grid-cols-2 lg:grid-cols-3 max-w-8xl fixed inset-0 z-[999] bg-background">
@@ -62,8 +79,12 @@ export default function Page() {
             <Label htmlFor="identifier">Email address or username</Label>
             <Input type="email" placeholder="Email" id="identifier" name="identifier" value={identifier} onChange={(e)=>setIdentifier(e.target.value)}/>
           </div>
-          <Button disabled={!isLoaded} className="w-full mt-4">Continue</Button>
-          <p className="text-muted-foreground text-sm mt-4">Don&apos;t have account? <Link href="/sign-up">Sign up</Link></p>
+          <div className="flex flex-col gap-2 mt-4">
+            <Label htmlFor="password">Password</Label>
+            <Input type="password" placeholder="Password" id="password" name="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
+          </div>
+          <Button disabled={!isLoaded} className="w-full mt-6" onClick={handleSignIn}>Continue</Button>
+          <p className="text-muted-foreground text-sm mt-4">Don&apos;t have account? <Link href="/sign-up" className="hover:underline">Sign up</Link></p>
         </div>
       </div>
     </Container>  
