@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server'
 const isAuthRoute=createRouteMatcher([
   '/sign-in',
   '/sign-up',
+  '/sso-callback'
 ])
 
 const isPublicRoute=createRouteMatcher([
@@ -24,11 +25,13 @@ export default clerkMiddleware((auth,req)=>{
     return NextResponse.redirect(new URL("/",req.url))
   }
   if(!userId){
+    const redirectUrlParam=new URLSearchParams({_r:req.url})
+    console.log({redirectUrlParam})
     if(!isPublicRoute(req) && !isPublicApiRoutes(req) && !isAuthRoute(req)){
-      return NextResponse.redirect(new URL('/sign-in',req.url))
+      return NextResponse.redirect(new URL(`/sign-in?${redirectUrlParam}`,req.url))
     }
     if(isApiReq && !isPublicApiRoutes(req) && !isAuthRoute(req)){
-      return NextResponse.redirect(new URL('/sign-in',req.url))
+      return NextResponse.redirect(new URL(`/sign-in?${redirectUrlParam}`,req.url))
     }
   }
   return NextResponse.next();
