@@ -11,7 +11,7 @@ import { isClerkAPIResponseError } from '@clerk/nextjs/errors'
 import { useSignIn } from '@clerk/nextjs'
 import GrainyAuroraBox from "@/components/ui/grainy-aurora-box";
 import Link from "next/link";
-import { GitHubLogoIcon } from '@radix-ui/react-icons'
+import { GitHubLogoIcon, ReloadIcon } from '@radix-ui/react-icons'
 import GoogleLogo from '@/assets/logo/google.png'
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -27,8 +27,10 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { signInSchema } from "@/schema/signInSchema";
+import { useState } from "react";
 export default function Page() {
   const { signIn, isLoaded, setActive}=useSignIn()
+  const [isProcessingSignInRequest,setIsProcessingSignInRequest]=useState<boolean>(false)
   const searchParams = useSearchParams()
   const redirect = searchParams.get('_r')
   const router = useRouter();
@@ -46,6 +48,7 @@ export default function Page() {
   }
   const handleSignIn=async({password,identifier}:z.infer<typeof signInSchema>)=>{
     if(!isLoaded) return;
+    setIsProcessingSignInRequest(true)
     try {
       const res:SignInResource|undefined =await signIn?.create({
         password,
@@ -75,6 +78,8 @@ export default function Page() {
         }      
       }
       console.log({error})
+    }finally{
+      setIsProcessingSignInRequest(false)
     }
   }
   return (
@@ -135,7 +140,10 @@ export default function Page() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" disabled={!isLoaded} className="w-full mt-6">Continue</Button>
+              <Button type="submit" disabled={!isLoaded || isProcessingSignInRequest} className="w-full mt-6">
+                {isProcessingSignInRequest && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+                Continue
+              </Button>
             </form>
           </Form>
           <p className="text-muted-foreground text-sm mt-4">Don&apos;t have account? <Link href="/sign-up" className="hover:underline">Sign up</Link></p>
