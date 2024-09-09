@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import {
   Form,
-  FormControl,
+  FormControl, 
   FormField,
   FormItem,
   FormLabel,
@@ -65,17 +65,21 @@ export default function Page() {
     } catch (error) {
       if(isClerkAPIResponseError(error)){
         const {errors}=error;
-        const [clerkError]=errors;
-        console.log({clerkError})
-        if(clerkError.code==="form_identifier_not_found"){
-          signInForm.setError("identifier",{message:"Username or Email not found"})
+        if(errors.some(err=>err.code==="form_identifier_not_found")){
+          signInForm.setError("identifier",{message:"Invalid Username or Email Address"})
         }
-        if(clerkError.code==="form_password_incorrect"){
+        if(errors.some(err=>err.code==="form_password_incorrect")){
           signInForm.setError("password",{message:"Password is incorrect"})
         }
-        if(clerkError.code==="user_locked"){
-          signInForm.setError("root",{message:clerkError.longMessage})
-        }      
+        if(errors.some(err=>err.code==="user_locked")){
+          signInForm.setError("root",{message:"User Account has been locked. Please connect Admin or try again after sometime."})
+        }    
+        if(errors.some(err=>err.code==="session_exists")){
+          signInForm.setError("identifier",{message:"You're currently in single session mode. You can only be signed into one account at a time."})
+        }    
+        if(errors.some(err=>err.code==="identifier_already_signed_in")){
+          signInForm.setError("identifier",{message:"You're already signed in"})
+        }    
       }
       console.log({error})
     }finally{
@@ -83,7 +87,7 @@ export default function Page() {
     }
   }
   return (
-    <Container className="h-screen w-screen grid md:grid-cols-2 lg:grid-cols-3 max-w-8xl fixed inset-0 z-[999] bg-background">
+    <Container className="h-screen w-screen grid md:grid-cols-2 lg:grid-cols-3 max-w-8xl absolute inset-0 z-[999] bg-background overflow-y-auto py-4">
       <GrainyAuroraBox/>
       <div className="grid place-items-center h-full">
         <div className="w-full px-6 md:px-12 max-w-md">
