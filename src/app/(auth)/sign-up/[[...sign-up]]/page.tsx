@@ -58,7 +58,6 @@ export default function Page() {
     })
   }
 
-
   const handleSignUp=async({
     firstName,
     email,
@@ -134,7 +133,6 @@ export default function Page() {
     }
   }
 
-
   return (
     <Container className='h-screen w-screen grid md:grid-cols-2 lg:grid-cols-3 max-w-8xl absolute inset-0 z-[999] bg-background overflow-y-auto py-4'>
       <GrainyAuroraBox/>
@@ -164,8 +162,7 @@ export default function Page() {
             <Separator className="w-auto flex-grow flex-shrink"/>
             <p>Or</p>
             <Separator className="w-auto flex-grow flex-shrink"/>
-          </div>
-          
+          </div>          
           {
             verifying ? 
               <Form {...otpForm}>
@@ -291,8 +288,6 @@ export default function Page() {
               </form>
             </Form>
           }
-
-          
           <p className="text-muted-foreground text-sm mt-4">Already have account? <Link href="/sign-in" className="hover:underline">Sign in</Link></p>
         </div>
       </div>
