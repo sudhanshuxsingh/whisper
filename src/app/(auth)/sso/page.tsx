@@ -37,7 +37,7 @@ function SSOCallback() {
                     })
                 }
             }
-            console.log('user created successfully',redirectPath)
+            console.log('user created successfully.. Redirecting to :: ',redirectPath)
             router.push(redirectPath ?? '/')
         } catch (error) {
             console.log(error)

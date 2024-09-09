@@ -6,23 +6,36 @@ import Container from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { OAuthStrategy, SignInResource } from '@clerk/types'
+import { isClerkAPIResponseError } from '@clerk/nextjs/errors'
 import { useSignIn } from '@clerk/nextjs'
-import { useState } from "react";
 import GrainyAuroraBox from "@/components/ui/grainy-aurora-box";
 import Link from "next/link";
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
 import GoogleLogo from '@/assets/logo/google.png'
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { signInSchema } from "@/schema/signInSchema";
 export default function Page() {
-  const { signIn, isLoaded}=useSignIn()
+  const { signIn, isLoaded, setActive}=useSignIn()
   const searchParams = useSearchParams()
   const redirect = searchParams.get('_r')
-  const [identifier,setIdentifier]=useState<string>("")
-  const [password,setPassword]=useState<string>("")
   const router = useRouter();
+
+  const signInForm=useForm<z.infer<typeof signInSchema>>({
+    resolver:zodResolver(signInSchema),
+  })
   const signInWithOAuth = (strategy: OAuthStrategy) => {
     return signIn?.authenticateWithRedirect({
       strategy,
@@ -31,17 +44,36 @@ export default function Page() {
       continueSignUp:true
     })
   }
-  const handleSignIn=async()=>{
+  const handleSignIn=async({password,identifier}:z.infer<typeof signInSchema>)=>{
+    if(!isLoaded) return;
     try {
       const res:SignInResource|undefined =await signIn?.create({
         password,
         strategy:'password',
         identifier
       })
+      if (res?.status !== 'complete') {
+        console.log({res})
+      }
       if(res?.status==="complete"){
+        await setActive?.({ session: res.createdSessionId })
         router.push(redirect ?? '/')
       }
     } catch (error) {
+      if(isClerkAPIResponseError(error)){
+        const {errors}=error;
+        const [clerkError]=errors;
+        console.log({clerkError})
+        if(clerkError.code==="form_identifier_not_found"){
+          signInForm.setError("identifier",{message:"Username or Email not found"})
+        }
+        if(clerkError.code==="form_password_incorrect"){
+          signInForm.setError("password",{message:"Password is incorrect"})
+        }
+        if(clerkError.code==="user_locked"){
+          signInForm.setError("root",{message:clerkError.longMessage})
+        }      
+      }
       console.log({error})
     }
   }
@@ -75,15 +107,37 @@ export default function Page() {
             <p>Or</p>
             <Separator className="w-auto flex-grow flex-shrink"/>
           </div>
-          <div className="flex flex-col gap-2 mt-8">
-            <Label htmlFor="identifier">Email address or username</Label>
-            <Input type="email" placeholder="Email" id="identifier" name="identifier" value={identifier} onChange={(e)=>setIdentifier(e.target.value)}/>
-          </div>
-          <div className="flex flex-col gap-2 mt-4">
-            <Label htmlFor="password">Password</Label>
-            <Input type="password" placeholder="Password" id="password" name="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
-          </div>
-          <Button disabled={!isLoaded} className="w-full mt-6" onClick={handleSignIn}>Continue</Button>
+          <Form {...signInForm}>
+            <form onSubmit={signInForm.handleSubmit(handleSignIn)}>
+              <FormField
+                control={signInForm.control}
+                name="identifier"
+                render={({field})=>(
+                  <FormItem>
+                    <FormLabel htmlFor="identifier">Email address or username</FormLabel>
+                    <FormControl>
+                        <Input type="text" placeholder="Email or Username" id="identifier" {...field}/>
+                    </FormControl>
+                    <FormMessage/>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={signInForm.control}
+                name="password"
+                render={({field})=>(
+                  <FormItem>
+                    <FormLabel htmlFor="password">Password</FormLabel>
+                    <FormControl>
+                        <Input type="password" placeholder="Password" id="password" {...field}/>
+                        </FormControl>
+                      <FormMessage/>
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" disabled={!isLoaded} className="w-full mt-6">Continue</Button>
+            </form>
+          </Form>
           <p className="text-muted-foreground text-sm mt-4">Don&apos;t have account? <Link href="/sign-up" className="hover:underline">Sign up</Link></p>
         </div>
       </div>
