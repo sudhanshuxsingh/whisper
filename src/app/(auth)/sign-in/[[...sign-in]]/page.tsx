@@ -38,6 +38,7 @@ export default function Page() {
   const signInForm=useForm<z.infer<typeof signInSchema>>({
     resolver:zodResolver(signInSchema),
   })
+
   const signInWithOAuth = (strategy: OAuthStrategy) => {
     return signIn?.authenticateWithRedirect({
       strategy,
@@ -46,6 +47,7 @@ export default function Page() {
       continueSignUp:true
     })
   }
+
   const handleSignIn=async({password,identifier}:z.infer<typeof signInSchema>)=>{
     if(!isLoaded) return;
     setIsProcessingSignInRequest(true)
@@ -86,6 +88,7 @@ export default function Page() {
       setIsProcessingSignInRequest(false)
     }
   }
+  
   return (
     <Container className="h-screen w-screen grid md:grid-cols-2 lg:grid-cols-3 max-w-8xl absolute inset-0 z-[999] bg-background overflow-y-auto py-4">
       <GrainyAuroraBox/>

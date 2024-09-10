@@ -1,6 +1,7 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import { ThemeProvider } from "@/components/theme-provider"
 import './globals.css'
+import Header from '@/components/ui/header'
 
 export const metadata={
   title:'Welcome to whishper'
@@ -17,9 +18,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               enableSystem
               disableTransitionOnChange
             >
-            
-                <h2>Header</h2>
-                {children}
+              <Header/>
+              {children}
             </ThemeProvider>
           </body>
       </html>
