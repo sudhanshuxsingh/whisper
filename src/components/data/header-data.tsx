@@ -4,12 +4,12 @@ export const MENU_ITEM_LIST=[
         href:'/features'
     },
     {
-        content:'Pricing',
-        href:'/Pricing'
-    },
-    {
         content:'Changelog',
         href:'/Changelog'
+    },
+    {
+        content:'Case Study',
+        href:'/case-study'
     },
     {
         content:'GitHub',
