@@ -25,7 +25,7 @@ const UserProfileButton = async () => {
       </HoverCard.Trigger>
       <HoverCard.Portal>
         <HoverCard.Content
-          className="data-[side=bottom]:animate-slideUpAndFade data-[side=right]:animate-slideLeftAndFade data-[side=left]:animate-slideRightAndFade data-[side=top]:animate-slideDownAndFade w-[300px] bg-secondary shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] rounded-xl data-[state=open]:transition-all z-[101] border border-1"
+          className="data-[side=bottom]:animate-slideUpAndFade data-[side=right]:animate-slideLeftAndFade data-[side=left]:animate-slideRightAndFade data-[side=top]:animate-slideDownAndFade border-1 z-[101] w-[300px] rounded-xl border bg-secondary shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] data-[state=open]:transition-all"
           sideOffset={5}
         >
           <div className="flex flex-col">
@@ -51,7 +51,7 @@ export const UserProfile = async ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        'flex gap-2 bg-background/90 p-4 rounded-xl items-center',
+        'flex items-center gap-2 rounded-xl bg-background/90 p-4',
         className
       )}
     >
@@ -63,7 +63,7 @@ export const UserProfile = async ({ className }: { className?: string }) => {
       </Avatar>
       <div className="">
         <p className="text-sm">{fullName}</p>
-        <p className="text-muted-foreground text-xs">
+        <p className="text-xs text-muted-foreground">
           {primaryEmailAddress?.emailAddress}
         </p>
       </div>

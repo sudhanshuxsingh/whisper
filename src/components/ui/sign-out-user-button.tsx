@@ -25,7 +25,7 @@ const SignOutUser = ({
     <Button
       variant={variant ?? 'secondary'}
       className={cn(
-        'h-10 hover:bg-background/20 w-full gap-4 px-7 justify-start font-normal',
+        'h-10 w-full justify-start gap-4 px-7 font-normal hover:bg-background/20',
         className
       )}
       onClick={() => signOut({ redirectUrl: '/' })}

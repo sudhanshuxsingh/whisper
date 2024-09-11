@@ -16,11 +16,11 @@ import SignOutUser from './sign-out-user-button';
 const Header = () => {
   const { userId } = auth();
   return (
-    <header className="sticky left-0 top-0 z-[100] flex w-full flex-col border-b dark:border-dark-border border-border/90 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/90">
+    <header className="dark:border-dark-border sticky left-0 top-0 z-[100] flex w-full flex-col border-b border-border/90 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/90">
       <div className="flex h-[--header-height]">
-        <Container className="w-full px-6 flex items-center justify-between">
+        <Container className="flex w-full items-center justify-between px-6">
           <Logo />
-          <nav className="relative z-[1] flex-col justify-center hidden lg:flex">
+          <nav className="relative z-[1] hidden flex-col justify-center lg:flex">
             <ul className="flex flex-1 gap-0.5 px-4">
               {MENU_ITEM_LIST.map(({ content, href }) => (
                 <li key={content}>
@@ -34,7 +34,7 @@ const Header = () => {
               <Link
                 className={cn(
                   buttonVariants({ variant: 'rounded' }),
-                  'h-8 text-sm font-medium border border-secondary-foreground/10 px-3.5'
+                  'h-8 border border-secondary-foreground/10 px-3.5 text-sm font-medium'
                 )}
                 href="/sign-in"
               >
@@ -47,7 +47,7 @@ const Header = () => {
                   variant: !userId ? 'rounded' : 'link',
                 }),
                 !userId
-                  ? 'h-8 font-medium text-sm px-3.5 text-white bg-indigo-500 hover:bg-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-600'
+                  ? 'h-8 bg-indigo-500 px-3.5 text-sm font-medium text-white hover:bg-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-600'
                   : 'gap-1'
               )}
               href="/dashboard"
@@ -75,7 +75,7 @@ const Header = () => {
               </Button>
             </SheetTrigger>
             <SheetContent side="left">
-              <nav className="flex flex-col gap-4 font-medium h-full">
+              <nav className="flex h-full flex-col gap-4 font-medium">
                 <Logo />
                 {MENU_ITEM_LIST.map(({ content, href }) => (
                   <Link
@@ -88,7 +88,7 @@ const Header = () => {
                 ))}
                 <Link
                   href="/dashboard"
-                  className="text-muted-foreground hover:text-foreground flex gap-2 items-center"
+                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
                 >
                   {!userId ? (
                     'Get Started Today'
@@ -107,7 +107,7 @@ const Header = () => {
                         buttonVariants({
                           variant: 'ghost',
                         }),
-                        'h-10 hover:bg-background/20 w-full gap-4 px-2 justify-start font-normal'
+                        'h-10 w-full justify-start gap-4 px-2 font-normal hover:bg-background/20'
                       )}
                       href="/sign-in"
                     >
@@ -137,7 +137,7 @@ const MenuItem = ({ content, href, className }: MenuItemPropsType) => {
     <Link
       href={href}
       className={cn(
-        'gap-1 shrink-0 rounded-full ring-control font-medium focus-visible:ring-2 tracking-tight outline-none outline-0 inline-flex h-6 items-center justify-center px-3 pb-px hover:bg-secondary lg:h-7',
+        'ring-control inline-flex h-6 shrink-0 items-center justify-center gap-1 rounded-full px-3 pb-px font-medium tracking-tight outline-none outline-0 hover:bg-secondary focus-visible:ring-2 lg:h-7',
         className
       )}
     >
@@ -151,10 +151,10 @@ const Logo = () => (
     <Image
       alt="Whisper"
       src={WHISPER_LOGO_WHITE}
-      className="dark:block hidden h-8"
+      className="hidden h-8 dark:block"
     />
     <Image alt="Whisper" src={WHISPER_LOGO_BLACK} className="dark:hidden" />
-    <p className="font-bold text-2xl">Whisper</p>
+    <p className="text-2xl font-bold">Whisper</p>
   </Link>
 );
 
