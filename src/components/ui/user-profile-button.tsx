@@ -8,13 +8,14 @@ import {UserCircle2Icon} from 'lucide-react'
 import { currentUser, User } from '@clerk/nextjs/server'
 import { Separator } from "./separator";
 import SignOutUser from './sign-out-user-button';
+import { cn } from '@/lib/utils';
 const UserProfileButton = async () => {
   const user:User|null=await currentUser()
   if(!user){ 
     return;
   }
 
-  const {fullName,imageUrl,primaryEmailAddress}=user;
+  const {imageUrl}=user;
 
   return (
     <HoverCard.Root>
@@ -32,18 +33,7 @@ const UserProfileButton = async () => {
         sideOffset={5}
       >
         <div className="flex flex-col">
-          <div className="flex gap-2 bg-background/90 p-4 rounded-xl items-center border">
-            <Avatar className="cursor-pointer">
-              <AvatarImage src={imageUrl} />
-              <AvatarFallback>
-                <UserCircle2Icon/>
-              </AvatarFallback>
-            </Avatar>
-            <div className="">
-              <p className="text-sm">{fullName}</p>
-              <p className="text-muted-foreground text-xs">{primaryEmailAddress?.emailAddress}</p>
-            </div>
-          </div>
+          <UserProfile className='border'/>
           <Separator/>
           <div className="p-1">
             <SignOutUser/>
@@ -53,6 +43,34 @@ const UserProfileButton = async () => {
       </HoverCard.Content>
     </HoverCard.Portal>
   </HoverCard.Root>
+  )
+}
+
+export const UserProfile=async (
+  {
+    className
+  }:{
+    className?:string
+  }
+)=>{
+  const user:User|null=await currentUser()
+  if(!user){ 
+    return;
+  }
+  const {fullName,imageUrl,primaryEmailAddress}=user;
+  return (
+    <div className={cn("flex gap-2 bg-background/90 p-4 rounded-xl items-center",className)}>
+      <Avatar className="cursor-pointer">
+        <AvatarImage src={imageUrl} />
+        <AvatarFallback>
+          <UserCircle2Icon/>
+        </AvatarFallback>
+      </Avatar>
+      <div className="">
+        <p className="text-sm">{fullName}</p>
+        <p className="text-muted-foreground text-xs">{primaryEmailAddress?.emailAddress}</p>
+      </div>
+    </div>
   )
 }
 
