@@ -1,4 +1,3 @@
-// 'use client'
 import React from 'react'
 import WHISPER_LOGO_BLACK from '@/assets/logo/whisper_black.svg';
 import WHISPER_LOGO_WHITE from '@/assets/logo/whisper_white.svg';
@@ -11,14 +10,14 @@ import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
 import { auth } from '@clerk/nextjs/server';
 import UserProfileButton, { UserProfile } from './user-profile-button';
-import {ArrowRightIcon} from '@radix-ui/react-icons'
+import {ArrowRightIcon, EnterIcon} from '@radix-ui/react-icons'
 import { MENU_ITEM_LIST } from '../data/header-data';
 import SignOutUser from './sign-out-user-button';
 const Header = () => {
     const {userId}=auth()
     return (
-        <header className='sticky left-0 top-0 z-[100] flex w-full flex-col border-b border-border dark:border-dark-border bg-background'>
-            <div className="flex h-[--header-height] bg-background">
+        <header className='sticky left-0 top-0 z-[100] flex w-full flex-col border-b dark:border-dark-border border-border/90 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/90'>
+            <div className="flex h-[--header-height]">
                 <Container className='w-full px-6 flex items-center justify-between'>
                     <Logo/>
                     <nav className='relative z-[1] flex-col justify-center hidden lg:flex'>
@@ -74,9 +73,29 @@ const Header = () => {
                                     </Link>
                                 ))
                             }
+                            <Link
+                                href="/dashboard"
+                                className="text-muted-foreground hover:text-foreground flex gap-2 items-center"
+                            >
+                                {
+                                    !userId ? 'Get Started Today' :
+                                    <>
+                                        <span>
+                                            Get Started 
+                                        </span>
+                                        <ArrowRightIcon/>
+                                    </>
+                                }
+                            </Link>
                             <div className="mt-auto space-y-2">
-                                <UserProfile className='p-2'/>
-                                <SignOutUser variant="ghost" className='px-2'/>
+                                <UserProfile className='p-2 px-0'/>
+                                {   !userId &&
+                                        <Link className={cn(buttonVariants({variant:'ghost'}),'h-10 hover:bg-background/20 w-full gap-4 px-2 justify-start font-normal')} href="/sign-in">
+                                            <EnterIcon/>
+                                            Sign In
+                                        </Link>
+                                }
+                                {userId && <SignOutUser variant="ghost" className='px-0'/>}
                             </div>
                             </nav>
                         </SheetContent>
