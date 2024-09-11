@@ -10,7 +10,7 @@ import { Button, buttonVariants } from './button';
 import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
 import { auth } from '@clerk/nextjs/server';
-import UserProfileButton from './user-profile-button';
+import UserProfileButton, { UserProfile } from './user-profile-button';
 import {ArrowRightIcon} from '@radix-ui/react-icons'
 import { MENU_ITEM_LIST } from '../data/header-data';
 import SignOutUser from './sign-out-user-button';
@@ -74,7 +74,10 @@ const Header = () => {
                                     </Link>
                                 ))
                             }
-                            <SignOutUser className='mt-auto'/>
+                            <div className="mt-auto space-y-2">
+                                <UserProfile className='p-2'/>
+                                <SignOutUser variant="ghost" className='px-2'/>
+                            </div>
                             </nav>
                         </SheetContent>
                     </Sheet>
