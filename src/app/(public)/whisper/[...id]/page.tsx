@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const Whisper = () => {
-  return (
-    <div>Whisper</div>
-  )
-}
+  return <div>Whisper</div>;
+};
 
-export default Whisper
+export default Whisper;

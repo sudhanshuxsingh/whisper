@@ -1,14 +1,18 @@
-import Header from '@/components/ui/header'
+import Header from '@/components/ui/header';
 
-export const metadata={
-  title:'Welcome to whishper'
-}
+export const metadata = {
+  title: 'Welcome to whishper',
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
-        <Header/>
-        {children}
+      <Header />
+      {children}
     </>
-  )
+  );
 }

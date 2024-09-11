@@ -1,3 +1,3 @@
-import {z} from 'zod'
+import { z } from 'zod';
 
-export const acceptFeedbackSchema=z.boolean
+export const acceptFeedbackSchema = z.boolean;

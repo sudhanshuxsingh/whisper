@@ -1,27 +1,30 @@
-import { ClerkProvider } from '@clerk/nextjs'
-import { ThemeProvider } from "@/components/theme-provider"
-import './globals.css'
+import { ClerkProvider } from '@clerk/nextjs';
+import { ThemeProvider } from '@/components/theme-provider';
+import './globals.css';
 
-export const metadata={
-  title:'Welcome to whishper'
-}
+export const metadata = {
+  title: 'Welcome to whishper',
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <ClerkProvider>
       <html lang="en">
-          <body>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="dark"
-              enableSystem
-              disableTransitionOnChange
-            >
-              
-              {children}
-            </ThemeProvider>
-          </body>
+        <body>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
       </html>
     </ClerkProvider>
-  )
+  );
 }
