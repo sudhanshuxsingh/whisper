@@ -63,63 +63,7 @@ const Header = () => {
             </Link>
             <UserProfileButton />
           </div>
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="shrink-0 lg:hidden"
-              >
-                <HamburgerMenuIcon className="h-5 w-5" />
-                <span className="sr-only">Toggle navigation menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left">
-              <nav className="flex h-full flex-col gap-4 font-medium">
-                <Logo />
-                {MENU_ITEM_LIST.map(({ content, href }) => (
-                  <Link
-                    href={href}
-                    key={content}
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    {content}
-                  </Link>
-                ))}
-                <Link
-                  href="/dashboard"
-                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
-                >
-                  {!userId ? (
-                    'Get Started Today'
-                  ) : (
-                    <>
-                      <span>Get Started</span>
-                      <ArrowRightIcon />
-                    </>
-                  )}
-                </Link>
-                <div className="mt-auto space-y-2">
-                  <UserProfile className="p-2 px-0" />
-                  {!userId && (
-                    <Link
-                      className={cn(
-                        buttonVariants({
-                          variant: 'ghost',
-                        }),
-                        'h-10 w-full justify-start gap-4 px-2 font-normal hover:bg-background/20'
-                      )}
-                      href="/sign-in"
-                    >
-                      <EnterIcon />
-                      Sign In
-                    </Link>
-                  )}
-                  {userId && <SignOutUser variant="ghost" className="px-0" />}
-                </div>
-              </nav>
-            </SheetContent>
-          </Sheet>
+          <HeaderSheet menuItems={MENU_ITEM_LIST} userId={userId} />
         </Container>
       </div>
     </header>
@@ -146,7 +90,7 @@ const MenuItem = ({ content, href, className }: MenuItemPropsType) => {
   );
 };
 
-const Logo = () => (
+export const Logo = () => (
   <Link href="/" about="home" className="flex items-center">
     <Image
       alt="Whisper"
@@ -154,8 +98,80 @@ const Logo = () => (
       className="hidden h-8 dark:block"
     />
     <Image alt="Whisper" src={WHISPER_LOGO_BLACK} className="dark:hidden" />
-    <p className="text-2xl font-bold">Whisper</p>
+    <p className="text-[1.1rem] font-bold">Whisper</p>
   </Link>
+);
+
+type HeaderSheetProps = {
+  userId: string | null;
+  menuItems: MenuItemPropsType[];
+  isDashboard?: boolean;
+  className?: string;
+};
+
+export const HeaderSheet = ({
+  menuItems,
+  userId,
+  isDashboard = false,
+  className,
+}: HeaderSheetProps) => (
+  <Sheet>
+    <SheetTrigger asChild>
+      <Button
+        variant="ghost"
+        size="icon"
+        className={cn('shrink-0 lg:hidden', className)}
+      >
+        <HamburgerMenuIcon className="h-5 w-5" />
+        <span className="sr-only">Toggle navigation menu</span>
+      </Button>
+    </SheetTrigger>
+    <SheetContent side="left">
+      <nav className="flex h-full flex-col gap-4 font-medium">
+        <Logo />
+        {menuItems.map(({ content, href }) => (
+          <Link
+            href={href}
+            key={content}
+            className="text-muted-foreground hover:text-foreground"
+          >
+            {content}
+          </Link>
+        ))}
+        <Link
+          href="/dashboard"
+          className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+        >
+          {!userId
+            ? 'Get Started Today'
+            : !isDashboard && (
+                <>
+                  <span>Get Started</span>
+                  <ArrowRightIcon />
+                </>
+              )}
+        </Link>
+        <div className="mt-auto space-y-2">
+          <UserProfile className="p-2 px-0" />
+          {!userId && (
+            <Link
+              className={cn(
+                buttonVariants({
+                  variant: 'ghost',
+                }),
+                'h-10 w-full justify-start gap-4 px-2 font-normal hover:bg-background/20'
+              )}
+              href="/sign-in"
+            >
+              <EnterIcon />
+              Sign In
+            </Link>
+          )}
+          {userId && <SignOutUser variant="ghost" className="px-0" />}
+        </div>
+      </nav>
+    </SheetContent>
+  </Sheet>
 );
 
 export default Header;
