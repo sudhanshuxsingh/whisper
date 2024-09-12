@@ -5,18 +5,16 @@ import { currentUser, User } from '@clerk/nextjs/server';
 import { Separator } from './separator';
 import SignOutUser from './sign-out-user-button';
 import { cn } from '@/lib/utils';
-const UserProfileButton = async () => {
+const UserProfileButton = async ({ className }: { className?: string }) => {
   const user: User | null = await currentUser();
   if (!user) {
     return;
   }
-
   const { imageUrl } = user;
-
   return (
     <HoverCard.Root>
       <HoverCard.Trigger asChild>
-        <Avatar className="cursor-pointer">
+        <Avatar className={cn('size-8 cursor-pointer', className)}>
           <AvatarImage src={imageUrl} />
           <AvatarFallback>
             <UserCircle2Icon />
