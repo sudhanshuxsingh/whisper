@@ -27,7 +27,7 @@ const UserProfileButton = async ({ className }: { className?: string }) => {
           sideOffset={5}
         >
           <div className="flex flex-col">
-            <UserProfile className="border" />
+            <UserProfileCard className="border" />
             <Separator />
             <div className="p-1">
               <SignOutUser />
@@ -40,7 +40,11 @@ const UserProfileButton = async ({ className }: { className?: string }) => {
   );
 };
 
-export const UserProfile = async ({ className }: { className?: string }) => {
+export const UserProfileCard = async ({
+  className,
+}: {
+  className?: string;
+}) => {
   const user: User | null = await currentUser();
   if (!user) {
     return;
@@ -65,6 +69,31 @@ export const UserProfile = async ({ className }: { className?: string }) => {
           {primaryEmailAddress?.emailAddress}
         </p>
       </div>
+    </div>
+  );
+};
+export const UserProfileInline = async ({
+  className,
+}: {
+  className?: string;
+}) => {
+  const user: User | null = await currentUser();
+  if (!user) {
+    return;
+  }
+  const { firstName, imageUrl, primaryEmailAddress, username } = user;
+  return (
+    <div className={cn('flex items-center gap-2', className)}>
+      <Avatar className="h-[1.2rem] w-[1.2rem] cursor-pointer">
+        <AvatarImage src={imageUrl} />
+        <AvatarFallback>
+          <UserCircle2Icon />
+        </AvatarFallback>
+      </Avatar>
+      <p className="font-medium">
+        {firstName ?? username ?? primaryEmailAddress?.emailAddress}&apos;s{' '}
+        space
+      </p>
     </div>
   );
 };

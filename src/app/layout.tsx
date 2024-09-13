@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body>
+        <body className="w-full overflow-x-hidden">
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
