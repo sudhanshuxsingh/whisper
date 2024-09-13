@@ -9,10 +9,11 @@ import { Button, buttonVariants } from './button';
 import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
 import { auth } from '@clerk/nextjs/server';
-import UserProfileButton, { UserProfile } from './user-profile-button';
+import UserProfileButton, { UserProfileCard } from './user-profile-button';
 import { ArrowRightIcon, EnterIcon } from '@radix-ui/react-icons';
 import { MENU_ITEM_LIST } from '../data/header-data';
 import SignOutUser from './sign-out-user-button';
+import { ThemeSwitcher } from './theme-switcher';
 const Header = () => {
   const { userId } = auth();
   return (
@@ -29,7 +30,7 @@ const Header = () => {
               ))}
             </ul>
           </nav>
-          <div className="hidden items-center gap-2 justify-self-end lg:flex">
+          <div className="hidden items-center gap-1 justify-self-end lg:flex">
             {!userId && (
               <Link
                 className={cn(
@@ -61,6 +62,7 @@ const Header = () => {
                 </>
               )}
             </Link>
+            <ThemeSwitcher />
             <UserProfileButton />
           </div>
           <HeaderSheet menuItems={MENU_ITEM_LIST} userId={userId} />
@@ -76,7 +78,7 @@ type MenuItemPropsType = {
   className?: string;
 };
 
-const MenuItem = ({ content, href, className }: MenuItemPropsType) => {
+export const MenuItem = ({ content, href, className }: MenuItemPropsType) => {
   return (
     <Link
       href={href}
@@ -91,14 +93,29 @@ const MenuItem = ({ content, href, className }: MenuItemPropsType) => {
 };
 
 export const Logo = () => (
-  <Link href="/" about="home" className="flex items-center">
+  <Link href="/" about="home" className="flex items-center -space-x-1">
     <Image
       alt="Whisper"
       src={WHISPER_LOGO_WHITE}
-      className="hidden h-8 dark:block"
+      className="hidden h-7 dark:block"
     />
-    <Image alt="Whisper" src={WHISPER_LOGO_BLACK} className="dark:hidden" />
+    <Image alt="Whisper" src={WHISPER_LOGO_BLACK} className="h-7 dark:hidden" />
     <p className="text-[1.1rem] font-bold">Whisper</p>
+  </Link>
+);
+
+export const LogoIcon = ({ className }: { className?: string }) => (
+  <Link
+    href="/"
+    about="home"
+    className={className}
+  >
+    <Image
+      alt="Whisper"
+      src={WHISPER_LOGO_WHITE}
+      className="hidden h-7 dark:block"
+    />
+    <Image alt="Whisper" src={WHISPER_LOGO_BLACK} className="h-7 dark:hidden" />
   </Link>
 );
 
@@ -152,7 +169,7 @@ export const HeaderSheet = ({
               )}
         </Link>
         <div className="mt-auto space-y-2">
-          <UserProfile className="p-2 px-0" />
+          <UserProfileCard className="p-2 px-0" />
           {!userId && (
             <Link
               className={cn(
