@@ -68,6 +68,10 @@ const config: Config = {
       maxWidth: {
         '8xl': '96rem',
       },
+      fontFamily: {
+        sans: ['var(--font-geist-sans)'],
+        mono: ['var(--font-geist-mono)'],
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
