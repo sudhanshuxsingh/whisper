@@ -6,11 +6,12 @@ import UserProfileButton, { UserProfileInline } from './user-profile-button';
 import { SlashIcon } from '@radix-ui/react-icons';
 import ChipTabNavigation from './chip-tabs';
 import { AuthorizedHeaderLogo } from './AuthorizedHeaderLogo';
+
 export default function AutorizedHeader() {
   const { userId } = auth();
   return (
     <>
-      <AuthorizedHeaderLogo/>
+      <AuthorizedHeaderLogo />
       <header className="dark:border-dark-border z-[100] flex w-full flex-col bg-background/90 px-6 backdrop-blur supports-[backdrop-filter]:bg-background/90">
         <div className="flex h-[--header-height] items-center justify-between">
           <div className="flex items-center gap-1 pl-12">
@@ -39,7 +40,7 @@ export default function AutorizedHeader() {
           <HeaderSheet
             menuItems={MENU_ITEM_LIST}
             userId={userId}
-            isDashboard={true}
+            isProtectedRoute={true}
           />
           {/* <Container className="flex w-full items-center justify-between px-6"></Container> */}
         </div>

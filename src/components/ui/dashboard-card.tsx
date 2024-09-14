@@ -1,14 +1,12 @@
 import Link from 'next/link';
 import React from 'react';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
-// type DashboardCardProps = {
-//   className: string;
-// };
+// type
 
 const DashboardCard = () => {
   return (
     <Link
-      href={''}
+      href={'/sphere/122'}
       className="group/dashboard-card rounded-xl bg-secondary p-1 pb-0"
     >
       <div className="relative flex h-5/6 flex-1 flex-col justify-between overflow-hidden rounded-lg border border-primary/15 bg-background/70 px-4 py-3">

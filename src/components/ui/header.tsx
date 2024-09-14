@@ -51,7 +51,7 @@ const Header = () => {
                   ? 'h-8 bg-indigo-500 px-3.5 text-sm font-medium text-white hover:bg-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-600'
                   : 'gap-1'
               )}
-              href="/dashboard"
+              href="/overview"
             >
               {!userId ? (
                 'Get Started Today'
@@ -105,11 +105,7 @@ export const Logo = () => (
 );
 
 export const LogoIcon = ({ className }: { className?: string }) => (
-  <Link
-    href="/"
-    about="home"
-    className={className}
-  >
+  <Link href="/" about="home" className={className}>
     <Image
       alt="Whisper"
       src={WHISPER_LOGO_WHITE}
@@ -122,14 +118,14 @@ export const LogoIcon = ({ className }: { className?: string }) => (
 type HeaderSheetProps = {
   userId: string | null;
   menuItems: MenuItemPropsType[];
-  isDashboard?: boolean;
+  isProtectedRoute?: boolean;
   className?: string;
 };
 
 export const HeaderSheet = ({
   menuItems,
   userId,
-  isDashboard = false,
+  isProtectedRoute = false,
   className,
 }: HeaderSheetProps) => (
   <Sheet>
@@ -156,12 +152,12 @@ export const HeaderSheet = ({
           </Link>
         ))}
         <Link
-          href="/dashboard"
+          href="/overview"
           className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
         >
           {!userId
             ? 'Get Started Today'
-            : !isDashboard && (
+            : !isProtectedRoute && (
                 <>
                   <span>Get Started</span>
                   <ArrowRightIcon />

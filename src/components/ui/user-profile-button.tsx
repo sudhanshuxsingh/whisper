@@ -90,7 +90,7 @@ export const UserProfileInline = async ({
           <UserCircle2Icon />
         </AvatarFallback>
       </Avatar>
-      <p className="font-medium">
+      <p className="text-sm font-medium">
         {firstName ?? username ?? primaryEmailAddress?.emailAddress}&apos;s{' '}
         space
       </p>
