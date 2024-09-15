@@ -10,7 +10,6 @@ export async function createSphereAction(
 ) {
   try {
     const { userId } = await auth();
-    throw new Error('Invalid data');
     if (!userId) {
       throw new Error('User not authenticated');
     }
