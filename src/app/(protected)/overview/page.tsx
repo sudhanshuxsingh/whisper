@@ -1,9 +1,14 @@
 import Container from '@/components/ui/container';
-import CreateSphere from '@/components/ui/create-sphere';
+import CreateSphere from '@/app/(protected)/overview/_features/create-sphere';
 import SphereCard from '@/components/ui/sphere-card';
 import React from 'react';
+import { getAllSphereAction } from '@/lib/actions/sphere.actions';
 
-const Overview = () => {
+const Overview = async () => {
+  const spheres = await getAllSphereAction();
+  console.log({
+    spheres,
+  });
   return (
     <Container className="mt-6 w-11/12">
       <h2 className="mb-4 text-2xl font-medium tracking-tight">Spheres</h2>
