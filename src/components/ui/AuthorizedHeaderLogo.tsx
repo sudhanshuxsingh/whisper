@@ -9,7 +9,7 @@ import { useRange } from '../hooks/useRange';
 export const AuthorizedHeaderLogo = () => {
   const y = useScrollPosition(60);
   const logoScale = useRange(y, 0, 50, 1, 0.8);
-  const topPosition=useRange(y,0,50,1,.8)
+  const topPosition = useRange(y, 0, 50, 1, 0.8);
   return (
     <Link
       href="/"
@@ -18,7 +18,7 @@ export const AuthorizedHeaderLogo = () => {
         transform: `scale(${logoScale})`,
         top: `${topPosition}rem`,
       }}
-      className="fixed left-6 z-[101]"
+      className="fixed left-6 z-40"
     >
       <Image
         alt="Whisper"

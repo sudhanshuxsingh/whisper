@@ -67,7 +67,7 @@ export default function ChipTabNavigation() {
     }
   }, [navX]);
   return (
-    <nav className="dark:border-dark-border sticky top-0 z-[99] -mt-4 flex w-full flex-col border-b border-border/90 bg-background/90 px-6 text-muted-foreground backdrop-blur supports-[backdrop-filter]:bg-background/90">
+    <nav className="dark:border-dark-border no-scrollbar sticky top-0 z-40 -mt-4 flex w-full flex-col overflow-x-scroll border-b border-border/90 bg-background/90 px-6 text-muted-foreground backdrop-blur supports-[backdrop-filter]:bg-background/90">
       <div
         ref={chipWrapperRef}
         onMouseLeave={() => {
@@ -116,7 +116,7 @@ const Chip = ({
         });
       }}
       href={href}
-      className="z-1 relative px-4 py-4"
+      className="z-1 relative text-nowrap px-4 py-4"
     >
       <span className={cn('relative z-10', isActive ? 'text-primary' : '')}>
         {text}
