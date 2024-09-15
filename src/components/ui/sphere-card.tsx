@@ -8,7 +8,7 @@ const SphereCard = () => {
       href={'/sphere/122'}
       className="group/dashboard-card rounded-xl bg-secondary p-1 pb-0"
     >
-      <div className="relative flex h-5/6 flex-1 flex-col justify-between overflow-hidden rounded-lg border border-primary/15 bg-background/70 px-4 py-3">
+      <div className="relative flex h-5/6 flex-1 flex-col justify-between overflow-hidden rounded-lg border border-primary/15 bg-background/70 px-4 py-3 pt-6">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <CrumpledPaperIcon />
           <p className="truncate text-xs">
