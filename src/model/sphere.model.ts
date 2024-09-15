@@ -6,7 +6,7 @@ export interface Sphere extends Document {
   isAcceptingMessages: boolean;
   type: 'message' | 'feedback';
   showSuggestionToUser: boolean;
-  toJSON: () => Record<string, any>;
+  // toJSON: () => Record<string, any>;
 }
 export const SphereSchema: Schema<Sphere> = new Schema(
   {
