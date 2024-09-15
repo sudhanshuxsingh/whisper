@@ -2,9 +2,7 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
 const isAuthRoute = createRouteMatcher(['/sign-in', '/sign-up', '/sso']);
-
 const isPublicRoute = createRouteMatcher(['/whisper', '/']);
-
 const isPublicApiRoutes = createRouteMatcher(['/api/whisper']);
 
 export default clerkMiddleware((auth, req) => {
@@ -16,7 +14,6 @@ export default clerkMiddleware((auth, req) => {
   }
   if (!userId) {
     const redirectUrlParam = new URLSearchParams({ _r: req.url });
-    console.log({ redirectUrlParam });
     if (!isPublicRoute(req) && !isPublicApiRoutes(req) && !isAuthRoute(req)) {
       return NextResponse.redirect(
         new URL(`/sign-in?${redirectUrlParam}`, req.url)

@@ -3,7 +3,6 @@ import mongoose, { Schema, Document, Types } from 'mongoose';
 export interface Feedback extends Document {
   message: string;
   rating?: number;
-  createdAt: Date;
   sphere: Types.ObjectId;
   name?: string;
 }
@@ -18,10 +17,6 @@ const FeedbackSchema: Schema<Feedback> = new Schema(
       type: Number,
       min: 1,
       max: 5,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
     },
     sphere: {
       type: Schema.ObjectId,
