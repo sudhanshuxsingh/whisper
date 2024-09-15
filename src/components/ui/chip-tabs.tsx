@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import useScrollPosition from '@react-hook/window-scroll';
-import { useRange } from '../hooks/useRange';
+import { useRange } from '../../hooks/useRange';
 import {
   useRef,
   useLayoutEffect,
@@ -11,7 +11,7 @@ import {
   Dispatch,
   SetStateAction,
 } from 'react';
-import usePathActive from '../hooks/usePathActive';
+import usePathActive from '../../hooks/usePathActive';
 import { useParams } from 'next/navigation';
 import {
   DASHBOARD_HOME_TAB_LIST,
@@ -67,7 +67,7 @@ export default function ChipTabNavigation() {
     }
   }, [navX]);
   return (
-    <nav className="dark:border-dark-border no-scrollbar sticky top-0 z-40 -mt-4 flex w-full flex-col overflow-x-scroll border-b border-border/90 bg-background/90 px-6 text-muted-foreground backdrop-blur supports-[backdrop-filter]:bg-background/90">
+    <nav className="dark:border-dark-border sticky top-0 z-40 -mt-4 flex w-full flex-col overflow-x-scroll border-b border-border/90 bg-background/90 px-6 text-muted-foreground backdrop-blur no-scrollbar supports-[backdrop-filter]:bg-background/90">
       <div
         ref={chipWrapperRef}
         onMouseLeave={() => {

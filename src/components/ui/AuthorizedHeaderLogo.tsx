@@ -5,7 +5,7 @@ import Link from 'next/link';
 import WHISPER_LOGO_BLACK from '@/assets/logo/whisper_black.svg';
 import WHISPER_LOGO_WHITE from '@/assets/logo/whisper_white.svg';
 import useScrollPosition from '@react-hook/window-scroll';
-import { useRange } from '../hooks/useRange';
+import { useRange } from '../../hooks/useRange';
 export const AuthorizedHeaderLogo = () => {
   const y = useScrollPosition(60);
   const logoScale = useRange(y, 0, 50, 1, 0.8);
