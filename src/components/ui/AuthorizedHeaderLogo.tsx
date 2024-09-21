@@ -18,7 +18,7 @@ export const AuthorizedHeaderLogo = () => {
         transform: `scale(${logoScale})`,
         top: `${topPosition}rem`,
       }}
-      className="fixed left-6 z-40"
+      className="fixed left-6 z-50"
     >
       <Image
         alt="Whisper"
