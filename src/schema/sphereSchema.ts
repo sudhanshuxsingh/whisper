@@ -15,4 +15,5 @@ export const sphereSchema = z.object({
   type: z.enum(['message', 'feedback'], {
     message: "Sphere type can't be empty",
   }),
+  isAcceptingMessage:z.boolean()
 });
