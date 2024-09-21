@@ -35,7 +35,6 @@ export default function AutorizedHeader() {
             userId={userId}
             isProtectedRoute={true}
           />
-          {/* <Container className="flex w-full items-center justify-between px-6"></Container> */}
         </div>
       </header>
       <ChipTabNavigation />
