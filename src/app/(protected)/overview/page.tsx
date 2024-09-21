@@ -1,8 +1,5 @@
 import Container from '@/components/ui/container';
 import CreateSphere from '@/app/(protected)/overview/_features/create-sphere';
-// import SphereCard from '@/components/ui/sphere-card';
-// import React, { Suspense } from 'react';
-// import { getAllSphereAction } from '@/lib/actions/sphere.actions';
 import SphereList from './_features/sphere-list';
 
 const Overview = () => {
