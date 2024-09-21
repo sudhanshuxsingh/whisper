@@ -1,5 +1,5 @@
 'use client';
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -31,12 +31,17 @@ import { createSphereAction } from '@/lib/actions/sphere.actions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { useToast } from '@/hooks/use-toast';
+import { SphereProps } from '@/types/sphere.types';
+import { useRouter } from 'next/navigation';
+
 const CreateSphereForm = ({
   setOpen,
 }: {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const { isPending, isError, isSuccess, mutate, data, error } = useMutation({
+  const router = useRouter();
+
+  const { isPending, mutate } = useMutation({
     mutationFn: (sphere: z.infer<typeof sphereSchema>) => {
       return createSphereAction(sphere);
     },
@@ -52,42 +57,39 @@ const CreateSphereForm = ({
       title: '',
       showSuggestionToUser: false,
       type: 'message',
+      isAcceptingMessage: true,
     },
   });
 
   function onSubmit(values: z.infer<typeof sphereSchema>) {
     mutate(values, {
-      onSuccess() {
+      onSuccess(sphere: SphereProps) {
         queryClient.invalidateQueries({
           queryKey: ['spheres'],
           refetchType: 'active',
         });
+        setOpen(false);
+        console.log({ sphere });
+        router.push(`/sphere/${sphere._id}`);
+      },
+      onError(error: Error) {
+        console.log({ error });
+        toast({
+          variant: 'destructive',
+          title: 'Uh oh! Something went wrong.',
+          description: error?.message,
+          action: (
+            <ToastAction
+              altText="Try again"
+              onClick={() => onSubmit(form.getValues())}
+            >
+              Try again
+            </ToastAction>
+          ),
+        });
       },
     });
   }
-
-  useEffect(() => {
-    if (isSuccess) {
-      console.log({ data });
-      setOpen(false);
-    }
-    if (isError) {
-      console.log({ error });
-      toast({
-        variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: error.message,
-        action: (
-          <ToastAction
-            altText="Try again"
-            onClick={() => onSubmit(form.getValues())}
-          >
-            Try again
-          </ToastAction>
-        ),
-      });
-    }
-  }, [isSuccess, isError, data, setOpen]);
 
   return (
     <Form {...form}>
