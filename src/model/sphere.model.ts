@@ -6,6 +6,7 @@ export interface Sphere extends Document {
   isAcceptingMessages: boolean;
   type: 'message' | 'feedback';
   showSuggestionToUser: boolean;
+  apiKey: string;
   // toJSON: () => Record<string, any>;
 }
 export const SphereSchema: Schema<Sphere> = new Schema(
@@ -21,6 +22,7 @@ export const SphereSchema: Schema<Sphere> = new Schema(
     description: String,
     isAcceptingMessages: Boolean,
     showSuggestionToUser: Boolean,
+    apiKey: String,
   },
   {
     timestamps: true,

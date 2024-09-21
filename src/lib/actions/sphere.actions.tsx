@@ -4,7 +4,7 @@ import { SphereModel } from '@/model/sphere.model';
 import { auth } from '@clerk/nextjs/server';
 import { z } from 'zod';
 import { sphereSchema } from '@/schema/sphereSchema';
-
+import { nanoid } from 'nanoid';
 export async function createSphereAction(
   request: z.infer<typeof sphereSchema>
 ) {
@@ -14,15 +14,14 @@ export async function createSphereAction(
       throw new Error('User not authenticated');
     }
     await dbConnect();
-
     const parsedRequest = sphereSchema.safeParse(request);
     if (!parsedRequest.success) {
       throw new Error('Invalid data');
     }
-
     const sphere = await SphereModel.create({
       userId,
       ...parsedRequest.data,
+      apiKey: nanoid(),
     });
     return {
       res: sphere.toJSON(),
@@ -33,20 +32,19 @@ export async function createSphereAction(
   }
 }
 
-export async function getAllSphereAction() {
+export async function getAllSphereAction(): Promise<
+  z.infer<typeof sphereSchema>
+> {
   try {
     const { userId } = await auth();
     if (!userId) {
-      throw new Error('User not authenticated');
+      throw new Error('Unauthorized');
     }
     await dbConnect();
-
-    const spheres = await SphereModel.find({ userId }).sort('createdAt').lean();
-    return {
-      res: spheres,
-    };
+    const spheres = await SphereModel.find({ userId }).sort({ createdAt: -1 });
+    return JSON.parse(JSON.stringify(spheres));
   } catch (error) {
-    console.log('Error fetching spheres', error);
-    throw Error('Failed to fetch sphere');
+    console.error('Error fetching spheres:', error);
+    throw new Error('Failed to fetch spheres');
   }
 }
