@@ -1,9 +1,14 @@
-import React from 'react'
+import React from 'react';
+import ShereDetailsHero from '../_features/ShereDetailsHero';
+import FeedbackContainer from '../_features/FeedbackContainer';
 
 const Sphere = () => {
   return (
-    <div>Sphere</div>
-  )
-}
+    <>
+      <ShereDetailsHero />
+      <FeedbackContainer />
+    </>
+  );
+};
 
-export default Sphere
+export default Sphere;
