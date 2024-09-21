@@ -28,7 +28,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '../../../../components/ui/textarea';
 import { createSphereAction } from '@/lib/actions/sphere.actions';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { useToast } from '@/hooks/use-toast';
 const CreateSphereForm = ({
@@ -41,6 +41,8 @@ const CreateSphereForm = ({
       return createSphereAction(sphere);
     },
   });
+
+  const queryClient = useQueryClient();
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof sphereSchema>>({
@@ -54,7 +56,14 @@ const CreateSphereForm = ({
   });
 
   function onSubmit(values: z.infer<typeof sphereSchema>) {
-    mutate(values);
+    mutate(values, {
+      onSuccess() {
+        queryClient.invalidateQueries({
+          queryKey: ['spheres'],
+          refetchType: 'active',
+        });
+      },
+    });
   }
 
   useEffect(() => {
