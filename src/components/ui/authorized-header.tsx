@@ -6,6 +6,7 @@ import UserProfileButton, { UserProfileInline } from './user-profile-button';
 import { SlashIcon } from '@radix-ui/react-icons';
 import ChipTabNavigation from './chip-tabs';
 import { AuthorizedHeaderLogo } from './AuthorizedHeaderLogo';
+import { memo } from 'react';
 
 export default function AutorizedHeader() {
   const { userId } = auth();
@@ -21,15 +22,7 @@ export default function AutorizedHeader() {
           <div className="flex items-center -space-x-1">
             <nav className="relative z-[1] hidden flex-col justify-center text-muted-foreground lg:flex">
               <ul className="flex flex-1 gap-0.5 px-4">
-                {MENU_ITEM_LIST.map(({ content, href }) => (
-                  <li key={content}>
-                    <MenuItem
-                      content={content}
-                      href={href}
-                      className="text-sm font-normal"
-                    />
-                  </li>
-                ))}
+                <MenuItems />
               </ul>
             </nav>
             <div className="hidden items-center gap-4 justify-self-end lg:flex">
@@ -49,3 +42,18 @@ export default function AutorizedHeader() {
     </>
   );
 }
+const MenuItems = memo(() => (
+  <>
+    {MENU_ITEM_LIST.map(({ content, href }) => (
+      <li key={content}>
+        <MenuItem
+          content={content}
+          href={href}
+          className="text-sm font-normal"
+        />
+      </li>
+    ))}
+  </>
+));
+
+MenuItems.displayName = 'MenuItems';
