@@ -1,4 +1,4 @@
-import * as HoverCard from '@radix-ui/react-hover-card';
+import * as Popover from '@radix-ui/react-hover-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { UserCircle2Icon } from 'lucide-react';
 import { currentUser, User } from '@clerk/nextjs/server';
@@ -12,17 +12,17 @@ const UserProfileButton = async ({ className }: { className?: string }) => {
   }
   const { imageUrl } = user;
   return (
-    <HoverCard.Root>
-      <HoverCard.Trigger asChild>
+    <Popover.Root openDelay={0}>
+      <Popover.Trigger asChild>
         <Avatar className={cn('size-8 cursor-pointer', className)}>
           <AvatarImage src={imageUrl} />
           <AvatarFallback>
             <UserCircle2Icon />
           </AvatarFallback>
         </Avatar>
-      </HoverCard.Trigger>
-      <HoverCard.Portal>
-        <HoverCard.Content
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content
           className="data-[side=bottom]:animate-slideUpAndFade data-[side=right]:animate-slideLeftAndFade data-[side=left]:animate-slideRightAndFade data-[side=top]:animate-slideDownAndFade border-1 z-[101] w-[300px] rounded-xl border bg-secondary shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] data-[state=open]:transition-all"
           sideOffset={5}
         >
@@ -33,10 +33,10 @@ const UserProfileButton = async ({ className }: { className?: string }) => {
               <SignOutUser />
             </div>
           </div>
-          <HoverCard.Arrow className="fill-secondary" />
-        </HoverCard.Content>
-      </HoverCard.Portal>
-    </HoverCard.Root>
+          <Popover.Arrow className="fill-secondary" />
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   );
 };
 
