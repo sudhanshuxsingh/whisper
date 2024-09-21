@@ -46,3 +46,21 @@ export async function getAllSphereAction(): Promise<SphereProps[]> {
     throw new Error('Failed to fetch spheres');
   }
 }
+
+export async function getSphereAction(sphereId: string): Promise<SphereProps> {
+  try {
+    const { userId } = await auth();
+    if (!userId) {
+      throw new Error('Unauthorized Request');
+    }
+    await dbConnect();
+    const sphere = await SphereModel.findById(sphereId);
+    if (sphere == null) {
+      throw new Error(`No Sphere Found for ${sphereId}`);
+    }
+    return JSON.parse(JSON.stringify(sphere));
+  } catch (error) {
+    console.error('Error Fetching Sphere details for:', sphereId, error);
+    throw new Error(`Failed to fetch sphere details for ${sphereId}`);
+  }
+}
