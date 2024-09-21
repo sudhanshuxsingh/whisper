@@ -3,7 +3,7 @@ import React from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import { getAllSphereAction } from '@/lib/actions/sphere.actions';
-import SphereCard from '@/components/ui/sphere-card';
+import SphereCard from '@/app/(protected)/overview/_features/sphere-card';
 import { SphereProps } from '@/types/sphere.types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { usePathname } from 'next/navigation';
@@ -25,7 +25,7 @@ const SphereList = () => {
     },
   });
   if (isLoading) {
-    return [...Array(3)].map((_,index: number) => (
+    return [...Array(3)].map((_, index: number) => (
       <Skeleton key={index} className="rounded-lg" />
     ));
   }

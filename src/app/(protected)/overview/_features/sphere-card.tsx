@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { ArrowRightIcon, CrumpledPaperIcon } from '@radix-ui/react-icons';
 import { timeSince } from '@/lib/utils';
-import { Badge } from './badge';
+import { Badge } from '../../../../components/ui/badge';
 
 type SphereCardProps = {
   title: string;
@@ -42,7 +42,9 @@ const SphereCard = ({
         </div>
         <div className="">
           <p className="mb-2 truncate font-normal">{title}</p>
-          <p className="line-clamp-1 text-xs capitalize text-muted-foreground">{description}</p>
+          <p className="line-clamp-1 text-xs capitalize text-muted-foreground">
+            {description}
+          </p>
         </div>
 
         <div className="absolute -top-2 left-1/2 h-3 w-2/3 -translate-x-1/2 rounded-b-full bg-indigo-500"></div>
