@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const UserGuide = () => {
-  return (
-    <div>UserGuide</div>
-  )
-}
+  return <div>UserGuide</div>;
+};
 
-export default UserGuide
+export default UserGuide;

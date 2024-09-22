@@ -73,7 +73,6 @@ const CreateSphereForm = ({
         router.push(`/sphere/${sphere._id}`);
       },
       onError(error: Error) {
-        console.log({ error });
         toast({
           variant: 'destructive',
           title: 'Uh oh! Something went wrong.',

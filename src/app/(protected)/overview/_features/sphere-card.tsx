@@ -50,10 +50,10 @@ const SphereCard = ({
         <div className="absolute -top-2 left-1/2 h-3 w-2/3 -translate-x-1/2 rounded-b-full bg-indigo-500"></div>
       </div>
       <div className="flex justify-between overflow-hidden px-3 py-2 text-xs font-medium text-muted-foreground">
-        <span className="ease-[cubic-bezier(0.2,0.4,0,1)] transition group-hover/dashboard-card:-translate-x-[calc(100%+theme(spacing.4))] group-has-[a:focus-visible]:-translate-x-[calc(100%+theme(spacing.4))] motion-reduce:duration-0">
+        <span className="ease-&lsqb;cubic-bezier(0.2,0.4,0,1)&rsqb; transition group-hover/dashboard-card:-translate-x-[calc(100%+theme(spacing.4))] group-has-[a:focus-visible]:-translate-x-[calc(100%+theme(spacing.4))] motion-reduce:duration-0">
           Updated <time>{timeSince(updatedAt)}</time>
         </span>
-        <span className="ease-[cubic-bezier(0.2,0.4,0,1)] flex translate-x-[calc(100%+theme(spacing.4))] items-center gap-1 transition group-hover/dashboard-card:translate-x-0 group-has-[a:focus-visible]:translate-x-0 motion-reduce:duration-0">
+        <span className="ease-&lsqb;cubic-bezier(0.2,0.4,0,1)&rsqb; flex translate-x-[calc(100%+theme(spacing.4))] items-center gap-1 transition group-hover/dashboard-card:translate-x-0 group-has-[a:focus-visible]:translate-x-0 motion-reduce:duration-0">
           Go to sphere <ArrowRightIcon />
         </span>
       </div>

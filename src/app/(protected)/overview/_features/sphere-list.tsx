@@ -6,12 +6,8 @@ import { getAllSphereAction } from '@/lib/actions/sphere.actions';
 import SphereCard from '@/app/(protected)/overview/_features/sphere-card';
 import { SphereProps } from '@/types/sphere.types';
 import { Skeleton } from '@/components/ui/skeleton';
-import { usePathname } from 'next/navigation';
 import { getAbsoutePath } from '@/lib/utils';
 const SphereList = () => {
-  const path = usePathname();
-  console.log({ path });
-
   const {
     isLoading,
     isError,
