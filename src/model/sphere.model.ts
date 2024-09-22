@@ -3,7 +3,7 @@ export interface Sphere extends Document {
   userId: string;
   title: string;
   description?: string;
-  isAcceptingMessages: boolean;
+  isAcceptingMessage: boolean;
   type: 'message' | 'feedback';
   showSuggestionToUser: boolean;
   apiKey: string;
@@ -19,7 +19,7 @@ export const SphereSchema: Schema<Sphere> = new Schema(
       required: true,
     },
     description: String,
-    isAcceptingMessages: Boolean,
+    isAcceptingMessage: Boolean,
     type: {
       type: String,
       enum: ['message', 'feedback'],
