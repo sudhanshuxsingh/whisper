@@ -13,7 +13,7 @@ const CopyToClipButton = ({
 }: CopyToClipboardButtonProps) => {
   const { onCopy, hasCopied } = useClipboard(duration);
   return (
-    <div onClick={() => onCopy(text)}>
+    <div onClick={() => onCopy(text)} className="h-fiit w-fit">
       {hasCopied ? <SuccessButton /> : <CopyButtonIcon />}
     </div>
   );
@@ -21,13 +21,13 @@ const CopyToClipButton = ({
 
 const CopyButtonIcon = () => (
   <Button variant="ghost" size="xs" className="p-0">
-    <CopyIcon className='size-4'/>
+    <CopyIcon className="size-4 h-fit w-fit" />
   </Button>
 );
 
 const SuccessButton = () => (
   <Button variant="ghost" size="xs" className="p-0">
-    <CheckIcon className='size-4'/>
+    <CheckIcon className="size-4 h-fit w-fit" />
   </Button>
 );
 

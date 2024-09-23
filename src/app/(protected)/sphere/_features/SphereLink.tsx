@@ -4,8 +4,8 @@ import React from 'react';
 //  onClick={()=>onCopy(link)}
 const SphereLink = ({ link }: { link: string }) => {
   return (
-    <div className="flex w-full max-w-xl items-center justify-between gap-2 overflow-x-scroll rounded bg-secondary px-4 py-1 text-xs text-muted-foreground no-scrollbar md:w-fit">
-      <pre>{link}</pre>
+    <div className="flex w-full max-w-xl items-center gap-2 overflow-x-scroll rounded bg-secondary px-4 text-xs no-scrollbar md:w-fit">
+      <pre className="text-muted-foreground">{link}</pre>
       <CopyToClipButton text={link} duration={3000} />
     </div>
   );

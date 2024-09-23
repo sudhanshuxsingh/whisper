@@ -1,7 +1,11 @@
 import Container from '@/components/ui/container';
 import React from 'react';
 import FeedbackCard from './FeedbackCard';
-const FeedbackContainer = () => {
+type FeedbackContainerProps = {
+  sphereId: string;
+};
+const FeedbackContainer = ({ sphereId }: FeedbackContainerProps) => {
+  console.log({ sphereId });
   return (
     <div className="bg-secondary/10 py-24 pt-44 lg:pt-28 xl:pt-[6.8rem]">
       <Container className="space-y-6">
