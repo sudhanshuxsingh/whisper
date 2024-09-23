@@ -1,12 +1,17 @@
-import React from 'react';
-import ShereDetailsHero from '../_features/ShereDetailsHero';
 import FeedbackContainer from '../_features/FeedbackContainer';
+import SphereDetailsHero from '../_features/SphereDetailsHero';
 
-const Sphere = () => {
+type SphereProps = {
+  params: {
+    id: string;
+  };
+};
+
+const Sphere = ({ params }: SphereProps) => {
   return (
     <>
-      <ShereDetailsHero />
-      <FeedbackContainer />
+      <SphereDetailsHero sphereId={params.id} />
+      <FeedbackContainer sphereId={params.id} />
     </>
   );
 };
