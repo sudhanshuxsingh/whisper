@@ -53,6 +53,7 @@ const AISuggestion = ({
       type="button"
       variant="outline"
       size="sm"
+      className="border"
       onClick={populateSuggestions}
     >
       {loading ? (

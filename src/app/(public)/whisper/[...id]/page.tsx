@@ -19,7 +19,7 @@ const Whisper = async ({ params }: Props) => {
     showSuggestionToUser,
   }: SphereProps = await getSphereAction(params.id);
   return (
-    <div className="py-8 pt-12">
+    <div className="bg-page-gradient py-8 pt-28">
       <Container className="grid max-w-6xl gap-14 md:grid-cols-2 lg:grid-cols-[1fr_30rem]">
         <FeedbackHeader title={title} description={description} />
         <FeedbackForm
