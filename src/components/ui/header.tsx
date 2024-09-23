@@ -17,12 +17,12 @@ import { ThemeSwitcher } from './theme-switcher';
 const Header = () => {
   const { userId } = auth();
   return (
-    <header className="dark:border-dark-border sticky left-0 top-0 z-[100] flex w-full flex-col border-b border-border/90 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/90">
+    <header className="dark:border-dark-border absolute left-0 top-0 z-[100] flex w-full flex-col border-b border-border/90 bg-transparent backdrop-blur supports-[backdrop-filter]:bg-transparent">
       <div className="flex h-[--header-height]">
         <Container className="flex w-full items-center justify-between px-6">
-          <Logo />
-          <nav className="relative z-[1] hidden flex-col justify-center lg:flex">
-            <ul className="flex flex-1 gap-0.5 px-4">
+          <nav className="relative z-[1] flex">
+            <Logo />
+            <ul className="hidden flex-1 justify-center gap-0.5 px-4 md:flex lg:flex-row">
               {MENU_ITEM_LIST.map(({ content, href }) => (
                 <li key={content}>
                   <MenuItem content={content} href={href} />
@@ -30,12 +30,12 @@ const Header = () => {
               ))}
             </ul>
           </nav>
-          <div className="hidden items-center gap-1 justify-self-end lg:flex">
+          <div className="hidden items-center gap-4 justify-self-end text-sm md:flex">
             {!userId && (
               <Link
                 className={cn(
                   buttonVariants({ variant: 'rounded' }),
-                  'h-8 border border-secondary-foreground/10 px-3.5 text-sm font-medium'
+                  'hidden h-8 border border-secondary-foreground/10 px-3.5 lg:flex'
                 )}
                 href="/sign-in"
               >
@@ -45,11 +45,10 @@ const Header = () => {
             <Link
               className={cn(
                 buttonVariants({
-                  variant: !userId ? 'rounded' : 'link',
+                  variant: !userId ? 'primary' : 'link',
+                  size: 'sm',
                 }),
-                !userId
-                  ? 'h-8 bg-indigo-500 px-3.5 text-sm font-medium text-white hover:bg-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-600'
-                  : 'gap-1'
+                !userId ? '' : 'gap-1 px-0'
               )}
               href="/overview"
             >
@@ -62,8 +61,8 @@ const Header = () => {
                 </>
               )}
             </Link>
-            <ThemeSwitcher />
             <UserProfileButton />
+            <ThemeSwitcher />
           </div>
           <HeaderSheet menuItems={MENU_ITEM_LIST} userId={userId} />
         </Container>
@@ -83,7 +82,7 @@ export const MenuItem = ({ content, href, className }: MenuItemPropsType) => {
     <Link
       href={href}
       className={cn(
-        'ring-control inline-flex h-6 shrink-0 items-center justify-center gap-1 rounded-full px-3 pb-px font-medium tracking-tight outline-none outline-0 hover:bg-secondary focus-visible:ring-2 lg:h-7',
+        'ring-control inline-flex h-6 shrink-0 items-center justify-center gap-1 rounded-full px-3 pb-px text-sm tracking-tight text-primary/80 outline-none outline-0 hover:bg-secondary hover:text-primary focus-visible:ring-2 lg:h-7',
         className
       )}
     >
@@ -140,7 +139,7 @@ export const HeaderSheet = ({
       </Button>
     </SheetTrigger>
     <SheetContent side="left">
-      <nav className="flex h-full flex-col gap-4 font-medium">
+      <nav className="flex h-full flex-col gap-4">
         <Logo />
         {menuItems.map(({ content, href }) => (
           <Link
