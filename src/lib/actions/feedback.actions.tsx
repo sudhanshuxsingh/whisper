@@ -1,4 +1,5 @@
 'use server';
+import { SphereModel } from '@/model/sphere.model';
 import dbConnect from '../db/dbConnect';
 import { FeedbackModel } from '@/model/feedback.model';
 import {
@@ -6,7 +7,9 @@ import {
   FeedbackPaginatedResponse,
   FeedbackPaginatedQueryProps,
 } from '@/types/feedback.types';
+import { auth } from '@clerk/nextjs/server';
 import mongoose from 'mongoose';
+import { SphereProps } from '@/types/sphere.types';
 
 export async function submitFeedback(request: FeedbackSubmissionProps) {
   try {
@@ -30,7 +33,15 @@ export async function getAllFeedback({
   sphereId,
 }: FeedbackPaginatedQueryProps): Promise<FeedbackPaginatedResponse> {
   try {
+    const { userId }: { userId: string | null } = auth();
+    if (!userId) {
+      throw Error('Unauthenticated User');
+    }
     await dbConnect();
+    const sphere: SphereProps | null = await SphereModel.findById(sphereId);
+    if (sphere?.userId != userId) {
+      throw Error('Unauthorized User');
+    }
     const skipCount = (page - 1) * pageSize;
     const [feedbacks, totalElements] = await Promise.all([
       FeedbackModel.find({ sphere: sphereId }).skip(skipCount).limit(pageSize),
