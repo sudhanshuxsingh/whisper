@@ -34,7 +34,7 @@ export async function createSphereAction(
 
 export async function getAllSphereAction(): Promise<SphereProps[]> {
   try {
-    const { userId } = await auth();
+    const { userId } = auth();
     if (!userId) {
       throw new Error('Unauthorized Request');
     }
@@ -49,7 +49,7 @@ export async function getAllSphereAction(): Promise<SphereProps[]> {
 
 export async function getSphereAction(sphereId: string): Promise<SphereProps> {
   try {
-    const { userId } = await auth();
+    const { userId } = auth();
     if (!userId) {
       throw new Error('Unauthorized Request');
     }
