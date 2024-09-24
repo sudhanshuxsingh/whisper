@@ -18,6 +18,12 @@ import { Button } from '@/components/ui/button';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { Textarea } from '@/components/ui/textarea';
 import AISuggestion from '@/components/ui/AISuggestion';
+import { useMutation } from '@tanstack/react-query';
+import { submitFeedback } from '@/lib/actions/feedback.actions';
+import { FeedbackSubmissionProps } from '@/types/feedback.types';
+import { useToast } from '@/hooks/use-toast';
+import { ToastAction } from '@radix-ui/react-toast';
+import { useRouter } from 'next/navigation';
 
 type FeedbackFormProps = {
   type: 'feedback' | 'message';
@@ -37,11 +43,40 @@ const FeedbackForm = ({
     resolver: zodResolver(feedbackSchema),
     defaultValues: {},
   });
+  const router = useRouter();
+  const { mutate, isPending } = useMutation({
+    mutationFn: (values: FeedbackSubmissionProps) => {
+      return submitFeedback(values);
+    },
+  });
+  const { toast } = useToast();
   const handleAISuggestion = (suggestion: string) => {
     form.setValue('content', suggestion);
   };
-  function onSubmit() {
-    console.log(sphereId);
+  function onSubmit(values: z.infer<typeof feedbackSchema>) {
+    mutate(
+      { ...values, sphereId },
+      {
+        onError: (error: Error) => {
+          toast({
+            variant: 'destructive',
+            title: 'Uh oh! Something went wrong.',
+            description: error?.message,
+            action: (
+              <ToastAction
+                altText="Try again"
+                onClick={() => onSubmit(form.getValues())}
+              >
+                Try again
+              </ToastAction>
+            ),
+          });
+        },
+        onSuccess: () => {
+          router.push('success');
+        },
+      }
+    );
   }
   return (
     <div className="rounded-lg border">
@@ -118,7 +153,7 @@ const FeedbackForm = ({
             type="submit"
             className="!mt-6 ml-auto w-full rounded-sm bg-indigo-500 text-white hover:bg-indigo-600"
           >
-            {false && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+            {isPending && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
             Send Feedback
           </Button>
         </form>
