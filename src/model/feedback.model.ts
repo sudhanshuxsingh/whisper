@@ -1,17 +1,18 @@
 import mongoose, { Schema, Document, Types } from 'mongoose';
 
 export interface Feedback extends Document {
-  message: string;
+  content: string;
   rating?: number;
   sphere: Types.ObjectId;
   name?: string;
+  email?: string;
 }
 
 const FeedbackSchema: Schema<Feedback> = new Schema(
   {
-    message: {
+    content: {
       type: String,
-      required: [true, "Message can't be empty"],
+      required: [true, "Content can't be empty"],
     },
     rating: {
       type: Number,
@@ -24,6 +25,9 @@ const FeedbackSchema: Schema<Feedback> = new Schema(
       required: [true, 'A Feedback must belong to a Sphere'],
     },
     name: {
+      type: String,
+    },
+    email: {
       type: String,
     },
   },
