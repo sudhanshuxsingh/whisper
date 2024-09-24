@@ -1,5 +1,5 @@
 'use client';
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -34,22 +34,16 @@ import { useToast } from '@/hooks/use-toast';
 import { SphereProps } from '@/types/sphere.types';
 import { useRouter } from 'next/navigation';
 
-const CreateSphereForm = ({
-  setOpen,
-}: {
-  setOpen: Dispatch<SetStateAction<boolean>>;
-}) => {
+const CreateSphereForm = () => {
   const router = useRouter();
-
   const { isPending, mutate } = useMutation({
     mutationFn: (sphere: z.infer<typeof sphereSchema>) => {
       return createSphereAction(sphere);
     },
   });
-
+  const [isProcessing, setIsProcessing] = useState(false);
   const queryClient = useQueryClient();
   const { toast } = useToast();
-
   const form = useForm<z.infer<typeof sphereSchema>>({
     resolver: zodResolver(sphereSchema),
     defaultValues: {
@@ -64,13 +58,13 @@ const CreateSphereForm = ({
   function onSubmit(values: z.infer<typeof sphereSchema>) {
     mutate(values, {
       onSuccess(sphere: SphereProps) {
+        setIsProcessing(true);
         queryClient.invalidateQueries({
           queryKey: ['spheres'],
           refetchType: 'active',
         });
-        setOpen(false);
-        console.log({ sphere });
         router.push(`/sphere/${sphere._id}`);
+        setIsProcessing(false);
       },
       onError(error: Error) {
         toast({
@@ -165,9 +159,11 @@ const CreateSphereForm = ({
         <Button
           type="submit"
           className="!mt-6 w-full rounded-sm bg-indigo-500 text-white hover:bg-indigo-600"
-          disabled={isPending}
+          disabled={isPending || isProcessing}
         >
-          {isPending && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+          {(isPending || isProcessing) && (
+            <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+          )}
           Submit
         </Button>
       </form>

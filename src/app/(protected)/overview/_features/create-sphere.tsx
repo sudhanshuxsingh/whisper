@@ -55,7 +55,7 @@ export default function CreateSphere() {
             The configurations can be changed anytime in the dashboard.
           </DialogDescription>
         </DialogHeader>
-        <CreateSphereForm setOpen={setOpen} />
+        <CreateSphereForm />
       </DialogContent>
     </Dialog>
   );
