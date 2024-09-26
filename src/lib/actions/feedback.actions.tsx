@@ -50,10 +50,10 @@ export async function getAllFeedback({
     const totalPageCount = Math.ceil(totalElements / pageSize);
     const hasNextPage = page < totalPageCount;
     return {
-      currentPageNumber: page + 1,
       totalPageCount,
       hasNextPage,
       pageSize,
+      totalElements,
       feedbacks: JSON.parse(JSON.stringify(feedbacks)),
     };
   } catch (error) {
