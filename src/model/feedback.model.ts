@@ -38,5 +38,5 @@ const FeedbackSchema: Schema<Feedback> = new Schema(
 );
 
 export const FeedbackModel =
-  (mongoose.models.User as mongoose.Model<Feedback>) ||
+  (mongoose.models.Feedback as mongoose.Model<Feedback>) ||
   mongoose.model<Feedback>('Feedback', FeedbackSchema);

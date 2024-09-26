@@ -10,4 +10,5 @@ export const feedbackSchema = z.object({
   name: z.optional(z.string()),
   email: z.optional(z.string()),
   rating: z.optional(z.number()),
+  _id: z.optional(z.string()),
 });

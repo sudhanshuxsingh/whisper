@@ -4,11 +4,11 @@ export type FeedbackSubmissionProps = z.infer<typeof feedbackSchema> & {
   sphereId: string;
 };
 export type FeedbackPaginatedResponse = {
-  currentPageNumber: number;
   totalPageCount: number;
   pageSize: number;
   hasNextPage: boolean;
-  feedbacks: z.infer<typeof feedbackSchema>;
+  totalElements: number;
+  feedbacks: z.infer<typeof feedbackSchema>[];
 };
 export type FeedbackPaginatedQueryProps = {
   page: number;
