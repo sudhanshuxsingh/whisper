@@ -44,6 +44,8 @@ const WhisperFeedbak = ({
       type={type}
       showSuggestionToUser={showSuggestionToUser}
       sphereId={sphereId}
+      title={title}
+      description={description}
     />
   </Container>
 );
