@@ -3,17 +3,20 @@ import { useClipboard } from '@/hooks/useClipboard';
 import React from 'react';
 import { Button } from './button';
 import { CopyIcon, CheckIcon } from '@radix-ui/react-icons';
+import { cn } from '@/lib/utils';
 type CopyToClipboardButtonProps = {
   duration: number;
   text: string;
+  className?: string;
 };
 const CopyToClipButton = ({
   text,
   duration = 2000,
+  className,
 }: CopyToClipboardButtonProps) => {
   const { onCopy, hasCopied } = useClipboard(duration);
   return (
-    <div onClick={() => onCopy(text)} className="h-fiit w-fit">
+    <div onClick={() => onCopy(text)} className={cn('h-fit w-fit', className)}>
       {hasCopied ? <SuccessButton /> : <CopyButtonIcon />}
     </div>
   );
