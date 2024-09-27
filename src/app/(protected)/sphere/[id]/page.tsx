@@ -1,5 +1,4 @@
 import FeedbackContainer from '../_features/FeedbackContainer';
-import SphereDetailsHero from '../_features/SphereDetailsHero';
 
 type SphereProps = {
   params: {
@@ -10,7 +9,6 @@ type SphereProps = {
 const Sphere = ({ params }: SphereProps) => {
   return (
     <>
-      <SphereDetailsHero sphereId={params.id} />
       <FeedbackContainer sphereId={params.id} />
     </>
   );

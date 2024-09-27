@@ -54,11 +54,11 @@ const SphereDetailsHero = ({ sphereId }: SphereDetailsHeroParams) => {
           </div>
           <div className="">
             <p className="mb-1 text-xs font-medium">Live link</p>
-            <SphereLink link={getAbsoutePath(`/whisper/${sphere._id}`)} />
+            <SphereLink link={getAbsoutePath(`whisper/${sphere._id}`)} />
           </div>
         </div>
         <SpherePreview
-          url={getAbsoutePath(`/whisper/${sphere._id}`)}
+          url={getAbsoutePath(`whisper/${sphere._id}`)}
           title={sphere.title}
           description={sphere.description}
           showSuggestionToUser={sphere.showSuggestionToUser}
