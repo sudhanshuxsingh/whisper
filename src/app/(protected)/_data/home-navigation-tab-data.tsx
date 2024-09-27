@@ -15,19 +15,27 @@ export const DASHBOARD_HOME_TAB_LIST = [
 
 export const DASHBOARD_HOME_TAB_LIST_SPHERE = [
   {
-    content: 'Overview',
-    href: '/overview',
-  },
-  {
     content: 'Sphere',
-    href: '/sphere',
+    href: '/sphere/[id]',
   },
   {
     content: 'Analytics',
-    href: '/analytics',
+    href: '/sphere/[id]/analytics',
   },
   {
-    content: 'User Guide',
-    href: '/user-guide',
+    content: 'API',
+    href: '/sphere/[id]/api',
+  },
+  {
+    content: 'Web Embedd',
+    href: '/sphere/[id]/embedd',
+  },
+  {
+    content: 'Primitive Component',
+    href: '/sphere/[id]/component',
+  },
+  {
+    content: 'Settings',
+    href: '/sphere/[id]/settings',
   },
 ];
