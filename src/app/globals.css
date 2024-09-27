@@ -34,6 +34,7 @@
     --text-gradient-start:0, 0, 0, 1;
     --text-gradient-end:176, 177, 197, 1;
     text-rendering: geometricPrecision;
+    --from: 100% 0 0 0;
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -64,6 +65,7 @@
     --home-page-gradient-color: 120, 119, 198, .3;
     --text-gradient-start: 255, 255, 255, 1;
     --text-gradient-end: 255, 255, 255, 0.38;
+    --from: 0 0 100% 0;
   }
   .grid-cols-header {
     grid-template-columns: 1fr max-content 1fr;
@@ -106,5 +108,30 @@
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
     --tw-shadow-color: hsl(var(--primary-btn-shadow));
     --tw-shadow: var(--tw-shadow-colored);
+  }
+}
+::view-transition-group(root) {
+  animation-duration: 1.25s;
+}
+
+::view-transition-new(root),
+::view-transition-old(root) {
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: reveal .5s;
+  clip-path: inset(0 0 0 0);
+  z-index: 2;
+  pointer-events: none;
+}
+::view-transition-old(root) {
+  z-index: -1;
+  animation: none;
+}
+
+@keyframes reveal {
+  from {
+    clip-path: inset(var(--from));
   }
 }
