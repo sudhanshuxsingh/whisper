@@ -10,3 +10,11 @@ export type SphereProps = {
   createdAt: Date;
   type: 'message' | 'feedback';
 };
+
+export type UpdateSphereProps = {
+  title?: string;
+  description?: string;
+  showSuggestionToUser?: boolean;
+  isAccepringMessage?: boolean;
+  type?: 'message' | 'feedback';
+};
