@@ -1,5 +1,7 @@
 import Container from '@/components/ui/container';
 import { Hero, HeroSubtitle, HeroTitle } from './_features/Hero';
+import HeroImage from './_features/HeroImage';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   return (
@@ -15,6 +17,13 @@ export default function Home() {
             <br className="hidden md:block" />
             integrate seamlessly into your website or app.
           </HeroSubtitle>
+          <Button
+            variant="primary"
+            className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:600ms]"
+          >
+            Get Started
+          </Button>
+          <HeroImage />
         </Hero>
       </Container>
     </main>

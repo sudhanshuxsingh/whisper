@@ -91,10 +91,6 @@
     color: transparent;
   }
 
-  .bg-page-gradient {
-    background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(var(--home-page-gradient-color)), transparent);
-  }
-
   .mask-radial-faded {
     mask-image: radial-gradient(circle at center center, black, transparent 80%)
   }

@@ -94,6 +94,24 @@ const config: Config = {
             transform: 'scale(0.98)',
           },
         },
+        'sketch-lines': {
+          '0%': { 'stroke-dashoffset': '1' },
+          '50%': { 'stroke-dashoffset': '0' },
+          '99%': { 'stroke-dashoffset': '0' },
+          '100%': { visiblity: 'hidden' },
+        },
+        'glow-line-horizontal': {
+          '0%': { opacity: '0', transform: 'translateX(0)' },
+          '5%': { opacity: '1', transform: 'translateX(0)' },
+          '90%': { opacity: '1' },
+          '100%': { opacity: '0', transform: 'translateX(min(60vw, 45rem))' },
+        },
+        'glow-line-vertical': {
+          '0%': { opacity: '0', transform: 'translateY(0)' },
+          '5%': { opacity: '1', transform: 'translateY(0)' },
+          '90%': { opacity: '1' },
+          '100%': { opacity: '0', transform: 'translateY(min(21vw, 45rem))' },
+        },
       },
       animation: {
         'caret-blink': 'caret-blink 1.25s ease-out infinite',
@@ -118,9 +136,29 @@ const config: Config = {
       boxShadow: {
         primary: 'rgb(80 63 205 / 50%) 0px 1px 40px',
       },
+      backgroundImage: {
+        'hero-gradient':
+          'radial-gradient(ellipse 50% 80% at 20% 40%,rgba(93,52,221,0.1),transparent), radial-gradient(ellipse 50% 80% at 80% 50%,rgba(120,119,198,0.15),transparent)',
+        'page-gradient':
+          'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(var(--home-page-gradient-color)), transparent);',
+        'hero-glow':
+          'conic-gradient(from 230.29deg at 51.63% 52.16%, rgb(36, 0, 255) 0deg, rgb(0, 135, 255) 67.5deg, rgb(108, 39, 157) 198.75deg, rgb(24, 38, 163) 251.25deg, rgb(54, 103, 196) 301.88deg, rgb(105, 30, 255) 360deg)',
+        'glow-lines':
+          'linear-gradient(var(--direction),#9d9bf2 0.43%,#7877c6 14.11%,rgba(120,119,198,0) 62.95%)',
+        'radial-faded':
+          'radial-gradient(circle at bottom center,var(--color),transparent 70%)',
+        'glass-gradient':
+          'linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.05) 100%)',
+      },
+      transitionDelay: {
+        '2000': '2000ms',
+        '680': '680ms',
+        '650': '650ms',
+      },
     },
   },
   plugins: [
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     require('tailwindcss-animate'),
     function ({ addUtilities }: PluginAPI) {
       addUtilities({
