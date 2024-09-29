@@ -1,4 +1,4 @@
-import { getAISuggestions } from '@/lib/actions/ai.actions';
+import { getAISuggestionsAction } from '@/lib/actions/ai.actions';
 import { ToastAction } from '@radix-ui/react-toast';
 import { useToast } from '@/hooks/use-toast';
 import MagicIcon from '@/components/ui/MagicIcon';
@@ -24,7 +24,11 @@ const AISuggestion = ({
   const populateSuggestions = async () => {
     try {
       setLoading(true);
-      const { object } = await getAISuggestions(title, description, partial);
+      const { object } = await getAISuggestionsAction(
+        title,
+        description,
+        partial
+      );
       for await (const partialObject of readStreamableValue(object)) {
         if (partialObject) {
           setAISuggetions(partialObject?.message);

@@ -4,7 +4,7 @@ import React from 'react';
 import FeedbackCard from './FeedbackCard';
 import { useQuery } from '@tanstack/react-query';
 import { FeedbackPaginatedResponse } from '@/types/feedback.types';
-import { getAllFeedback } from '@/lib/actions/feedback.actions';
+import { getAllFeedbackAction } from '@/lib/actions/feedback.actions';
 import { useSearchParams } from 'next/navigation';
 import Pagination from '@/components/ui/Pagination';
 import EmptyFeedback from './EmptyFeedback';
@@ -19,7 +19,7 @@ const FeedbackContainer = ({ sphereId }: FeedbackContainerProps) => {
     queryKey: [`feedback`, { sphereId, currentPageNumber }],
     queryFn: async (): Promise<FeedbackPaginatedResponse> => {
       console.log({ currentPageNumber });
-      return await getAllFeedback({
+      return await getAllFeedbackAction({
         page: Number(currentPageNumber),
         pageSize: FEEDBACK_PAGE_SIZE,
         sphereId,

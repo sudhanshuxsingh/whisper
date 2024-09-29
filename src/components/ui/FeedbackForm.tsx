@@ -19,7 +19,7 @@ import { ReloadIcon } from '@radix-ui/react-icons';
 import { Textarea } from '@/components/ui/textarea';
 import AISuggestion from '@/components/ui/AISuggestion';
 import { useMutation } from '@tanstack/react-query';
-import { submitFeedback } from '@/lib/actions/feedback.actions';
+import { submitFeedbackAction } from '@/lib/actions/feedback.actions';
 import { FeedbackSubmissionProps } from '@/types/feedback.types';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@radix-ui/react-toast';
@@ -46,7 +46,7 @@ const FeedbackForm = ({
   const router = useRouter();
   const { mutate, isPending } = useMutation({
     mutationFn: (values: FeedbackSubmissionProps) => {
-      return submitFeedback(values);
+      return submitFeedbackAction(values);
     },
   });
   const { toast } = useToast();
