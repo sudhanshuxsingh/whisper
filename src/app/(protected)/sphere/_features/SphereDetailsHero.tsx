@@ -18,7 +18,7 @@ const SphereDetailsHero = ({ sphereId }: SphereDetailsHeroParams) => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: [`sphere-${sphereId}`],
+    queryKey: [`sphere`, sphereId],
     queryFn: async (): Promise<SphereProps> => {
       return await getSphereAction(sphereId);
     },
