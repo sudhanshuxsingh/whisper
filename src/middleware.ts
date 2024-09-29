@@ -2,8 +2,8 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 
 const isAuthRoute = createRouteMatcher(['/sign-in', '/sign-up', '/sso']);
-const isPublicRoute = createRouteMatcher(['/whisper', '/']);
-const isPublicApiRoutes = createRouteMatcher(['/api/whisper']);
+const isPublicRoute = createRouteMatcher(['/whisper/:path', '/']);
+const isPublicApiRoutes = createRouteMatcher(['/api/:path*']);
 
 export default clerkMiddleware((auth, req) => {
   const { userId } = auth();
