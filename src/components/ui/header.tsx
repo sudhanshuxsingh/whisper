@@ -132,7 +132,7 @@ export const HeaderSheet = ({
       <Button
         variant="ghost"
         size="icon"
-        className={cn('shrink-0 lg:hidden', className)}
+        className={cn('shrink-0 md:hidden', className)}
       >
         <HamburgerMenuIcon className="h-5 w-5" />
         <span className="sr-only">Toggle navigation menu</span>
