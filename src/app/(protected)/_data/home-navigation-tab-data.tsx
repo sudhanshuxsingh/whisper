@@ -19,10 +19,6 @@ export const DASHBOARD_HOME_TAB_LIST_SPHERE = [
     href: '/sphere/[id]',
   },
   {
-    content: 'Analytics',
-    href: '/sphere/[id]/analytics',
-  },
-  {
     content: 'API',
     href: '/sphere/[id]/api',
   },
