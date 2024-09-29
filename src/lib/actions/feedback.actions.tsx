@@ -10,13 +10,17 @@ import {
 import { auth } from '@clerk/nextjs/server';
 import mongoose from 'mongoose';
 import { SphereProps } from '@/types/sphere.types';
+import { feedbackSchema } from '@/schema/feedbackSchema';
 
-export async function submitFeedback(request: FeedbackSubmissionProps) {
+export async function submitFeedbackAction(request: FeedbackSubmissionProps) {
   try {
+    const { sphereId: sphere, ...feedbackPayload } = request;
+    const parsedFeedbackPayload =
+      await feedbackSchema.parseAsync(feedbackPayload);
     await dbConnect();
     const requestPayload = {
-      ...request,
-      sphere: new mongoose.Types.ObjectId(request.sphereId),
+      ...parsedFeedbackPayload,
+      sphere: new mongoose.Types.ObjectId(sphere),
     };
     console.log(requestPayload);
     const feedback = await FeedbackModel.create(requestPayload);
@@ -27,7 +31,7 @@ export async function submitFeedback(request: FeedbackSubmissionProps) {
   }
 }
 
-export async function getAllFeedback({
+export async function getAllFeedbackAction({
   page = 1,
   pageSize = 10,
   sphereId,
@@ -57,7 +61,24 @@ export async function getAllFeedback({
       feedbacks: JSON.parse(JSON.stringify(feedbacks)),
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw new Error('Failed to fetch feedbacks');
+  }
+}
+
+export async function deleteFeedbackAction(feedbackId: string) {
+  try {
+    const { userId }: { userId: string | null } = auth();
+    if (!userId) {
+      throw Error('Unauthenticated User');
+    }
+    await dbConnect();
+    await FeedbackModel.findByIdAndDelete(feedbackId);
+    return {
+      message: 'Feedback deleted successfully',
+    };
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to delete feedback');
   }
 }
