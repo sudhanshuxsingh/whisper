@@ -10,12 +10,21 @@ const randomNumberBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-interface Line {
+const directions = ['to top', 'to left', 'to right', 'to bottom'];
+
+const randomDirection = (): Direction => {
+  const index = Math.floor(Math.random() * 4);
+  return directions[index] as Direction;
+};
+
+type Direction = 'to top' | 'to left' | 'to right' | 'to bottom';
+
+type Line = {
   id: string;
-  direction: 'to top' | 'to left';
+  direction: Direction;
   size: number;
   duration: number;
-}
+};
 
 const HeroImage = () => {
   const ref = useRef(null);
@@ -38,30 +47,31 @@ const HeroImage = () => {
         setLines((lines) => [
           ...lines,
           {
-            direction: Math.random() > 0.5 ? 'to top' : 'to left',
+            direction: randomDirection(),
             duration: randomNumberBetween(1300, 3500),
             size: randomNumberBetween(10, 30),
             id: Math.random().toString(36).substring(7),
           },
         ]);
 
-        renderLine(randomNumberBetween(800, 2500));
+        renderLine(randomNumberBetween(700, 2000));
       }, timeout);
     };
 
-    renderLine(randomNumberBetween(800, 1300));
+    renderLine(randomNumberBetween(600, 1300));
 
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, [isInView, setLines]);
+
   return (
     <div className="mt-24 [perspective:2000px]" ref={ref}>
       <div
         className={cn(
-          'relative rounded-md border border-secondary/50 bg-white bg-opacity-[0.01] bg-hero-gradient before:transition-opacity',
+          'relative rounded-md border bg-white bg-opacity-[0.01] bg-hero-gradient before:transition-opacity dark:border-secondary/50',
           isInView ? 'animate-image-rotate' : '[transform:rotateX(30deg)]',
-          'before:absolute before:left-0 before:top-0 before:z-[11] before:h-full before:w-full before:bg-hero-glow before:opacity-10 before:[filter:blur(120px)]',
+          'before:absolute before:left-0 before:top-0 before:z-[11] before:h-full before:w-full before:bg-hero-glow before:opacity-5 before:[filter:blur(120px)]',
           !isInView && 'before:opacity-20'
         )}
       >
@@ -82,7 +92,11 @@ const HeroImage = () => {
                 line.direction === 'to left' &&
                   `left-0 h-[1px] w-[calc(var(--size)*0.5rem)] animate-glow-line-horizontal md:w-[calc(var(--size)*1rem)]`,
                 line.direction === 'to top' &&
-                  `right-0 h-[calc(var(--size)*0.5rem)] w-[1px] animate-glow-line-vertical md:h-[calc(var(--size)*1rem)]`
+                  `right-0 h-[calc(var(--size)*0.5rem)] w-[1px] animate-glow-line-vertical md:h-[calc(var(--size)*1rem)]`,
+                line.direction === 'to bottom' &&
+                  `bottom-0 left-0 h-[calc(var(--size)*0.5rem)] w-[1px] animate-glow-line-vertical-reverse md:h-[calc(var(--size)*1rem)]`,
+                line.direction === 'to right' &&
+                  `bottom-0 top-[99.9%] h-[1px] w-[calc(var(--size)*0.5rem)] animate-glow-line-horizontal-reverse md:w-[calc(var(--size)*1rem)]`
               )}
             />
           ))}

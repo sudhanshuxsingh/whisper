@@ -121,8 +121,12 @@ const config: Config = {
         'sketch-lines': 'sketch-lines 1200ms ease-out forwards',
         'glow-line-horizontal':
           'glow-line-horizontal var(--animation-duration) ease-in forwards',
+        'glow-line-horizontal-reverse':
+          'glow-line-horizontal var(--animation-duration) ease-in forwards reverse',
         'glow-line-vertical':
           'glow-line-vertical var(--animation-duration) ease-in forwards',
+        'glow-line-vertical-reverse':
+          'glow-line-vertical var(--animation-duration) ease-in forwards reverse',
         zap: 'zap 2250ms calc(var(--index) * 20ms) linear infinite',
         bounce: '240ms ease 0s 1 running bounce',
       },
