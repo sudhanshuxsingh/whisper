@@ -4,6 +4,7 @@ import React from 'react';
 import { Button } from './button';
 import { CopyIcon, CheckIcon } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
+import confetti from 'canvas-confetti';
 type CopyToClipboardButtonProps = {
   duration: number;
   text: string;
@@ -15,8 +16,25 @@ const CopyToClipButton = ({
   className,
 }: CopyToClipboardButtonProps) => {
   const { onCopy, hasCopied } = useClipboard(duration);
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (!hasCopied) {
+      const rect = event.currentTarget.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      confetti({
+        angle: 10,
+        gravity: 0.8,
+        scalar: 0.6,
+        origin: {
+          x: x / window.innerWidth,
+          y: y / window.innerHeight,
+        },
+      });
+    }
+    onCopy(text);
+  };
   return (
-    <div onClick={() => onCopy(text)} className={cn('h-fit w-fit', className)}>
+    <div onClick={handleClick} className={cn('h-fit w-fit', className)}>
       {hasCopied ? <SuccessButton /> : <CopyButtonIcon />}
     </div>
   );
