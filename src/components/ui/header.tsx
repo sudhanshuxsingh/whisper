@@ -17,10 +17,10 @@ import { ThemeSwitcher } from './theme-switcher';
 const Header = () => {
   const { userId } = auth();
   return (
-    <header className="dark:border-dark-border absolute left-0 top-0 z-[100] flex w-full flex-col border-b border-border/90 bg-transparent backdrop-blur supports-[backdrop-filter]:bg-transparent">
+    <header className="dark:border-dark-border fixed left-0 top-0 z-[100] flex w-full flex-col border-b border-border/90 bg-transparent backdrop-blur supports-[backdrop-filter]:bg-transparent">
       <div className="flex h-[--header-height]">
         <Container className="flex w-full items-center justify-between px-6">
-          <nav className="relative z-[1] flex">
+          <nav className="relative z-[1] flex items-center">
             <Logo />
             <ul className="hidden flex-1 justify-center gap-0.5 px-4 md:flex lg:flex-row">
               {MENU_ITEM_LIST.map(({ content, href }) => (
@@ -56,7 +56,7 @@ const Header = () => {
                 'Get Started Today'
               ) : (
                 <>
-                  <span>Get Started</span>
+                  <span className="text-sm">Get Started</span>
                   <ArrowRightIcon />
                 </>
               )}
@@ -82,7 +82,7 @@ export const MenuItem = ({ content, href, className }: MenuItemPropsType) => {
     <Link
       href={href}
       className={cn(
-        'ring-control inline-flex h-6 shrink-0 items-center justify-center gap-1 rounded-full px-3 pb-px text-sm tracking-tight text-primary/80 outline-none outline-0 hover:bg-secondary hover:text-primary focus-visible:ring-2 lg:h-7',
+        'ring-control inline-flex h-6 shrink-0 items-center justify-center gap-1 rounded-full px-3 pb-px text-sm tracking-tight text-primary outline-none outline-0 hover:bg-secondary/20 hover:text-primary/80 focus-visible:ring-2 lg:h-7',
         className
       )}
     >
