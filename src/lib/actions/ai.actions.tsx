@@ -8,14 +8,14 @@ type AISuggestionActionResponse = {
   message: string;
 };
 
-export async function getAISuggestions(
+export async function getAISuggestionsAction(
   title: string,
   description: string,
   partial: string
 ): Promise<{
   object: StreamableValue<AISuggestionActionResponse>;
 }> {
-  const prompt = `Generate/complete a feedbak/message for an annonymus feedback form with the title ${title} and desription ${description}. User have already filled a partial text - ${partial}`;
+  const prompt = `Generate/complete a feedbak/message for an annonymus feedback form with the title ${title} and desription ${description}. User may have already filled a partial text - ${partial ?? ''}`;
   const stream = createStreamableValue();
 
   (async () => {
