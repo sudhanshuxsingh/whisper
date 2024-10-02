@@ -112,6 +112,14 @@ const config: Config = {
           '90%': { opacity: '1' },
           '100%': { opacity: '0', transform: 'translateY(min(21vw, 45rem))' },
         },
+        lightning: {
+          '0%, 9%, 11%, 100% ': {
+            fill: 'transparent',
+          },
+          '10%': {
+            fill: 'white',
+          },
+        },
       },
       animation: {
         'caret-blink': 'caret-blink 1.25s ease-out infinite',
@@ -127,7 +135,7 @@ const config: Config = {
           'glow-line-vertical var(--animation-duration) ease-in forwards',
         'glow-line-vertical-reverse':
           'glow-line-vertical var(--animation-duration) ease-in forwards reverse',
-        zap: 'zap 2250ms calc(var(--index) * 20ms) linear infinite',
+        lightning: 'lightning 2250ms calc(var(--index) * 20ms) linear infinite',
         bounce: '240ms ease 0s 1 running bounce',
       },
       maxWidth: {
@@ -150,9 +158,7 @@ const config: Config = {
         'glow-lines':
           'linear-gradient(var(--direction),#9d9bf2 0.43%,#7877c6 14.11%,rgba(120,119,198,0) 62.95%)',
         'radial-faded':
-          'radial-gradient(circle at bottom center,var(--color),transparent 70%)',
-        'glass-gradient':
-          'linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.05) 100%)',
+          'radial-gradient(circle at bottom center,rgba(var(--home-page-gradient-color)),transparent 70%)',
       },
       transitionDelay: {
         '2000': '2000ms',

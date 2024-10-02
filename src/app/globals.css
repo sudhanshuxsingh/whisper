@@ -105,6 +105,9 @@
     --tw-shadow-color: hsl(var(--primary-btn-shadow));
     --tw-shadow: var(--tw-shadow-colored);
   }
+  .mask-image {
+    mask-image: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.57) 33.98%, black 100%);
+  }
 }
 ::view-transition-group(root) {
   animation-duration: 1.25s;
@@ -130,4 +133,23 @@
   from {
     clip-path: inset(var(--from));
   }
+}
+@keyframes flash-code {
+  0% {
+    background-color: rgb(125 211 252 / 0.1);
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+.animate-flash-code-slow {
+  animation: flash-code 2s forwards;
+}
+
+.code-highlight {
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.1875rem;
+  margin: 0 -0.1875rem;
 }
