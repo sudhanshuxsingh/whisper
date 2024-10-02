@@ -29,7 +29,7 @@ type Line = {
 const HeroImage = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, {
-    amount: 0.7,
+    amount: 0.5,
     once: true,
   });
   const [lines, setLines] = useState<Line[]>([]);
@@ -71,8 +71,7 @@ const HeroImage = () => {
         className={cn(
           'relative rounded-md border bg-white bg-opacity-[0.01] bg-hero-gradient before:transition-opacity dark:border-secondary/50',
           isInView ? 'animate-image-rotate' : '[transform:rotateX(30deg)]',
-          'before:absolute before:left-0 before:top-0 before:z-[11] before:h-full before:w-full before:bg-hero-glow before:opacity-5 before:[filter:blur(120px)]',
-          !isInView && 'before:opacity-20'
+          'before:absolute before:left-0 before:top-0 before:z-[11] before:h-full before:w-full before:bg-hero-glow before:opacity-5 before:[filter:blur(120px)]'
         )}
       >
         <div className="absolute left-0 top-0 z-20 h-full w-full overflow-hidden">
