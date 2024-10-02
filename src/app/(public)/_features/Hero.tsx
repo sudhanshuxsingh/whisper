@@ -22,7 +22,7 @@ export const HeroSubtitle = ({ children, className }: HeroElementProps) => {
   return (
     <p
       className={cn(
-        '-text text-md mb-12 text-muted-foreground md:text-lg',
+        'text-md mb-12 text-muted-foreground md:text-lg',
         className
       )}
     >
