@@ -1,31 +1,27 @@
 import Container from '@/components/ui/container';
-import { Hero, HeroSubtitle, HeroTitle } from './_features/Hero';
-import HeroImage from './_features/HeroImage';
-import { Button } from '@/components/ui/button';
+import BuildToolShowCase from './_sections/home/BuildToolShowCase';
+import LandingHero from './_sections/home/LandingHero';
+import StarIllustration from '@/components/illutstration/star';
+import { cn } from '@/lib/utils';
+import UnlockFeedback from './_sections/home/UnlockFeedback';
 
 export default function Home() {
   return (
-    <main className="bg-page-gradient">
-      <Container className="flex flex-col gap-4 pt-16">
-        <Hero className="grid place-items-center py-12">
-          <HeroTitle className="translate-y-[-1rem] animate-fade-in tracking-tighter opacity-0 [--animation-delay:200ms]">
-            Go-to platform for anonymous
-            <br className="hidden md:block" /> feedback collection
-          </HeroTitle>
-          <HeroSubtitle className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:400ms]">
-            Organize feedback with spheres, get AI-driven suggestions, and{' '}
-            <br className="hidden md:block" />
-            integrate seamlessly into your website or app.
-          </HeroSubtitle>
-          <Button
-            variant="primary"
-            className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:600ms]"
-          >
-            Get Started
-          </Button>
-          <HeroImage />
-        </Hero>
+    <main className="dark:bg-page-gradient">
+      <LandingHero />
+      <BuildToolShowCase />
+      <Container>
+        <div
+          className={cn(
+            'mask-radial-faded pointer-events-none relative z-[-1] -my-72 h-[60rem] overflow-hidden',
+            '[--home-page-gradient-color:120,_119,_198,_1] before:absolute before:inset-0 before:bg-radial-faded before:opacity-[0.4]',
+            'after:absolute after:-left-1/2 after:top-1/2 after:h-[142.8%] after:w-[200%] after:rounded-[50%] after:border-t after:border-[rgba(120,_119,_198,_0.4)] after:bg-background'
+          )}
+        >
+          <StarIllustration />
+        </div>
       </Container>
+      <UnlockFeedback />
     </main>
   );
 }
