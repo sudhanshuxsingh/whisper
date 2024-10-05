@@ -15,7 +15,7 @@ const UnlockFeedback = () => {
       <p className="text-md mt-4 text-center text-muted-foreground md:text-xl">
         Experience Seamless Integration for Effortless User Engagement.
       </p>
-      <div className="my-14 grid grid-cols-3 gap-6 [--home-page-gradient-color:120,_119,_198,_0.1]">
+      <div className="mt-14 grid grid-cols-3 gap-6 [--home-page-gradient-color:120,_119,_198,_0.1]">
         <div className="relative col-span-2 flex h-[28rem] flex-col items-center overflow-hidden rounded-xl border bg-secondary/10 bg-gradient-to-tr from-transparent p-8 text-center after:absolute dark:to-[rgba(var(--home-page-gradient-color))]">
           <div className="absolute top-[38%] -z-[2] h-full w-[120%] from-transparent to-primary">
             <Browser
