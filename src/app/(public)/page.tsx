@@ -4,10 +4,11 @@ import LandingHero from './_sections/home/LandingHero';
 import StarIllustration from '@/components/illutstration/star';
 import { cn } from '@/lib/utils';
 import UnlockFeedback from './_sections/home/UnlockFeedback';
+import WhyWhisper from './_sections/home/WhyWhisper';
 
 export default function Home() {
   return (
-    <main className="dark:bg-page-gradient">
+    <main className="">
       <LandingHero />
       <BuildToolShowCase />
       <Container>
@@ -21,7 +22,10 @@ export default function Home() {
           <StarIllustration />
         </div>
       </Container>
-      <UnlockFeedback />
+      <div className="[background:linear-gradient(180deg,transparent,rgba(97,106,115,.12) 40%,rgba(97,106,115,.12) 60%,rgba(97,106,115,0))]">
+        <UnlockFeedback />
+      </div>
+      <WhyWhisper />
     </main>
   );
 }
