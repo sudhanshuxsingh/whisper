@@ -5,7 +5,7 @@ export const MENU_ITEM_LIST = [
   },
   {
     content: 'Changelog',
-    href: '/Changelog',
+    href: '/changelog',
   },
   {
     content: 'Case Study',
