@@ -5,6 +5,8 @@ import React, { Fragment, useMemo } from 'react';
 import { Highlight, Language, RenderProps, themes } from 'prism-react-renderer';
 import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
+import { CopyIcon } from '@radix-ui/react-icons';
+import { useClipboard } from '@/hooks/useClipboard';
 
 type CodeWindowProps = {
   children: React.ReactNode;
@@ -55,7 +57,7 @@ type CodeWindowCodeProps = {
   overflow?: boolean | 'x' | 'y';
   wrap?: boolean;
   className?: string;
-  code: string;
+  children: string;
   language: Language;
 };
 
@@ -64,7 +66,7 @@ export const CodeWindowCode = ({
   overflow = true,
   wrap = false,
   className,
-  code,
+  children,
   language,
 }: CodeWindowCodeProps) => {
   const { resolvedTheme } = useTheme();
@@ -80,7 +82,7 @@ export const CodeWindowCode = ({
       })}
     >
       <div className="relative w-full flex-auto">
-        <Highlight code={code} language={language} theme={theme}>
+        <Highlight code={children} language={language} theme={theme}>
           {({
             className,
             tokens,
@@ -138,3 +140,70 @@ export const CodeWindowCode = ({
   );
 };
 export default CodeWindow;
+
+const theme = {
+  plain: {
+    color: 'var(--gray12)',
+    fontSize: 12,
+    fontFamily: 'Menlo, monospace',
+  },
+  styles: [
+    {
+      types: ['comment'],
+      style: {
+        color: 'var(--gray9)',
+      },
+    },
+    {
+      types: ['atrule', 'keyword', 'attr-name', 'selector'],
+      style: {
+        color: 'var(--gray10)',
+      },
+    },
+    {
+      types: ['punctuation', 'operator'],
+      style: {
+        color: 'var(--gray9)',
+      },
+    },
+    {
+      types: ['class-name', 'function', 'tag'],
+      style: {
+        color: 'var(--gray12)',
+      },
+    },
+  ],
+};
+
+type CodeProps = {
+  children: string;
+  language: string;
+} & React.HTMLAttributes<HTMLElement>;
+
+export function Code({ children, language }: CodeProps) {
+  const { onCopy: copy } = useClipboard();
+  return (
+    <Highlight theme={theme} code={children} language={language}>
+      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+        <pre className={`${className} `} style={style}>
+          <button
+            aria-label="Copy Code"
+            onClick={() => {
+              copy(children);
+            }}
+          >
+            <CopyIcon />
+          </button>
+          {/* <div className={styles.shine} /> */}
+          {tokens.map((line, i) => (
+            <div key={i} {...getLineProps({ line, key: i })}>
+              {line.map((token, key) => (
+                <span key={i} {...getTokenProps({ token, key })} />
+              ))}
+            </div>
+          ))}
+        </pre>
+      )}
+    </Highlight>
+  );
+}

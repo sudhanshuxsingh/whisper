@@ -25,7 +25,9 @@ fetch("http://localhost:3000/api/v1/feedback", requestOptions)
 const APICodeBlock = () => {
   return (
     <CodeWindow>
-      <CodeWindowCode code={codeBlock} language="tsx" overflow={false} />
+      <CodeWindowCode language="tsx" overflow={false}>
+        {codeBlock}
+      </CodeWindowCode>
     </CodeWindow>
   );
 };
