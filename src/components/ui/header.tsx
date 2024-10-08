@@ -17,7 +17,7 @@ import { ThemeSwitcher } from './theme-switcher';
 const Header = () => {
   const { userId } = auth();
   return (
-    <header className="dark:border-dark-border fixed left-0 top-0 z-[100] flex w-full flex-col border-b border-border/90 bg-transparent backdrop-blur supports-[backdrop-filter]:bg-transparent">
+    <header className="dark:border-dark-border fixed left-0 top-0 z-[100] flex w-full flex-col border-b border-border/90 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-[--header-height]">
         <Container className="flex w-full items-center justify-between px-6">
           <nav className="relative z-[1] flex items-center">
