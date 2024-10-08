@@ -170,6 +170,8 @@ const config: Config = {
   plugins: [
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     require('tailwindcss-animate'),
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    require('@tailwindcss/typography'),
     function ({ addUtilities }: PluginAPI) {
       addUtilities({
         '.no-scrollbar': {
@@ -178,6 +180,26 @@ const config: Config = {
           '&::-webkit-scrollbar': {
             display: 'none',
           },
+        },
+        '.text-shadow': {
+          'text-shadow': 'rgb(0 0 0 / 56%) 0px 3px 12px',
+        },
+        '.text-gradient': {
+          background:
+            'linear-gradient(to right bottom, rgba(var(--text-gradient-start)) 30%, rgba(var(--text-gradient-end)))',
+          'background-clip': 'text',
+          color: 'transparent',
+        },
+        '.mask-radial-faded': {
+          'mask-image':
+            'radial-gradient(circle at center center, black, transparent 80%)',
+        },
+        '.mask-linear-faded': {
+          'mask-image': 'linear-gradient(black, transparent 70%)',
+        },
+        '.mask-image': {
+          'mask-image':
+            'linear-gradient(transparent 0%, rgba(0, 0, 0, 0.57) 33.98%, black 100%)',
         },
       });
     },

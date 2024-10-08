@@ -30,9 +30,9 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --header-height: 64px;
-    --home-page-gradient-color:120, 119, 198, .3;
-    --text-gradient-start:0, 0, 0, 1;
-    --text-gradient-end:176, 177, 197, 1;
+    --home-page-gradient-color: 120, 119, 198, 0.3;
+    --text-gradient-start: 0, 0, 0, 1;
+    --text-gradient-end: 176, 177, 197, 1;
     text-rendering: geometricPrecision;
     --from: 100% 0 0 0;
   }
@@ -62,7 +62,7 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --home-page-gradient-color: 120, 119, 198, .3;
+    --home-page-gradient-color: 120, 119, 198, 0.3;
     --text-gradient-start: 255, 255, 255, 1;
     --text-gradient-end: 255, 255, 255, 0.38;
     --from: 0 0 100% 0;
@@ -81,32 +81,13 @@
   }
 }
 @layer utilities {
-  .text-shadow {
-    text-shadow: rgb(0 0 0 / 56%) 0px 3px 12px;
-  }
-
-  .text-gradient {
-    background: linear-gradient(to right bottom, rgba(var(--text-gradient-start)) 30%, rgba(var(--text-gradient-end)));
-    background-clip: text;
-    color: transparent;
-  }
-
-  .mask-radial-faded {
-    mask-image: radial-gradient(circle at center center, black, transparent 80%)
-  }
-
-  .mask-linear-faded {
-    mask-image: linear-gradient(black, transparent 70%)
-  }
-  .shadow-primary-btn{
+  .shadow-primary-btn {
     --tw-shadow: rgb(80 63 205 / 50%) 0px 1px 40px;
     --tw-shadow-colored: 0px 1px 40px var(--tw-shadow-color);
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+      var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
     --tw-shadow-color: hsl(var(--primary-btn-shadow));
     --tw-shadow: var(--tw-shadow-colored);
-  }
-  .mask-image {
-    mask-image: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.57) 33.98%, black 100%);
   }
 }
 ::view-transition-group(root) {
@@ -119,7 +100,7 @@
 }
 
 ::view-transition-new(root) {
-  animation: reveal .5s;
+  animation: reveal 0.5s;
   clip-path: inset(0 0 0 0);
   z-index: 2;
   pointer-events: none;
@@ -152,4 +133,13 @@
   border-radius: 0.25rem;
   padding: 0.125rem 0.1875rem;
   margin: 0 -0.1875rem;
+}
+
+.timeline-line {
+  background: linear-gradient(
+    to top,
+    #9d9bf2 0.43%,
+    #7877c6 14.11%,
+    rgba(120, 119, 198, 0) 62.95%
+  );
 }
