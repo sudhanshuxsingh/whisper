@@ -1,0 +1,48 @@
+---
+title: Improved Search Functionality
+slug: first-change
+date: 2023-10-05
+description: We've revamped the search feature to provide quicker and more precise results. Now, finding past conversations and important files is easier than ever. You can search by keyword, date, and file type for improved accuracy.
+metadata:
+  author: Sudhanshu Singh
+  tags: []
+cover: images/changelog-improved-search-functionality2.png
+---
+
+We have revamped the search feature to provide quicker and more precise results. Now, finding past conversations and important files is easier than ever. You can search by keyword, date, and file type for improved accuracy.
+
+## Key Improvements
+
+Our team has focused on three primary areas to enhance your search experience: speed, accuracy, and usability. By optimizing our search algorithms and adding new filtering options, we've significantly reduced the time it takes to find what you're looking for.
+
+```bash
+npx shadcn@latest add accordion
+```
+
+Add the following animations to your `tailwind.config.js` file:
+
+```js title="tailwind.config.js" {5-18}
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      keyframes: {
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+    },
+  },
+};
+```
+
+Hello second line here

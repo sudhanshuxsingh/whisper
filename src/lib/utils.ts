@@ -4,6 +4,7 @@ import qs from 'query-string';
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
 export function timeSince(date: Date | string): string {
   const now = new Date();
   const pastDate = new Date(date);
@@ -31,6 +32,7 @@ export function timeSince(date: Date | string): string {
 
   return rtf.format(0, 'second');
 }
+
 export function getAbsoutePath(partialPath: string) {
   const { protocol, host } = window.location;
   const fullPath = `${protocol}//${host}/${partialPath}`;
@@ -77,4 +79,12 @@ export function removeKeysFromQueryParams({
       skipNull: true,
     }
   );
+}
+
+export function formateDate(date: string | number): string {
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(new Date(date));
 }
