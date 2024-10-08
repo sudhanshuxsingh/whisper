@@ -36,8 +36,6 @@ const SphereDetailsHero = ({ sphereId }: SphereDetailsHeroParams) => {
     return 'undefined';
   }
 
-  console.log({ sphere });
-
   return (
     <div className="relative w-full border-b bg-secondary/10">
       <Container className="flex flex-col justify-between gap-12 py-10 sm:pb-16 sm:pt-12 lg:flex-row lg:gap-12 lg:pt-16">
