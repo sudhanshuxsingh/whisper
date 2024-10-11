@@ -44,7 +44,7 @@ const ChangSphereOtherConfig = ({
               control={form.control}
               name="isAcceptingMessage"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md shadow">
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                   <FormControl>
                     <Checkbox
                       checked={field.value}
@@ -65,7 +65,7 @@ const ChangSphereOtherConfig = ({
               control={form.control}
               name="showSuggestionToUser"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md shadow">
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                   <FormControl>
                     <Checkbox
                       checked={field.value}
