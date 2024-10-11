@@ -1,5 +1,4 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import Card from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -21,7 +20,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { modifySphereAction } from '@/lib/actions/sphere.actions';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@/components/ui/toast';
-import { ReloadIcon } from '@radix-ui/react-icons';
+import SaveChangesButton from './SaveChangesButton';
 
 type ChangeSphereDescriptionProps = {
   description: string;
@@ -47,7 +46,6 @@ const ChangeSphereDescription = ({
     },
   });
   const onSubmit = (value: z.infer<typeof sphereDescriptionSchema>) => {
-    console.log({ sphereDes: value });
     mutate(value, {
       onSuccess() {
         setIsProcessing(true);
@@ -101,12 +99,7 @@ const ChangeSphereDescription = ({
           </Card.Body>
           <Card.Footer className="flex items-center justify-between">
             <p>Please use 1k characters at maximum.</p>
-            <Button className="rounded" variant="primarySquare">
-              {(isPending || isProcessing) && (
-                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              Save
-            </Button>
+            <SaveChangesButton isLoading={isPending || isProcessing} />
           </Card.Footer>
         </form>
       </Form>
