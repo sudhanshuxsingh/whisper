@@ -35,7 +35,7 @@ const SphereConfiguration = () => {
   }
   return (
     <Container className="my-8 mb-24 grid max-w-6xl gap-8">
-      <ChangeSphereType type={data.type} />
+      <ChangeSphereType type={data.type} id={id as string} />
       <ChangeSphereTitle title={data.title} id={id as string} />
       <ChangeSphereDescription
         description={data.description}

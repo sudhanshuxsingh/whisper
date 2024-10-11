@@ -1,5 +1,4 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import Card from '@/components/ui/card';
 import { z } from 'zod';
 import {
@@ -10,9 +9,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import React from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { sphereTypeSchema } from '@/schema/sphereSchema';
+import { sphereTypeSchema, updateSphereSchema } from '@/schema/sphereSchema';
 import {
   Form,
   FormField,
@@ -21,12 +20,26 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useToast } from '@/hooks/use-toast';
+import { modifySphereAction } from '@/lib/actions/sphere.actions';
+import { ToastAction } from '@/components/ui/toast';
+import SaveChangesButton from './SaveChangesButton';
 
 type ChangeSphereTypeProps = {
   type: 'message' | 'feedback';
+  id: string;
 };
 
-const ChangeSphereType = ({ type }: ChangeSphereTypeProps) => {
+const ChangeSphereType = ({ type, id }: ChangeSphereTypeProps) => {
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (payload: z.infer<typeof updateSphereSchema>) => {
+      return await modifySphereAction(id, payload);
+    },
+  });
+  const queryClient = useQueryClient();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof sphereTypeSchema>>({
     resolver: zodResolver(sphereTypeSchema),
     defaultValues: {
@@ -34,7 +47,33 @@ const ChangeSphereType = ({ type }: ChangeSphereTypeProps) => {
     },
   });
   const onSubmit = (value: z.infer<typeof sphereTypeSchema>) => {
-    console.log(value);
+    mutate(value, {
+      onSuccess() {
+        setIsProcessing(true);
+        queryClient.invalidateQueries({
+          queryKey: ['sphere', 'spheres', id],
+        });
+        setIsProcessing(false);
+        toast({
+          title: 'Type changed successfully.',
+        });
+      },
+      onError(error: Error) {
+        toast({
+          variant: 'destructive',
+          title: 'Uh oh! Something went wrong.',
+          description: error?.message,
+          action: (
+            <ToastAction
+              altText="Try again"
+              onClick={() => onSubmit(form.getValues())}
+            >
+              Try again
+            </ToastAction>
+          ),
+        });
+      },
+    });
   };
   return (
     <Card>
@@ -71,9 +110,7 @@ const ChangeSphereType = ({ type }: ChangeSphereTypeProps) => {
           </Card.Body>
           <Card.Footer className="flex items-center justify-between">
             <p>Please use feedback only if you want to recieve ratings</p>
-            <Button className="rounded" variant="primarySquare">
-              Save
-            </Button>
+            <SaveChangesButton isLoading={isPending || isProcessing} />
           </Card.Footer>
         </form>
       </Form>
