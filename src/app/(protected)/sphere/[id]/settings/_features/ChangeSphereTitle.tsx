@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+'use client';
 import Card from '@/components/ui/card';
 import {
   Form,
@@ -8,17 +8,31 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { sphereTitleSchema } from '@/schema/sphereSchema';
+import { ToastAction } from '@/components/ui/toast';
+import { useToast } from '@/hooks/use-toast';
+import { modifySphereAction } from '@/lib/actions/sphere.actions';
+import { sphereTitleSchema, updateSphereSchema } from '@/schema/sphereSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import SaveChangesButton from './SaveChangesButton';
 
 type ChangeSphereTitleProps = {
   title: string;
+  id: string;
 };
 
-const ChangeSphereTitle = ({ title }: ChangeSphereTitleProps) => {
+const ChangeSphereTitle = ({ title, id }: ChangeSphereTitleProps) => {
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (payload: z.infer<typeof updateSphereSchema>) => {
+      return await modifySphereAction(id, payload);
+    },
+  });
+  const queryClient = useQueryClient();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof sphereTitleSchema>>({
     resolver: zodResolver(sphereTitleSchema),
     defaultValues: {
@@ -26,7 +40,33 @@ const ChangeSphereTitle = ({ title }: ChangeSphereTitleProps) => {
     },
   });
   const onSubmit = (value: z.infer<typeof sphereTitleSchema>) => {
-    console.log(value);
+    mutate(value, {
+      onSuccess() {
+        setIsProcessing(true);
+        queryClient.invalidateQueries({
+          queryKey: ['sphere', 'spheres', id],
+        });
+        setIsProcessing(false);
+        toast({
+          title: 'Title changed successfully.',
+        });
+      },
+      onError(error: Error) {
+        toast({
+          variant: 'destructive',
+          title: 'Uh oh! Something went wrong.',
+          description: error?.message,
+          action: (
+            <ToastAction
+              altText="Try again"
+              onClick={() => onSubmit(form.getValues())}
+            >
+              Try again
+            </ToastAction>
+          ),
+        });
+      },
+    });
   };
   return (
     <Card>
@@ -53,9 +93,7 @@ const ChangeSphereTitle = ({ title }: ChangeSphereTitleProps) => {
           </Card.Body>
           <Card.Footer className="flex items-center justify-between">
             <p>Please use 200 characters at maximum.</p>
-            <Button className="rounded" variant="primarySquare">
-              Save
-            </Button>
+            <SaveChangesButton isLoading={isPending || isProcessing} />
           </Card.Footer>
         </form>
       </Form>
