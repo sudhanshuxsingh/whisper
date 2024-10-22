@@ -8,8 +8,7 @@ export const widgets: Registry = [
     files: [
       'feedback-01/FeedbackButton.tsx',
       'feedback-01/FeedbackForm.tsx',
-      'feedback-01/FeedbackIcon.tsx',
-      'feedback-01/FeedbackThankyou.tsx',
+      'feedback-01/Icons.tsx',
       'feedback-01/FeedbackWidget.tsx',
     ],
   },

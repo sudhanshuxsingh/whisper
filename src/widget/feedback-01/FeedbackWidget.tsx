@@ -7,15 +7,21 @@ import {
 } from '@/components/ui/popover';
 import FeedbackForm from './FeedbackForm';
 
-const FeedbackWidget = () => {
+const FeedbackWidget = ({
+  className,
+  apiKey,
+}: {
+  className?: string;
+  apiKey: string;
+}) => {
   return (
-    <div className="">
+    <div className={className}>
       <Popover>
         <PopoverTrigger asChild>
           <FeedbackButton />
         </PopoverTrigger>
         <PopoverContent>
-          <FeedbackForm />
+          <FeedbackForm apiKey={apiKey} />
         </PopoverContent>
       </Popover>
     </div>

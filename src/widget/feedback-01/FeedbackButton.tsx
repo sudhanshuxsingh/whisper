@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from '@/components/ui/button';
 import React from 'react';
-import FeedbackIcon from './FeedbackIcon';
+import { FeedbackIcon } from './Icons';
 import { cn } from '@/lib/utils';
 
 const FeedbackButton = ({
