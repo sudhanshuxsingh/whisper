@@ -1,5 +1,4 @@
 import { defineConfig, s, defineCollection } from 'velite';
-import rehypePreetyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 const changelog = defineCollection({
   name: 'changelog',
@@ -46,6 +45,23 @@ const userguide = defineCollection({
   }),
 });
 
+const apidoc = defineCollection({
+  name: 'apidoc',
+  pattern: 'api-doc.mdx',
+  schema: s
+    .object({
+      title: s.string().max(90),
+      slug: s.slug(),
+      date: s.isodate(),
+      metadata: s.object({
+        author: s.string().optional(),
+        tags: s.array(s.string()).optional(),
+      }),
+      content: s.mdx(),
+    })
+    .transform((data) => ({ ...data, permalink: `${data.slug}` })),
+});
+
 export default defineConfig({
   root: 'src/content',
   output: {
@@ -59,19 +75,20 @@ export default defineConfig({
     changelog,
     userguide,
     casestudy,
+    apidoc,
   },
   mdx: {
     rehypePlugins: [
       rehypeSlug,
-      [
-        rehypePreetyCode,
-        {
-          theme: {
-            dark: 'github-dark-dimmed',
-            light: 'github-light',
-          },
-        },
-      ],
+      // [
+      //   rehypePreetyCode,
+      //   {
+      //     theme: {
+      //       dark: 'github-dark-dimmed',
+      //       light: 'github-light',
+      //     },
+      //   },
+      // ],
     ],
     remarkPlugins: [],
   },
