@@ -40,3 +40,7 @@ next-env.d.ts
 
 #velite
 .velite
+
+#widget-build
+/public/feedback-widget/*
+/public/widget
