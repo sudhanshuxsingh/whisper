@@ -53,7 +53,7 @@ const Header = () => {
               href="/overview"
             >
               {!userId ? (
-                'Get Started Today'
+                'Get Started'
               ) : (
                 <>
                   <span className="text-sm">Get Started</span>
