@@ -1,49 +1,72 @@
 'use client';
 
-import React, { Fragment, useMemo } from 'react';
+import React, { forwardRef, Fragment, RefObject, useMemo, useRef } from 'react';
 
 import { Highlight, Language, RenderProps, themes } from 'prism-react-renderer';
 import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
-import { CopyIcon } from '@radix-ui/react-icons';
 import { useClipboard } from '@/hooks/useClipboard';
+import { CopyButtonIcon, SuccessButton } from './copy-to-clipboard-button';
 
 type CodeWindowProps = {
   children: React.ReactNode;
   className?: string;
   border?: boolean;
   bodyClassName?: string;
-};
+  codeWindowClassName?: string;
+} & CodeWindowCodeProps;
 
 const CodeWindow = ({
   children,
   className,
   border = true,
   bodyClassName,
+  language,
+  codeWindowClassName,
+  showLineNumbers = true,
 }: CodeWindowProps) => {
+  const ref = useRef<HTMLPreElement>(null);
+  const { onCopy, hasCopied } = useClipboard(1000);
+  const handleCopy = () => {
+    if (ref.current) {
+      const textToCopy = ref.current.innerText;
+      onCopy(textToCopy);
+    }
+  };
+
   return (
     <div
       className={cn(
-        'relative flex h-[31.625rem] max-h-[60vh] overflow-hidden bg-secondary shadow-xl dark:bg-secondary/40 dark:ring-1 dark:ring-inset dark:ring-primary/10 dark:backdrop-blur sm:max-h-[none] sm:rounded-md lg:h-[34.6875rem] xl:h-[31.625rem]',
+        'relative flex bg-secondary shadow-md dark:bg-secondary/10 dark:ring-1 dark:ring-inset dark:ring-primary/10 dark:backdrop-blur sm:rounded-md',
         className
       )}
     >
-      <div className="relative flex w-full flex-col">
-        <div className={cn('flex-none', border && 'border-b')}>
+      <div className="sticky top-0 flex w-full flex-col">
+        <div className={cn('flex items-center', border && 'border-b')}>
           <div className="flex h-9 items-center space-x-1.5 px-3">
             <div className="h-[0.6rem] w-[0.6rem] rounded-full bg-muted-foreground/20" />
             <div className="h-[0.6rem] w-[0.6rem] rounded-full bg-muted-foreground/20" />
             <div className="h-[0.6rem] w-[0.6rem] rounded-full bg-muted-foreground/20" />
           </div>
-          {/* <div className="h-px bg-gradient-to-r from-sky-300/0 via-sky-300/20 to-sky-300/0" /> */}
+          <div className="ml-auto mr-4" onClick={handleCopy}>
+            {hasCopied ? <SuccessButton /> : <CopyButtonIcon />}
+          </div>
         </div>
+        {/* <div className="h-px bg-gradient-to-r from-sky-300/0 via-sky-300/20 to-sky-300/0" /> */}
         <div
           className={cn(
             'relative flex min-h-0 flex-auto flex-col bg-background dark:bg-inherit',
             bodyClassName
           )}
         >
-          {children}
+          <CodeWindowCode
+            language={language ?? 'js'}
+            ref={ref}
+            className={codeWindowClassName}
+            showLineNumbers={showLineNumbers}
+          >
+            {children}
+          </CodeWindowCode>
         </div>
       </div>
     </div>
@@ -59,151 +82,96 @@ type CodeWindowCodeProps = {
   className?: string;
   children: string;
   language: Language;
+  ref?: RefObject<HTMLPreElement>;
 };
 
-export const CodeWindowCode = ({
-  showLineNumbers = true,
-  overflow = true,
-  wrap = false,
-  className,
-  children,
-  language,
-}: CodeWindowCodeProps) => {
-  const { resolvedTheme } = useTheme();
+export const CodeWindowCode = forwardRef<HTMLPreElement, CodeWindowCodeProps>(
+  (
+    {
+      showLineNumbers = true,
+      overflow = true,
+      wrap = false,
+      className,
+      children,
+      language,
+    },
+    ref
+  ) => {
+    const { resolvedTheme } = useTheme();
 
-  const theme = useMemo(() => {
-    return resolvedTheme === 'light' ? themes.vsLight : themes.dracula;
-  }, [resolvedTheme]);
+    const theme = useMemo(() => {
+      return resolvedTheme === 'light' ? themes.vsLight : themes.dracula;
+    }, [resolvedTheme]);
 
-  return (
-    <div
-      className={cn(className, 'flex min-h-0 w-full flex-auto', {
-        'overflow-auto': overflow === true || overflow === 'y',
-      })}
-    >
-      <div className="relative w-full flex-auto">
-        <Highlight code={children} language={language} theme={theme}>
-          {({
-            className,
-            tokens,
-            getLineProps,
-            getTokenProps,
-          }: RenderProps) => (
-            <pre
-              className={cn(
-                'flex min-h-full text-sm leading-6',
-                language && `language-${language}`,
-                className
-              )}
-            >
-              {showLineNumbers && (
-                <div
-                  aria-hidden="true"
-                  className="hidden w-[3.125rem] flex-none select-none py-4 pr-4 text-right text-slate-600 md:block"
-                >
-                  {Array.from({ length: tokens.length ?? 0 }).map((_, i) =>
-                    i === 0 ? (
-                      i + 1
-                    ) : (
-                      <Fragment key={i + 1}>
-                        <br />
-                        {i + 1}
-                      </Fragment>
-                    )
-                  )}
-                </div>
-              )}
-              <code
+    return (
+      <div
+        className={cn(
+          'flex h-[40rem] min-h-0 w-full flex-auto overflow-auto text-xs',
+          {
+            'overflow-auto': overflow === true || overflow === 'y',
+          },
+          className
+        )}
+      >
+        <div className="relative w-full flex-auto">
+          <Highlight code={children} language={language} theme={theme}>
+            {({
+              className,
+              tokens,
+              getLineProps,
+              getTokenProps,
+            }: RenderProps) => (
+              <pre
                 className={cn(
-                  'relative block flex-auto text-slate-50',
-                  {
-                    'overflow-auto': overflow === true || overflow === 'x',
-                    'whitespace-pre-wrap': wrap,
-                    'p-4': showLineNumbers,
-                  },
-                  language && `language-${language}`
+                  'flex min-h-full text-sm leading-6',
+                  language && `language-${language}`,
+                  className
                 )}
               >
-                {tokens.map((line, i) => (
-                  <div key={i} {...getLineProps({ line })}>
-                    {line.map((token, key) => {
-                      return <span key={key} {...getTokenProps({ token })} />;
-                    })}
+                {showLineNumbers && (
+                  <div
+                    aria-hidden="true"
+                    className="hidden w-[3.125rem] flex-none select-none py-4 pr-4 text-right text-slate-600 md:block"
+                  >
+                    {Array.from({ length: tokens.length ?? 0 }).map((_, i) =>
+                      i === 0 ? (
+                        i + 1
+                      ) : (
+                        <Fragment key={i + 1}>
+                          <br />
+                          {i + 1}
+                        </Fragment>
+                      )
+                    )}
                   </div>
-                ))}
-              </code>
-            </pre>
-          )}
-        </Highlight>
+                )}
+                <code
+                  className={cn(
+                    'relative block flex-auto text-slate-50',
+                    {
+                      'overflow-auto': overflow === true || overflow === 'x',
+                      'whitespace-pre-wrap': wrap,
+                      'p-4': showLineNumbers,
+                    },
+                    language && `language-${language}`
+                  )}
+                  ref={ref}
+                >
+                  {tokens.map((line, i) => (
+                    <div key={i} {...getLineProps({ line })}>
+                      {line.map((token, key) => {
+                        return <span key={key} {...getTokenProps({ token })} />;
+                      })}
+                    </div>
+                  ))}
+                </code>
+              </pre>
+            )}
+          </Highlight>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
+CodeWindowCode.displayName = 'CodeWindowCode';
 export default CodeWindow;
-
-const theme = {
-  plain: {
-    color: 'var(--gray12)',
-    fontSize: 12,
-    fontFamily: 'Menlo, monospace',
-  },
-  styles: [
-    {
-      types: ['comment'],
-      style: {
-        color: 'var(--gray9)',
-      },
-    },
-    {
-      types: ['atrule', 'keyword', 'attr-name', 'selector'],
-      style: {
-        color: 'var(--gray10)',
-      },
-    },
-    {
-      types: ['punctuation', 'operator'],
-      style: {
-        color: 'var(--gray9)',
-      },
-    },
-    {
-      types: ['class-name', 'function', 'tag'],
-      style: {
-        color: 'var(--gray12)',
-      },
-    },
-  ],
-};
-
-type CodeProps = {
-  children: string;
-  language: string;
-} & React.HTMLAttributes<HTMLElement>;
-
-export function Code({ children, language }: CodeProps) {
-  const { onCopy: copy } = useClipboard();
-  return (
-    <Highlight theme={theme} code={children} language={language}>
-      {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <pre className={`${className} `} style={style}>
-          <button
-            aria-label="Copy Code"
-            onClick={() => {
-              copy(children);
-            }}
-          >
-            <CopyIcon />
-          </button>
-          {/* <div className={styles.shine} /> */}
-          {tokens.map((line, i) => (
-            <div key={i} {...getLineProps({ line, key: i })}>
-              {line.map((token, key) => (
-                <span key={i} {...getTokenProps({ token, key })} />
-              ))}
-            </div>
-          ))}
-        </pre>
-      )}
-    </Highlight>
-  );
-}

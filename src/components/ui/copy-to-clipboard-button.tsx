@@ -6,7 +6,7 @@ import { CopyIcon, CheckIcon } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
 import confetti from 'canvas-confetti';
 type CopyToClipboardButtonProps = {
-  duration: number;
+  duration?: number;
   text: string;
   className?: string;
 };
@@ -34,20 +34,24 @@ const CopyToClipButton = ({
     onCopy(text);
   };
   return (
-    <div onClick={handleClick} className={cn('h-fit w-fit', className)}>
-      {hasCopied ? <SuccessButton /> : <CopyButtonIcon />}
+    <div onClick={handleClick} className="relative">
+      {hasCopied ? (
+        <SuccessButton className={className} />
+      ) : (
+        <CopyButtonIcon className={className} />
+      )}
     </div>
   );
 };
 
-const CopyButtonIcon = () => (
-  <Button variant="ghost" size="xs" className="p-0">
+export const CopyButtonIcon = ({ className }: { className?: string }) => (
+  <Button variant="ghost" size="xs" className={cn('p-0', className)}>
     <CopyIcon className="size-4 h-fit w-fit" />
   </Button>
 );
 
-const SuccessButton = () => (
-  <Button variant="ghost" size="xs" className="p-0">
+export const SuccessButton = ({ className }: { className?: string }) => (
+  <Button variant="ghost" size="xs" className={cn('p-0', className)}>
     <CheckIcon className="size-4 h-fit w-fit" />
   </Button>
 );
