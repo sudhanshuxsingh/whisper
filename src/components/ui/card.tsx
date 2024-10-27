@@ -21,7 +21,11 @@ const Title = ({ className, children }: CardElementProps) => {
   );
 };
 const Description = ({ className, children }: CardElementProps) => {
-  return <p className={cn('px-6 pb-6 text-sm', className)}>{children}</p>;
+  return (
+    <p className={cn('px-6 pb-6 text-sm text-muted-foreground', className)}>
+      {children}
+    </p>
+  );
 };
 const CardBody = ({ className, children }: CardElementProps) => {
   return <div className={cn('px-6 pb-6', className)}>{children}</div>;
