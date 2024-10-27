@@ -1,4 +1,4 @@
-import CodeWindow, { CodeWindowCode } from '@/components/ui/code-window';
+import CodeWindow from '@/components/ui/code-window';
 import React from 'react';
 const codeBlock = `var myHeaders = new Headers();
 myHeaders.append("X-API-KEY-WHISPER", "at43sds5usggsre4g");
@@ -23,13 +23,7 @@ fetch("http://localhost:3000/api/v1/feedback", requestOptions)
   .then(result => console.log(result))
   .catch(error => console.log('error', error));`;
 const APICodeBlock = () => {
-  return (
-    <CodeWindow>
-      <CodeWindowCode language="tsx" overflow={false}>
-        {codeBlock}
-      </CodeWindowCode>
-    </CodeWindow>
-  );
+  return <CodeWindow language="tsx">{codeBlock}</CodeWindow>;
 };
 
 export default APICodeBlock;
