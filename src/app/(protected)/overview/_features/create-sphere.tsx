@@ -28,7 +28,7 @@ export default function CreateSphere() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
         asChild
-        className="grid place-items-center bg-secondary/30"
+        className="grid place-items-center bg-secondary/20"
       >
         <Button
           variant="outline"
