@@ -7,7 +7,6 @@ import {
   motion,
   useInView,
 } from 'framer-motion';
-import Image from 'next/image';
 import { useRef } from 'react';
 import Container from './container';
 import { cn } from '@/lib/utils';
@@ -73,35 +72,21 @@ export const Features = ({
 };
 
 type FeatureMainProps = {
-  imageUrl: string;
   text: string;
-  imageWidth: number;
-  imageHeight: number;
   title: React.ReactNode;
+  image: React.ReactNode;
 };
 
-const FeatureMain = ({
-  imageUrl,
-  text,
-  imageHeight,
-  imageWidth,
-  title,
-}: FeatureMainProps) => {
+const FeatureMain = ({ text, title, image }: FeatureMainProps) => {
   return (
     <>
       <div className="relative before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_50%_50%_at_center,var(--bottom-feature-color),transparent)] before:opacity-70">
         <Container className="w-[78rem] max-w-[90%] text-center">
-          <h3 className="text-gradient my-6 mb-11 translate-y-[70%] text-center text-4xl [transition:transform_1000ms_cubic-bezier(0.3,_1.17,_0.55,_0.99)_0s] md:text-6xl [.is-visible_&]:translate-y-0">
+          <h3 className="my-6 mb-11 translate-y-[70%] text-center text-4xl text-gradient [transition:transform_1000ms_cubic-bezier(0.3,_1.17,_0.55,_0.99)_0s] md:text-6xl [.is-visible_&]:translate-y-0">
             {title}
           </h3>
-          <div className="before:bg-gradient relative z-10 rounded-lg to-transparent backdrop-blur-[6px] before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:from-[var(--bottom-feature-color)] before:p-[1px] before:[mask-composite:xor] before:[mask:linear-gradient(black,_black)_content-box_content-box,_linear-gradient(black,_black)] after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:bg-white/20 after:[mask:linear-gradient(black,transparent)]">
-            <Image
-              src={imageUrl}
-              alt="feature image"
-              className="h-auto w-full"
-              width={imageHeight}
-              height={imageWidth}
-            ></Image>
+          <div className="before:bg-gradient relative z-10 rounded-lg to-transparent backdrop-blur-[6px] before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:from-[var(--bottom-feature-color)] before:p-[1px] before:[mask-composite:xor] before:[mask:linear-gradient(black,_black)_content-box_content-box,_linear-gradient(black,_black)] after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:bg-primary/10 after:[mask:linear-gradient(black,transparent)]">
+            {image}
           </div>
         </Container>
         <Container className="flex w-[78rem] max-w-[90%] flex-col items-center text-center">
