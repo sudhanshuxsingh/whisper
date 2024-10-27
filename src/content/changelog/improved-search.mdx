@@ -21,28 +21,58 @@ npx shadcn@latest add accordion
 
 Add the following animations to your `tailwind.config.js` file:
 
-```js title="tailwind.config.js" {5-18}
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  theme: {
-    extend: {
-      keyframes: {
-        'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
-        },
-        'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
-        },
-      },
-      animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
-      },
-    },
-  },
-};
-```
+<CodeWindow className='mt-4' language='tsx'>
+{`'use client'
+
+import React, { useState, useEffect } from 'react';
+import { MDXRemote } from 'next-mdx-remote/rsc';
+
+// Error boundary component as a functional component
+function ErrorBoundary({ children }: { children: React.ReactNode }) {
+const [hasError, setHasError] = useState(false)
+
+useEffect(() => {
+const errorHandler = (error: ErrorEvent) => {
+console.error('Error caught by error boundary:', error)
+setHasError(true)
+}
+
+    window.addEventListener('error', errorHandler)
+
+    return () => {
+      window.removeEventListener('error', errorHandler)
+    }
+
+}, [])
+
+if (hasError) {
+return <h1>Something went wrong.</h1>
+}
+
+return <>{children}</>
+}
+
+// Your other MDX components here
+const components = {
+h1: ({ children }: { children: React.ReactNode }) => (
+<h1 className="text-3xl font-bold mb-4">{children}</h1>
+),
+h2: ({ children }: { children: React.ReactNode }) => (
+<h2 className="text-2xl font-semibold mb-3">{children}</h2>
+),
+// Add more components as needed
+}
+
+export function MDXComponents({ source }: { source: string }) {
+  return (
+    <ErrorBoundary>
+      <MDXRemote
+        source={source}
+        components={components}
+      />
+    </ErrorBoundary>
+  )
+}`}
+</CodeWindow>
 
 Hello second line here

@@ -79,7 +79,7 @@ const ChangeLogDetailPage = async ({ params }: ChangeLogDetailPageProps) => {
           </div>
         </Container>
       </div>
-      <Container className="prose mx-auto max-w-screen-md px-8 pb-20 pt-16 dark:prose-invert">
+      <Container className="max-w-screen-md px-8 pb-20 pt-16">
         <Image
           src={changeItem.cover.src}
           alt={changeItem.title}

@@ -3,7 +3,7 @@ import React from 'react';
 
 import Link from 'next/link';
 import { LinkedInLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons';
-import ChangeList from './_features/changelogs';
+import ChangeList from './_features/changelist';
 
 const Changelog = () => {
   return (
