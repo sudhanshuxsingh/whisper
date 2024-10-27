@@ -9,6 +9,8 @@ import { getAbsoutePath } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { SphereProps } from '@/types/sphere.types';
 import Status from '@/components/ui/status';
+import { Skeleton } from '@/components/ui/skeleton';
+import { notFound } from 'next/navigation';
 type SphereDetailsHeroParams = {
   sphereId: string;
 };
@@ -18,22 +20,27 @@ const SphereDetailsHero = ({ sphereId }: SphereDetailsHeroParams) => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: [`sphere`, sphereId],
+    queryKey: ['sphere', 'spheres', sphereId],
     queryFn: async (): Promise<SphereProps> => {
+      console.log('queryFn called with sphereId:', sphereId);
       return await getSphereAction(sphereId);
     },
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: true,
+    retry: 2,
   });
 
   if (isLoading) {
-    return 'Loading';
+    return <SphereDetailsHeroSkelton />;
   }
 
   if (isError) {
-    return 'error';
+    console.log(sphere);
+    notFound();
   }
 
   if (!sphere) {
-    return 'undefined';
+    return null;
   }
 
   return (
@@ -69,3 +76,17 @@ const SphereDetailsHero = ({ sphereId }: SphereDetailsHeroParams) => {
 };
 
 export default SphereDetailsHero;
+
+export const SphereDetailsHeroSkelton = () => (
+  <div className="relative h-80 w-full border-b bg-secondary/10">
+    <Container className="flex h-72 flex-col justify-between gap-12 py-10 sm:pb-16 sm:pt-12 lg:flex-row lg:gap-12 lg:pt-16">
+      <div className="w-full space-y-4">
+        <Skeleton className="h-6 w-32 rounded" />
+        <Skeleton className="h-14 w-1/2 rounded-md" />
+        <Skeleton className="h-6 w-9/12 rounded-md" />
+        <Skeleton className="h-6 w-9/12 rounded-md" />
+      </div>
+      <Skeleton className="-mb-48 h-72 w-full rounded-md p-2 lg:-mb-60 lg:h-80 xl:max-w-xl" />
+    </Container>
+  </div>
+);

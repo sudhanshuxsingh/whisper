@@ -8,6 +8,7 @@ import { getAllFeedbackAction } from '@/lib/actions/feedback.actions';
 import { useSearchParams } from 'next/navigation';
 import Pagination from '@/components/ui/Pagination';
 import EmptyFeedback from './EmptyFeedback';
+import { Skeleton } from '@/components/ui/skeleton';
 type FeedbackContainerProps = {
   sphereId: string;
 };
@@ -27,7 +28,7 @@ const FeedbackContainer = ({ sphereId }: FeedbackContainerProps) => {
     },
   });
   if (isLoading) {
-    return 'loading....';
+    return <FeedbackContainerSkelton />;
   }
   if (error || !data) {
     return JSON.stringify(error);
@@ -69,3 +70,14 @@ const FeedbackContainer = ({ sphereId }: FeedbackContainerProps) => {
 };
 
 export default FeedbackContainer;
+
+export const FeedbackContainerSkelton = () => (
+  <Container className="space-y-6 py-24 pt-44 lg:pt-28 xl:pt-[6.8rem]">
+    <Skeleton className="h-6 w-24 rounded" />
+    <div className="grid grid-cols-[repeat(1,_minmax(16rem,_1fr))] gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+      {new Array(8).fill(0).map((_, i) => {
+        return <Skeleton className="h-48 w-full" key={i} />;
+      })}
+    </div>
+  </Container>
+);
