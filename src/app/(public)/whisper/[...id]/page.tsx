@@ -2,7 +2,7 @@ import Container from '@/components/ui/container';
 import React from 'react';
 import FeedbackForm from '../../../../components/ui/FeedbackForm';
 import FeedbackHeader from '../../../../components/ui/FeedbackHeader';
-import { getSphereAction } from '@/lib/actions/sphere.actions';
+import { getMinimalSphereDetailAction } from '@/lib/actions/sphere.actions';
 import { SphereProps } from '@/types/sphere.types';
 type Params = {
   id: string;
@@ -17,9 +17,15 @@ const Whisper = async ({ params }: Props) => {
     description,
     type,
     showSuggestionToUser,
-  }: SphereProps = await getSphereAction(params.id);
+    isAcceptingMessage,
+  }: SphereProps = await getMinimalSphereDetailAction(params.id);
+
+  if (!isAcceptingMessage) {
+    return 'User not accepting any messages for now';
+  }
+
   return (
-    <div className="bg-page-gradient py-8 pt-28">
+    <div className="py-8 pt-36">
       <Container className="grid max-w-6xl gap-14 md:grid-cols-2 lg:grid-cols-[1fr_30rem]">
         <FeedbackHeader title={title} description={description} />
         <FeedbackForm
