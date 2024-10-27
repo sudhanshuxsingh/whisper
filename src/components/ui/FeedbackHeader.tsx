@@ -7,10 +7,10 @@ const FeedbackHeader = ({ title, description }: FeedbackHeaderProps) => {
   return (
     <div className="space-y-4">
       <h2 className="text-3xl font-medium">{title}</h2>
-      <Features />
       <p className="line-clamp-2 hidden text-sm text-muted-foreground md:block">
         {description}
       </p>
+      <Features />
     </div>
   );
 };
