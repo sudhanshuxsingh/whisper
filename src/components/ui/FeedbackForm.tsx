@@ -24,6 +24,7 @@ import { FeedbackSubmissionProps } from '@/types/feedback.types';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@radix-ui/react-toast';
 import { useRouter } from 'next/navigation';
+import Rating from './rating';
 
 type FeedbackFormProps = {
   type: 'feedback' | 'message';
@@ -84,14 +85,14 @@ const FeedbackForm = ({
         className={`flex items-center justify-between border-b text-sm ${showSuggestionToUser ? 'p-2 px-4' : 'p-4'}`}
       >
         <p>Send your annonymus {type}</p>
-        {
+        {showSuggestionToUser && (
           <AISuggestion
             setAISuggetions={handleAISuggestion}
             title={title}
             description={description}
             partial={form.getValues('content')}
           />
-        }
+        )}
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 p-4">
@@ -149,6 +150,24 @@ const FeedbackForm = ({
               </FormItem>
             )}
           />
+          {type == 'feedback' && (
+            <FormField
+              control={form.control}
+              name="rating"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Rating</FormLabel>
+                  <FormControl>
+                    <Rating
+                      rating={Number(field.value)}
+                      setRating={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
           <Button
             type="submit"
             className="!mt-6 ml-auto w-full rounded-sm bg-indigo-500 text-white hover:bg-indigo-600"
