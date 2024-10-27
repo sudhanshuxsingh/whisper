@@ -88,12 +88,10 @@ export async function modifySphereAction(
     if (sphere.userId != userId) {
       throw new Error(`Un-authorized`);
     }
-    console.log({ sphereId, parsedPayload });
     const updatedSphere = await SphereModel.findByIdAndUpdate(
       sphereId,
       parsedPayload
     );
-    console.log({ updatedSphere });
     return JSON.parse(JSON.stringify(updatedSphere));
   } catch (error) {
     console.error(error);
@@ -115,6 +113,42 @@ export async function generateNewApiKeyAction(sphereId: string) {
   } catch (error) {
     console.error(error);
     throw new Error('Failed to generate new API Key');
+  }
+}
+
+export async function getAPIKey(sphereId: string) {
+  try {
+    const { userId } = auth();
+    if (!userId) {
+      throw new Error('Unauthorized Request');
+    }
+    await dbConnect();
+    const sphere = await SphereModel.findById(sphereId);
+    if (sphere == null) {
+      throw new Error(`No Sphere Found for ${sphereId}`);
+    }
+    if (sphere.userId != userId) {
+      throw new Error(`Un-authorized`);
+    }
+    return JSON.parse(JSON.stringify({ apiKey: sphere.apiKey ?? null }));
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to get API Key');
+  }
+}
+
+export async function getMinimalSphereDetailAction(sphereId: string) {
+  try {
+    await dbConnect();
+    const sphere =
+      await SphereModel.findById(sphereId).select('-apiKey -userId');
+    if (sphere == null) {
+      throw new Error(`No Sphere Found for ${sphereId}`);
+    }
+    return JSON.parse(JSON.stringify(sphere));
+  } catch (error) {
+    console.error('Error Fetching Sphere details for:', sphereId, error);
+    throw new Error(`Failed to fetch sphere details for ${sphereId}`);
   }
 }
 

@@ -1,9 +1,9 @@
 export type SphereProps = {
-  userId: string;
+  userId?: string;
   title: string;
   description: string;
   showSuggestionToUser: boolean;
-  apiKey: string;
+  apiKey?: string;
   isAcceptingMessage: boolean;
   _id: string;
   updatedAt: Date;
