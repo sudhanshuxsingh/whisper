@@ -31,7 +31,6 @@ export async function getAISuggestionsAction(
     for await (const partialObject of partialObjectStream) {
       stream.update(partialObject);
     }
-    console.log('streaming');
     stream.done();
   })();
 

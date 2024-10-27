@@ -22,7 +22,6 @@ export async function submitFeedbackAction(request: FeedbackSubmissionProps) {
       ...parsedFeedbackPayload,
       sphere: new mongoose.Types.ObjectId(sphere),
     };
-    console.log(requestPayload);
     const feedback = await FeedbackModel.create(requestPayload);
     return JSON.parse(JSON.stringify(feedback));
   } catch (error) {
