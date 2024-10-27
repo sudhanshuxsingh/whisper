@@ -5,7 +5,7 @@ import ChangeSphereTitle from './ChangeSphereTitle';
 import ChangeSphereDescription from './ChangeSphereDescription';
 import ChangeSphereType from './ChangeSphereType';
 import ChangSphereOtherConfig from './ChangSphereOtherConfig';
-import { useParams } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getSphereAction } from '@/lib/actions/sphere.actions';
 import DeleteSphereDescription from './DeleteSphere';
@@ -13,25 +13,20 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const SphereConfiguration = () => {
   const { id } = useParams();
-  const { data, isLoading } = useQuery({
-    queryKey: ['sphere', id],
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['sphere', 'spheres', id],
     queryFn: async () => {
       return await getSphereAction(id as string);
     },
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: true,
+    retry: 2,
   });
   if (isLoading) {
-    return (
-      <Container className="my-8 mb-24 grid max-w-6xl gap-8">
-        <Skeleton className="min-h-56" />
-        <Skeleton className="min-h-56" />
-        <Skeleton className="min-h-56" />
-        <Skeleton className="min-h-56" />
-        <Skeleton className="min-h-56" />
-      </Container>
-    );
+    return <SphereConfigurationSkelton />;
   }
-  if (!data) {
-    return null;
+  if (isError || !data) {
+    notFound();
   }
   return (
     <Container className="my-8 mb-24 grid max-w-6xl gap-8">
@@ -44,10 +39,21 @@ const SphereConfiguration = () => {
       <ChangSphereOtherConfig
         isAcceptingMessage={data.isAcceptingMessage}
         showSuggestionToUser={data.showSuggestionToUser}
+        id={id as string}
       />
-      <DeleteSphereDescription />
+      <DeleteSphereDescription id={id as string} />
     </Container>
   );
 };
+
+export const SphereConfigurationSkelton = () => (
+  <Container className="my-8 mb-24 grid max-w-6xl gap-8">
+    <Skeleton className="min-h-56" />
+    <Skeleton className="min-h-56" />
+    <Skeleton className="min-h-56" />
+    <Skeleton className="min-h-56" />
+    <Skeleton className="min-h-56" />
+  </Container>
+);
 
 export default SphereConfiguration;

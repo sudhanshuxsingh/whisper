@@ -1,9 +1,12 @@
-import { Button } from '@/components/ui/button';
+'use client';
 import Card from '@/components/ui/card';
-import React from 'react';
+import React, { useState } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useForm } from 'react-hook-form';
-import { otherSphereConfigSchema } from '@/schema/sphereSchema';
+import {
+  otherSphereConfigSchema,
+  updateSphereSchema,
+} from '@/schema/sphereSchema';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -14,16 +17,31 @@ import {
   FormItem,
   FormLabel,
 } from '@/components/ui/form';
+import { ToastAction } from '@/components/ui/toast';
+import { useToast } from '@/hooks/use-toast';
+import { modifySphereAction } from '@/lib/actions/sphere.actions';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import SaveChangesButton from './SaveChangesButton';
 
 type ChangSphereOtherConfigProps = {
   isAcceptingMessage: boolean;
   showSuggestionToUser: boolean;
+  id: string;
 };
 
 const ChangSphereOtherConfig = ({
   isAcceptingMessage,
   showSuggestionToUser,
+  id,
 }: ChangSphereOtherConfigProps) => {
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (payload: z.infer<typeof updateSphereSchema>) => {
+      return await modifySphereAction(id, payload);
+    },
+  });
+  const queryClient = useQueryClient();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof otherSphereConfigSchema>>({
     resolver: zodResolver(otherSphereConfigSchema),
     defaultValues: {
@@ -32,7 +50,33 @@ const ChangSphereOtherConfig = ({
     },
   });
   const onSubmit = (value: z.infer<typeof otherSphereConfigSchema>) => {
-    console.log({ value });
+    mutate(value, {
+      onSuccess() {
+        setIsProcessing(true);
+        queryClient.invalidateQueries({
+          queryKey: ['sphere', 'spheres', id],
+        });
+        setIsProcessing(false);
+        toast({
+          title: 'Configuration changed successfully.',
+        });
+      },
+      onError(error: Error) {
+        toast({
+          variant: 'destructive',
+          title: 'Uh oh! Something went wrong.',
+          description: error?.message,
+          action: (
+            <ToastAction
+              altText="Try again"
+              onClick={() => onSubmit(form.getValues())}
+            >
+              Try again
+            </ToastAction>
+          ),
+        });
+      },
+    });
   };
   return (
     <Card>
@@ -84,9 +128,10 @@ const ChangSphereOtherConfig = ({
             />
           </Card.Body>
           <Card.Footer className="flex items-center justify-between">
-            <Button className="ml-auto rounded" variant="primarySquare">
-              Save
-            </Button>
+            <SaveChangesButton
+              isLoading={isPending || isProcessing}
+              className="ml-auto"
+            />
           </Card.Footer>
         </form>
       </Form>

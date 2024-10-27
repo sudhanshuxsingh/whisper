@@ -1,6 +1,7 @@
 import Container from '@/components/ui/container';
 import React from 'react';
 import SphereConfiguration from './_features/SphereConfiguration';
+export const dynamic = 'force-dynamic';
 
 const Settings = () => {
   return (
