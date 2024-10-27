@@ -1,15 +1,19 @@
 import * as React from 'react';
 import FeedbackForm from '../FeedbackForm';
 import tailwindStyles from '@/app/globals.css?inline';
-import FeedbackIcon from '../FeedbackIcon';
 import { Button } from '@/components/ui/button';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { FeedbackIcon } from '../Icons';
 
-const FeedbackWebWidget = () => {
+type FeedbackWidgetProps = {
+  apiKey?: string;
+};
+
+const FeedbackWebWidget = ({ apiKey }: FeedbackWidgetProps) => {
   return (
     <>
       <style>{tailwindStyles}</style>
@@ -25,7 +29,7 @@ const FeedbackWebWidget = () => {
           </PopoverTrigger>
           <PopoverContent className="w-80">
             <style>{tailwindStyles}</style>
-            <FeedbackForm />
+            <FeedbackForm apiKey={apiKey ?? 'invalid-api-key'} />
           </PopoverContent>
         </Popover>
       </div>
