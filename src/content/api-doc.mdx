@@ -1,0 +1,152 @@
+---
+title: API Documentation
+slug: api-doc
+date: 2023-10-05
+metadata:
+  author: Sudhanshu Singh
+  tags: []
+---
+
+**Endpoint** `/api/v1/feedback`
+
+**Method** `POST`
+
+**Auth Required** `Yes`
+
+**Headers**
+
+| Name                | Required | Description                |
+| ------------------- | -------- | -------------------------- |
+| `X-API-KEY-WHISPER` | Yes      | API key for authentication |
+
+**Usage Example**
+
+<CodeWindow language="js" className="mt-4" codeWindowClassName="h-auto">
+  {`const submitFeedback = async (feedbackData) => {
+    const response = await fetch('https://whisper.sudhanshuxsingh/api/v1/feedback', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY-WHISPER': 'your-api-key-here',
+      },
+      body: JSON.stringify(feedbackData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to submit feedback');
+    }
+
+    return response.json();
+
+};`}
+
+</CodeWindow>
+
+**Request Body**
+
+The request body should be a JSON object conforming to the `feedbackSchema`.
+
+<CodeWindow className="mt-4" language="ts">
+  {`export const feedbackSchema = z.object({
+  content: z
+    .string({
+      message: "Description can't be empty",
+    })
+    .min(10, 'Message must be of at least 10 character')
+    .max(300, 'Message can be of at max 300 characters'),
+  name: z
+    .string()
+    .min(3, {
+      message: 'Name must be of atleast 3 character',
+    })
+    .max(50, {
+      message: 'Name can be of at max 50 character',
+    })
+    .optional(),
+  email: z.string().email({ message: 'Invalid Email' }).optional(),
+  rating: z
+    .number()
+    .min(1, { message: "Rating value can't be less than 1" })
+    .max(5, { message: "Rating value can't be more than 5" })
+    .optional(),
+  _id: z.string().optional(),
+});`}
+</CodeWindow>
+
+**Example:**
+
+<CodeWindow language="json" className="mt-4" codeWindowClassName="h-auto">
+  {`{
+    "content":"I loved it",
+    "name":"Sudhanshu Singh",
+    "email":"sudhanshu.iem2k18@gmail.com",
+    "rating":5
+}`}
+</CodeWindow>
+
+**Success Response**
+
+`Response Code: 201 Created`
+
+<CodeWindow language="json" className="mt-4" codeWindowClassName="h-auto">
+  {`{
+    "message": "Feedback Submitted Successfully",
+    "result": {
+      // Created feedback object
+    }
+}`}
+</CodeWindow>
+
+**Error Responses**
+
+1. Missing API Key
+
+`Response Code: 401 Unauthorized`
+
+<CodeWindow language="json" className="mt-4" codeWindowClassName="h-auto">
+  {`{
+    "message": "Un-authorized - Missing header X-API-KEY-WHISPER"
+}`}
+</CodeWindow>
+
+2. Invalid API Key
+
+`Response Code: 401 Unauthorized`
+
+<CodeWindow language="json" className="mt-4" codeWindowClassName="h-auto">
+  {`{
+     "message": "Un-authorized - Invalid API Key"
+}`}
+</CodeWindow>
+
+3. Invalid Payload
+
+`Response Code: 400 Bad Request`
+
+<CodeWindow language="json" className="mt-4" codeWindowClassName="h-auto">
+  {`{
+    "message": "Invalid Payload",
+    "error": {
+      // Validation error details
+    }
+}`}
+</CodeWindow>
+
+4. Invalid Payload
+
+`Response Code: 400 Bad Request`
+
+<CodeWindow language="json" className="mt-4" codeWindowClassName="h-auto">
+  {`{
+      "message": "Internal Server Error",
+      "error": {
+        // Error details
+      }
+}`}
+</CodeWindow>
+
+**Notes**
+
+- Ensure that your feedback data conforms to the `feedbackSchema` to avoid validation errors.
+- Keep your API key secure and do not expose it in client-side code.
+- The API uses CORS, allowing it to be called from different origins.
