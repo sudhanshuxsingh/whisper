@@ -66,7 +66,7 @@ export default defineConfig({
   root: 'src/content',
   output: {
     data: '.velite',
-    assets: 'public',
+    assets: 'public/velite',
     base: '/',
     name: '[name]-[hash:6].[ext]',
     clean: true,
