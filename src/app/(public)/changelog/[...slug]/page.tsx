@@ -12,33 +12,38 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react';
 
-type ChangeLogDetailPageProps = {
-  params: Promise<{
-    slug: string[];
-  }>;
+type Params = {
+  slug: string[];
 };
 
-async function getChangeItemFromParams({ params }: ChangeLogDetailPageProps) {
-  const slug = params?.slug?.join('/');
-  console.log({ params, slug });
+type Props = {
+  params: Promise<Params>;
+};
+
+// type ChangeLogDetailPageProps = {
+//   params: Promise<{
+//     slug: string[];
+//   }>;
+// };
+
+async function getChangeItemFromParams({ slug }: Params) {
+  const currSlug = slug?.join('/');
   const change = changelog.find((changeItem) => {
-    return changeItem.slug == slug;
+    return changeItem.slug == currSlug;
   });
 
   return change;
 }
 
-export async function generateStaticParams(): Promise<
-  ChangeLogDetailPageProps['params'][]
-> {
+export async function generateStaticParams(): Promise<Params[]> {
   return changelog.map((changeItem) => ({
     slug: changeItem.permalink.split('/'),
   }));
 }
 
-const ChangeLogDetailPage = async (props: ChangeLogDetailPageProps) => {
-  const params = await props.params;
-  const changeItem = await getChangeItemFromParams({ params });
+const ChangeLogDetailPage = async ({ params }: Props) => {
+  const slug = (await params).slug;
+  const changeItem = await getChangeItemFromParams({ slug });
   if (!changeItem) {
     return notFound();
   }

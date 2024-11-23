@@ -27,8 +27,8 @@ type Line = {
 };
 
 const HeroImage = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref as React.RefObject<HTMLDivElement>, {
     amount: 0.5,
     once: true,
   });

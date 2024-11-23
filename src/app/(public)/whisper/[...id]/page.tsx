@@ -8,7 +8,7 @@ type Params = {
   id: string;
 };
 type Props = {
-  params: Params;
+  params: Promise<Params>;
 };
 const Whisper = async (props: Props) => {
   const params = await props.params;
