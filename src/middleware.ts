@@ -9,8 +9,8 @@ const isPublicRoute = createRouteMatcher([
 ]);
 const isPublicApiRoutes = createRouteMatcher(['/api/:path*']);
 
-export default clerkMiddleware((auth, req) => {
-  const { userId } = auth();
+export default clerkMiddleware(async (auth, req) => {
+  const { userId } = await auth();
   const currentUrl = new URL(req.url);
   const isApiReq = currentUrl.pathname.startsWith('/api');
   if (userId && isAuthRoute(req)) {

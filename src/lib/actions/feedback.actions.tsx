@@ -36,7 +36,7 @@ export async function getAllFeedbackAction({
   sphereId,
 }: FeedbackPaginatedQueryProps): Promise<FeedbackPaginatedResponse> {
   try {
-    const { userId }: { userId: string | null } = auth();
+    const { userId }: { userId: string | null } = await auth();
     if (!userId) {
       throw Error('Unauthenticated User');
     }
@@ -67,7 +67,7 @@ export async function getAllFeedbackAction({
 
 export async function deleteFeedbackAction(feedbackId: string) {
   try {
-    const { userId }: { userId: string | null } = auth();
+    const { userId }: { userId: string | null } = await auth();
     if (!userId) {
       throw Error('Unauthenticated User');
     }

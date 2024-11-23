@@ -13,9 +13,9 @@ import { notFound } from 'next/navigation';
 import React from 'react';
 
 type ChangeLogDetailPageProps = {
-  params: {
+  params: Promise<{
     slug: string[];
-  };
+  }>;
 };
 
 async function getChangeItemFromParams({ params }: ChangeLogDetailPageProps) {
@@ -36,7 +36,8 @@ export async function generateStaticParams(): Promise<
   }));
 }
 
-const ChangeLogDetailPage = async ({ params }: ChangeLogDetailPageProps) => {
+const ChangeLogDetailPage = async (props: ChangeLogDetailPageProps) => {
+  const params = await props.params;
   const changeItem = await getChangeItemFromParams({ params });
   if (!changeItem) {
     return notFound();

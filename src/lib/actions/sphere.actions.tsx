@@ -36,7 +36,7 @@ export async function createSphereAction(
 
 export async function getAllSphereAction(): Promise<SphereProps[]> {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
     if (!userId) {
       throw new Error('Unauthorized Request');
     }
@@ -51,7 +51,7 @@ export async function getAllSphereAction(): Promise<SphereProps[]> {
 
 export async function getSphereAction(sphereId: string): Promise<SphereProps> {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
     if (!userId) {
       throw new Error('Unauthorized Request');
     }
@@ -76,7 +76,7 @@ export async function modifySphereAction(
 ) {
   try {
     const parsedPayload = await updateSphereSchema.parseAsync(payload);
-    const { userId } = auth();
+    const { userId } = await auth();
     if (!userId) {
       throw new Error('Unauthorized Request');
     }
@@ -100,7 +100,7 @@ export async function modifySphereAction(
 
 export async function generateNewApiKeyAction(sphereId: string) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
     if (!userId) {
       throw new Error('Unauthorized Request');
     }
@@ -118,7 +118,7 @@ export async function generateNewApiKeyAction(sphereId: string) {
 
 export async function getAPIKey(sphereId: string) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
     if (!userId) {
       throw new Error('Unauthorized Request');
     }
@@ -154,7 +154,7 @@ export async function getMinimalSphereDetailAction(sphereId: string) {
 
 export async function deleteSphereAction(sphereId: string) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
     if (!userId) {
       throw new Error('Unauthorized Request');
     }

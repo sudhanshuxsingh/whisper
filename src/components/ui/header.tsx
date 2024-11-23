@@ -14,8 +14,8 @@ import { ArrowRightIcon, EnterIcon } from '@radix-ui/react-icons';
 import { MENU_ITEM_LIST } from '../data/header-data';
 import SignOutUser from './sign-out-user-button';
 import { ThemeSwitcher } from './theme-switcher';
-const Header = () => {
-  const { userId } = auth();
+const Header = async () => {
+  const { userId } = await auth();
   return (
     <header className="dark:border-dark-border fixed left-0 top-0 z-[100] flex w-full flex-col border-b border-border/90 bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-[--header-height]">

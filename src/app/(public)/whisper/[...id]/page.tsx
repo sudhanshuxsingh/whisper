@@ -10,7 +10,8 @@ type Params = {
 type Props = {
   params: Params;
 };
-const Whisper = async ({ params }: Props) => {
+const Whisper = async (props: Props) => {
+  const params = await props.params;
   const {
     _id: sphereId,
     title,

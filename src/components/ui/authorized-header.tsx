@@ -8,8 +8,8 @@ import ChipTabNavigation from './chip-tabs';
 import { AuthorizedHeaderLogo } from './AuthorizedHeaderLogo';
 import { memo } from 'react';
 
-export default function AutorizedHeader() {
-  const { userId } = auth();
+export default async function AutorizedHeader() {
+  const { userId } = await auth();
   return (
     <>
       <AuthorizedHeaderLogo />

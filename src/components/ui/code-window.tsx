@@ -82,7 +82,7 @@ type CodeWindowCodeProps = {
   className?: string;
   children: string;
   language: Language;
-  ref?: RefObject<HTMLPreElement>;
+  ref?: RefObject<HTMLPreElement | null>;
 };
 
 export const CodeWindowCode = forwardRef<HTMLPreElement, CodeWindowCodeProps>(
