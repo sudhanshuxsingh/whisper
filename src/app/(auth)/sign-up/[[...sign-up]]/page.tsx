@@ -6,7 +6,6 @@ import Container from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
-import GrainyAuroraBox from '@/components/ui/grainy-aurora-box';
 import Link from 'next/link';
 import { GitHubLogoIcon, ReloadIcon } from '@radix-ui/react-icons';
 import GoogleLogo from '@/assets/logo/google.png';
@@ -34,6 +33,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from '@/components/ui/input-otp';
+import { Loader } from 'lucide-react';
 export default function Page() {
   const { signUp, isLoaded, setActive } = useSignUp();
   const searchParams = useSearchParams();
@@ -52,6 +52,14 @@ export default function Page() {
 
   const signUpForm = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      confirmPassword: '',
+      email: '',
+      firstName: '',
+      lastName: '',
+      password: '',
+      userName: '',
+    },
   });
 
   const signUpWithOAuth = (strategy: OAuthStrategy) => {
@@ -159,244 +167,242 @@ export default function Page() {
   };
 
   return (
-    <Container className="absolute inset-0 z-[999] grid h-screen w-screen max-w-8xl overflow-y-auto bg-background py-4 md:grid-cols-2 lg:grid-cols-3">
-      <GrainyAuroraBox />
-      <div className="grid h-full place-items-center">
-        <div className="w-full max-w-md px-6 md:px-12">
-          <div className="mb-8 flex flex-col items-center gap-6">
-            <div className="">
-              <Image
-                alt="Whisper"
-                src={WHISPER_LOGO_WHITE}
-                className="hidden dark:block"
-              />
-              <Image
-                alt="Whisper"
-                src={WHISPER_LOGO_BLACK}
-                className="dark:hidden"
-              />
-            </div>
-            <div className="text-center">
-              <h1 className="text-2xl font-medium">Sign Up to Whisper</h1>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Welcome back! Please sign up to continue
-              </p>
-            </div>
+    <Container className="absolute inset-0 z-[999] grid h-screen w-screen max-w-8xl place-items-center overflow-y-auto bg-background">
+      <div className="w-full max-w-md px-6 md:px-12">
+        <div className="mb-8 flex flex-col items-center gap-6">
+          <div className="">
+            <Image
+              alt="Whisper"
+              src={WHISPER_LOGO_WHITE}
+              className="hidden dark:block"
+            />
+            <Image
+              alt="Whisper"
+              src={WHISPER_LOGO_BLACK}
+              className="dark:hidden"
+            />
           </div>
-          <div className="mb-4 grid grid-cols-2 gap-4">
-            <Button
-              variant={'outline'}
-              className="flex items-center gap-2"
-              onClick={() => signUpWithOAuth('oauth_github')}
-              disabled={!isLoaded}
-            >
-              <GitHubLogoIcon />
-              <p>Github</p>
-            </Button>
-            <Button
-              variant={'outline'}
-              className="flex items-center gap-2"
-              disabled={!isLoaded}
-            >
-              <Image
-                alt="Google"
-                src={GoogleLogo}
-                className="h-3 w-3"
-                onClick={() => signUpWithOAuth('oauth_google')}
-              />
-              Google
-            </Button>
+          <div className="text-center">
+            <h1 className="text-2xl font-medium">Sign Up to Whisper</h1>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Welcome back! Please sign up to continue
+            </p>
           </div>
-          <div className="flex items-center justify-between gap-4 text-xs text-muted-foreground">
-            <Separator className="w-auto flex-shrink flex-grow" />
-            <p>Or</p>
-            <Separator className="w-auto flex-shrink flex-grow" />
-          </div>
-          {verifying ? (
-            <Form {...otpForm}>
-              <form
-                onSubmit={otpForm.handleSubmit(handleVerify)}
-                className="space-y-6"
-              >
-                <FormField
-                  control={otpForm.control}
-                  name="code"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>One-Time Password</FormLabel>
-                      <FormControl>
-                        <InputOTP
-                          maxLength={6}
-                          {...field}
-                          className="w-full justify-between"
-                        >
-                          <InputOTPGroup className="w-full">
-                            <InputOTPSlot index={0} className="w-full" />
-                            <InputOTPSlot index={1} className="w-full" />
-                            <InputOTPSlot index={2} className="w-full" />
-                            <InputOTPSlot index={3} className="w-full" />
-                            <InputOTPSlot index={4} className="w-full" />
-                            <InputOTPSlot index={5} className="w-full" />
-                          </InputOTPGroup>
-                        </InputOTP>
-                      </FormControl>
-                      <FormDescription>
-                        Please enter the one-time password sent to your email.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  type="submit"
-                  disabled={!isLoaded || isProcessingSignUpRequest}
-                  className="mt-6 w-full"
-                >
-                  {isProcessingSignUpRequest && (
-                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                  )}
-                  Submit
-                </Button>
-              </form>
-            </Form>
-          ) : (
-            <Form {...signUpForm}>
-              <form
-                onSubmit={signUpForm.handleSubmit(handleSignUp)}
-                className="mt-8 flex flex-col gap-2"
-              >
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField
-                    control={signUpForm.control}
-                    name="firstName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel htmlFor="firstName">First Name</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="text"
-                            placeholder="First Name"
-                            id="firstName"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={signUpForm.control}
-                    name="lastName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel htmlFor="lastName">Last Name</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="text"
-                            placeholder="Last Name"
-                            id="lastName"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <FormField
-                  control={signUpForm.control}
-                  name="userName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel htmlFor="userName">Username</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Username"
-                          id="userName"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={signUpForm.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel htmlFor="email">Email address</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Email address"
-                          id="email"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={signUpForm.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel htmlFor="password">Password</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="Password"
-                          id="password"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={signUpForm.control}
-                  name="confirmPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel htmlFor="confirmPassword">
-                        Confirm Password
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="confirmPassword"
-                          id="confirmPassword"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  type="submit"
-                  disabled={!isLoaded || isProcessingSignUpRequest}
-                  className="mt-6 w-full"
-                >
-                  {isProcessingSignUpRequest && (
-                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                  )}
-                  Continue
-                </Button>
-              </form>
-            </Form>
-          )}
-          <p className="mt-4 text-sm text-muted-foreground">
-            Already have account?{' '}
-            <Link href="/sign-in" className="hover:underline">
-              Sign in
-            </Link>
-          </p>
         </div>
+        <div className="mb-4 grid grid-cols-2 gap-4">
+          <Button
+            variant={'outline'}
+            className="flex items-center gap-2"
+            onClick={() => signUpWithOAuth('oauth_github')}
+            disabled={!isLoaded}
+          >
+            <GitHubLogoIcon />
+            <p>Github</p>
+          </Button>
+          <Button
+            variant={'outline'}
+            className="flex items-center gap-2"
+            disabled={!isLoaded}
+          >
+            <Image
+              alt="Google"
+              src={GoogleLogo}
+              className="h-3 w-3"
+              onClick={() => signUpWithOAuth('oauth_google')}
+            />
+            Google
+          </Button>
+        </div>
+        <div className="flex items-center justify-between gap-4 text-xs text-muted-foreground">
+          <Separator className="w-auto flex-shrink flex-grow" />
+          <p>Or</p>
+          <Separator className="w-auto flex-shrink flex-grow" />
+        </div>
+        {verifying ? (
+          <Form {...otpForm}>
+            <form
+              onSubmit={otpForm.handleSubmit(handleVerify)}
+              className="space-y-6"
+            >
+              <FormField
+                control={otpForm.control}
+                name="code"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>One-Time Password</FormLabel>
+                    <FormControl>
+                      <InputOTP
+                        maxLength={6}
+                        {...field}
+                        className="w-full justify-between"
+                      >
+                        <InputOTPGroup className="w-full">
+                          <InputOTPSlot index={0} className="w-full" />
+                          <InputOTPSlot index={1} className="w-full" />
+                          <InputOTPSlot index={2} className="w-full" />
+                          <InputOTPSlot index={3} className="w-full" />
+                          <InputOTPSlot index={4} className="w-full" />
+                          <InputOTPSlot index={5} className="w-full" />
+                        </InputOTPGroup>
+                      </InputOTP>
+                    </FormControl>
+                    <FormDescription>
+                      Please enter the one-time password sent to your email.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                type="submit"
+                disabled={!isLoaded || isProcessingSignUpRequest}
+                className="mt-6 w-full"
+              >
+                {isProcessingSignUpRequest && (
+                  <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Submit
+              </Button>
+            </form>
+          </Form>
+        ) : (
+          <Form {...signUpForm}>
+            <form
+              onSubmit={signUpForm.handleSubmit(handleSignUp)}
+              className="mt-8 flex flex-col gap-2"
+            >
+              <div className="grid grid-cols-2 gap-4">
+                <FormField
+                  control={signUpForm.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel htmlFor="firstName">First Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="First Name"
+                          id="firstName"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={signUpForm.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel htmlFor="lastName">Last Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="Last Name"
+                          id="lastName"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <FormField
+                control={signUpForm.control}
+                name="userName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="userName">Username</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        placeholder="Username"
+                        id="userName"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={signUpForm.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="email">Email address</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        placeholder="Email address"
+                        id="email"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={signUpForm.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="password">Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="Password"
+                        id="password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={signUpForm.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="confirmPassword">
+                      Confirm Password
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="confirmPassword"
+                        id="confirmPassword"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                type="submit"
+                disabled={!isLoaded || isProcessingSignUpRequest}
+                className="mt-6 w-full"
+                variant="primarySquare"
+              >
+                {isProcessingSignUpRequest && (
+                  <Loader className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Continue
+              </Button>
+            </form>
+          </Form>
+        )}
+        <p className="mt-4 text-sm text-muted-foreground">
+          Already have account?{' '}
+          <Link href="/sign-in" className="hover:underline">
+            Sign in
+          </Link>
+        </p>
       </div>
     </Container>
   );
