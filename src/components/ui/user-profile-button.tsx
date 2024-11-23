@@ -10,12 +10,15 @@ const UserProfileButton = async ({ className }: { className?: string }) => {
   if (!user) {
     return;
   }
-  const { imageUrl } = user;
+  const { fullName, imageUrl, primaryEmailAddress } = user;
   return (
     <Popover.Root openDelay={0}>
       <Popover.Trigger asChild>
         <Avatar className={cn('size-8 cursor-pointer', className)}>
-          <AvatarImage src={imageUrl} />
+          <AvatarImage
+            src={imageUrl}
+            alt={fullName ?? primaryEmailAddress?.emailAddress}
+          />
           <AvatarFallback>
             <UserCircle2Icon />
           </AvatarFallback>
@@ -58,7 +61,10 @@ export const UserProfileCard = async ({
       )}
     >
       <Avatar className="cursor-pointer">
-        <AvatarImage src={imageUrl} />
+        <AvatarImage
+          src={imageUrl}
+          alt={fullName ?? primaryEmailAddress?.emailAddress}
+        />
         <AvatarFallback>
           <UserCircle2Icon />
         </AvatarFallback>
@@ -85,7 +91,10 @@ export const UserProfileInline = async ({
   return (
     <div className={cn('flex items-center gap-2', className)}>
       <Avatar className="h-[1.2rem] w-[1.2rem] cursor-pointer">
-        <AvatarImage src={imageUrl} />
+        <AvatarImage
+          src={imageUrl}
+          alt={firstName ?? username ?? primaryEmailAddress?.emailAddress}
+        />
         <AvatarFallback>
           <UserCircle2Icon />
         </AvatarFallback>

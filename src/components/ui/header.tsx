@@ -94,11 +94,15 @@ export const MenuItem = ({ content, href, className }: MenuItemPropsType) => {
 export const Logo = () => (
   <Link href="/" about="home" className="flex items-center -space-x-1">
     <Image
-      alt="Whisper"
+      alt="Whisper Logo"
       src={WHISPER_LOGO_WHITE}
       className="hidden h-7 dark:block"
     />
-    <Image alt="Whisper" src={WHISPER_LOGO_BLACK} className="h-7 dark:hidden" />
+    <Image
+      alt="Whisper Logo"
+      src={WHISPER_LOGO_BLACK}
+      className="h-7 dark:hidden"
+    />
     <p className="text-[1.1rem] font-bold">Whisper</p>
   </Link>
 );

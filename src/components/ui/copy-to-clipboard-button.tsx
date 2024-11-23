@@ -45,13 +45,23 @@ const CopyToClipButton = ({
 };
 
 export const CopyButtonIcon = ({ className }: { className?: string }) => (
-  <Button variant="ghost" size="xs" className={cn('p-0', className)}>
+  <Button
+    variant="ghost"
+    size="xs"
+    className={cn('p-0', className)}
+    aria-label="copy"
+  >
     <CopyIcon className="size-4 h-fit w-fit" />
   </Button>
 );
 
 export const SuccessButton = ({ className }: { className?: string }) => (
-  <Button variant="ghost" size="xs" className={cn('p-0', className)}>
+  <Button
+    variant="ghost"
+    size="xs"
+    className={cn('p-0', className)}
+    aria-label="copy"
+  >
     <CheckIcon className="size-4 h-fit w-fit" />
   </Button>
 );
@@ -85,11 +95,16 @@ export const CopyToClipButtonV2 = ({
         <Button
           className="h-9 min-w-[4.1rem] rounded-sm border"
           variant={'outline'}
+          aria-label="copy"
         >
           <CheckIcon className="h-4 w-4" />
         </Button>
       ) : (
-        <Button className="h-full rounded-sm border" variant={'outline'}>
+        <Button
+          className="h-full rounded-sm border"
+          variant={'outline'}
+          aria-label="copy"
+        >
           Copy
         </Button>
       )}
