@@ -9,7 +9,7 @@ import { HeroSubtitle } from '../../_features/Hero';
 
 export default function CTA() {
   return (
-    <BackgroundBeamsWithCollision className="from-[rgba(120,_119,_198,_0.2)] to-background py-8 pb-48">
+    <BackgroundBeamsWithCollision className="h-auto from-[rgba(120,_119,_198,_0.2)] to-background py-8 pb-48">
       <Container className="grid place-items-center">
         <div className="relative h-32 w-32">
           <div className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 animate-ripple rounded-full bg-indigo-500 opacity-50 [--animation-delay:0.12s]"></div>
@@ -18,14 +18,14 @@ export default function CTA() {
             <WhisperIcon className="text-white" />
           </div>
         </div>
-        <p className="my-6 mt-12 text-center text-4xl text-gradient md:text-6xl">
+        <p className="my-6 mt-12 text-balance text-center text-4xl text-gradient md:text-6xl">
           Listen Anonymously <br className="hidden md:block" /> Improve
           Authentically
         </p>
-        <HeroSubtitle>
+        <HeroSubtitle className="text-balance text-center">
           Empowering growth with genuine insights—anonymous or personalized
         </HeroSubtitle>
-        <div className="mt-4 flex items-center gap-4">
+        <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row">
           <Link
             className={cn(
               buttonVariants({

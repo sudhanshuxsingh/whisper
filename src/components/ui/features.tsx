@@ -54,7 +54,7 @@ export const Features = ({
     >
       <motion.div
         className={cn(
-          'pointer-events-none absolute h-[40rem] w-full rotate-180 bg-no-repeat transition-[transform,opacity] duration-1000 ease-in [mask:radial-gradient(100%_50%_at_center_center,_black,_transparent)] after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:to-[var(--bottom-feature-color)]',
+          'pointer-events-none absolute h-[20rem] w-full rotate-180 bg-no-repeat transition-[transform,opacity] duration-1000 ease-in [mask:radial-gradient(100%_50%_at_center_center,_black,_transparent)] after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:to-[var(--bottom-feature-color)] md:h-[40rem]',
           isInView && 'is-visible opacity-100'
         )}
         ref={ref}
