@@ -21,7 +21,7 @@ const ChangeLogItem = ({
   return (
     <article className="mb-16 flex flex-col gap-6">
       <Image
-        src={cover}
+        src={`/velite${cover}`}
         alt={title}
         width="647"
         height="480"

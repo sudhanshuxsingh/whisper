@@ -40,7 +40,7 @@ function ChangeLogTimeline({ data }: ChangeLogTimelineProps) {
           date: formateDate(date),
           content: (
             <ChangeLogItem
-              path={permalink}
+              path={`changelog/${permalink}`}
               cover={cover?.src ?? ''}
               title={title}
               description={description}
