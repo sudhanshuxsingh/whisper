@@ -1,4 +1,5 @@
 import Header from '@/components/ui/header';
+import { Footer } from './_features/Footer';
 
 export const metadata = {
   title: 'Welcome to whishper',
@@ -13,6 +14,7 @@ export default function RootLayout({
     <>
       <Header />
       {children}
+      <Footer />
     </>
   );
 }
