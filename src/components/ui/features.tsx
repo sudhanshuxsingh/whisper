@@ -35,7 +35,7 @@ export const Features = ({
     offset: ['60% end', '60% center'],
   });
   const gradientX = useTransform(scrollYProgress, [0, 1], [10, 100]);
-  const leftGradientX = useTransform(gradientX, (value) => 100 - value);
+  const leftGradientX = useTransform(gradientX, (value: number) => 100 - value);
   const background = useMotionTemplate`conic-gradient(from 90deg at ${leftGradientX}% 50%, var(--top-feature-color), var(--bottom-feature-color)), conic-gradient(from 270deg at ${gradientX}% 50%,var(--bottom-feature-color),var(--top-feature-color))`;
   return (
     <section
