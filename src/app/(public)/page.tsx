@@ -29,18 +29,6 @@ export default function Home() {
       </div>
       <WhyWhisper />
       <Testimonial />
-      <Container>
-        <div
-          className={cn(
-            'pointer-events-none relative z-[-1] -my-72 h-[60rem] overflow-hidden mask-radial-faded',
-            '[--home-page-gradient-color:120,_119,_198,_1] before:absolute before:inset-0 before:bg-radial-faded before:opacity-[0.4]',
-            'after:absolute after:-left-1/2 after:top-1/2 after:h-[142.8%] after:w-[200%] after:rounded-[50%] after:border-t after:border-[rgba(120,_119,_198,_0.4)] after:bg-background',
-            'rotate-180'
-          )}
-        >
-          <StarIllustration />
-        </div>
-      </Container>
       <CTA />
     </main>
   );
