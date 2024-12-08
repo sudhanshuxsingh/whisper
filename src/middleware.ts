@@ -6,6 +6,7 @@ const isPublicRoute = createRouteMatcher([
   '/whisper/:path',
   '/',
   '/changelog/:path*',
+  '/features/:path*',
 ]);
 const isPublicApiRoutes = createRouteMatcher(['/api/:path*']);
 
