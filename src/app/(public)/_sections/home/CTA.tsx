@@ -1,9 +1,9 @@
 import WhisperIcon from '@/components/logo/whisper';
 import { BackgroundBeamsWithCollision } from '@/components/ui/beam-collision';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import Container from '@/components/ui/container';
 import { cn } from '@/lib/utils';
-import { PlayIcon } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { HeroSubtitle } from '../../_features/Hero';
 import StarIllustration from '@/components/illutstration/star';
@@ -29,7 +29,7 @@ export default function CTA() {
             <div className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 animate-ripple rounded-full bg-indigo-500 opacity-20 [animation-delay:0.18s]"></div>
             <div className="absolute left-1/2 top-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2 animate-ripple rounded-full bg-indigo-500 opacity-40 [animation-delay:0.12s]"></div>
             <div className="absolute left-1/2 top-1/2 grid h-20 w-20 -translate-x-1/2 -translate-y-1/2 animate-ripple place-items-center rounded-full bg-indigo-500/60">
-              <WhisperIcon className="text-white" />
+              <WhisperIcon className="h-10 w-10 text-white" />
             </div>
           </div>
           <p className="my-6 mt-12 text-balance text-center text-4xl text-gradient md:text-6xl">
@@ -50,10 +50,19 @@ export default function CTA() {
             >
               Get Started
             </Link>
-            <Button variant="link" className="gap-2 rounded-full">
-              <PlayIcon className="h-4 w-4 fill-primary" />
-              View Demo
-            </Button>
+            <Link
+              className={cn(
+                buttonVariants({
+                  variant: 'link',
+                }),
+                'gap-2 rounded-full'
+              )}
+              href="https://cal.com/sudhanshuxsingh/whisper"
+              target="_blank"
+            >
+              Book Demo
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </Container>
       </BackgroundBeamsWithCollision>
