@@ -13,7 +13,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const SphereConfiguration = () => {
   const { id } = useParams();
-  const { data, isLoading, isError } = useQuery({
+  const { data, isFetching, isError } = useQuery({
     queryKey: ['sphere', 'spheres', id],
     queryFn: async () => {
       return await getSphereAction(id as string);
@@ -22,7 +22,7 @@ const SphereConfiguration = () => {
     refetchOnWindowFocus: true,
     retry: 2,
   });
-  if (isLoading) {
+  if (isFetching) {
     return <SphereConfigurationSkelton />;
   }
   if (isError || !data) {
