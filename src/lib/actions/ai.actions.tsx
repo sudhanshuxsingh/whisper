@@ -20,7 +20,7 @@ export async function getAISuggestionsAction(
 
   (async () => {
     const { partialObjectStream } = await streamObject({
-      model: google('gemini-1.5-pro'),
+      model: google('gemini-1.5-flash'),
       system:
         'You generate three feedbacks/messages for a annonymus feedback form whih will suggest users what feedback/messages they can provide',
       prompt,
