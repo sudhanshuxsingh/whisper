@@ -130,42 +130,42 @@ const ICON_LIST = [
     className: '[--duration:50s]',
     reverse: true,
   },
-  {
-    icons: [
-      {
-        icon: <CrumpledPaperIcon className="size-7" />,
-      },
-      {
-        icon: <ScissorsIcon className="size-7" />,
-      },
-      {
-        icon: <LayersIcon className="size-7" />,
-      },
-      {
-        icon: <CookieIcon className="size-7" />,
-      },
-      {
-        icon: <RocketIcon className="size-7" />,
-      },
-      {
-        icon: <MixIcon className="size-7" />,
-      },
-      {
-        icon: <IconJarLogoIcon className="size-7" />,
-      },
-      {
-        icon: <GlobeIcon className="size-7" />,
-      },
-      {
-        icon: <ModulzLogoIcon className="size-7" />,
-      },
-      {
-        icon: <LapTimerIcon className="size-7" />,
-      },
-    ],
-    className: '[--duration:60s]',
-    reverse: false,
-  },
+  // {
+  //   icons: [
+  //     {
+  //       icon: <CrumpledPaperIcon className="size-7" />,
+  //     },
+  //     {
+  //       icon: <ScissorsIcon className="size-7" />,
+  //     },
+  //     {
+  //       icon: <LayersIcon className="size-7" />,
+  //     },
+  //     {
+  //       icon: <CookieIcon className="size-7" />,
+  //     },
+  //     {
+  //       icon: <RocketIcon className="size-7" />,
+  //     },
+  //     {
+  //       icon: <MixIcon className="size-7" />,
+  //     },
+  //     {
+  //       icon: <IconJarLogoIcon className="size-7" />,
+  //     },
+  //     {
+  //       icon: <GlobeIcon className="size-7" />,
+  //     },
+  //     {
+  //       icon: <ModulzLogoIcon className="size-7" />,
+  //     },
+  //     {
+  //       icon: <LapTimerIcon className="size-7" />,
+  //     },
+  //   ],
+  //   className: '[--duration:60s]',
+  //   reverse: false,
+  // },
 ];
 
 export default function FeaturesHero() {

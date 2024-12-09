@@ -8,7 +8,7 @@ const Features = () => {
   return (
     <section className="mt-16">
       <FeaturesHero />
-      <div className="relative mx-auto mb-12 h-16 w-16 rounded-md bg-secondary/80 from-transparent p-[6px] dark:bg-gradient-to-tr dark:to-[rgba(var(--home-page-gradient-color))]">
+      <div className="relative mx-auto mb-16 h-16 w-16 rounded-md bg-secondary/80 from-transparent p-[6px] dark:bg-gradient-to-tr dark:to-[rgba(var(--home-page-gradient-color))]">
         <div className="relative z-20 flex h-full w-full items-center justify-center overflow-hidden rounded-[5px] bg-background/70">
           <WhisperIcon className="w-8 text-indigo-500 dark:text-indigo-100" />
         </div>
