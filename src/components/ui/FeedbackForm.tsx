@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { ReloadIcon } from '@radix-ui/react-icons';
 import { Textarea } from '@/components/ui/textarea';
 import AISuggestion from '@/components/ui/AISuggestion';
 import { useMutation } from '@tanstack/react-query';
@@ -25,6 +24,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@radix-ui/react-toast';
 import { useRouter } from 'next/navigation';
 import Rating from './rating';
+import { LoaderIcon } from 'lucide-react';
 
 type FeedbackFormProps = {
   type: 'feedback' | 'message';
@@ -172,7 +172,7 @@ const FeedbackForm = ({
             type="submit"
             className="!mt-6 ml-auto w-full rounded-sm bg-indigo-500 text-white hover:bg-indigo-600"
           >
-            {isPending && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+            {isPending && <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />}
             Send Feedback
           </Button>
         </form>

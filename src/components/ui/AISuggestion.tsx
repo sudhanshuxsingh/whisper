@@ -4,8 +4,8 @@ import { useToast } from '@/hooks/use-toast';
 import MagicIcon from '@/components/ui/MagicIcon';
 import { readStreamableValue } from 'ai/rsc';
 import { Button } from '@/components/ui/button';
-import { ReloadIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
+import { LoaderIcon } from 'lucide-react';
 type AISuggestionProps = {
   setAISuggetions: (suggestion: string) => void;
   title: string;
@@ -61,7 +61,7 @@ const AISuggestion = ({
       onClick={populateSuggestions}
     >
       {loading ? (
-        <ReloadIcon className="h-4 w-4 animate-spin" />
+        <LoaderIcon className="h-4 w-4 animate-spin" />
       ) : (
         <MagicIcon className="size-4 fill-primary" />
       )}
