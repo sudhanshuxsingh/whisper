@@ -41,7 +41,7 @@ const ChangeLogItem = ({
           href={path}
           className={cn(
             buttonVariants({ variant: 'link' }),
-            'ml-auto items-center gap-1 px-0 text-muted-foreground hover:text-primary'
+            'mr-auto items-center gap-1 px-0 text-muted-foreground hover:text-primary'
           )}
         >
           Read More

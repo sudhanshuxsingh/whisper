@@ -1,0 +1,70 @@
+---
+title: Improved AI Suggestions
+slug: improved-ai-sugestion
+date: 2024-12-09
+description: We now deliver smarter, real-time AI feedback suggestions using sphere context and streaming responses for a seamless experience.
+metadata:
+  author: Sudhanshu Singh
+  tags: []
+cover: images/improved-ai-suggestion.jpg
+---
+Whisper now delivers smarter AI feedback suggestions by leveraging sphere context and user inputs, with real-time streaming for faster and seamless responses.
+
+#### New Features
+1. Context-Aware AI Suggestions  
+   - The AI system now combines Sphere Title, Sphere Description, and User-Provided Feedback to generate detailed and contextually accurate feedback.  
+   - This ensures responses are more aligned with the purpose of each sphere, enhancing relevance and usability.  
+
+2. Real-Time Feedback Streaming  
+   - Feedback is streamed incrementally, so users see suggestions evolve in real-time rather than waiting for the entire response to load.  
+   - This new feature provides a faster and more dynamic user experience.  
+
+#### Code Snippet for Streaming AI Suggestions  
+
+<CodeWindow className='mt-4' language='tsx'>
+{`'use server';
+import { streamObject } from 'ai';
+import { createStreamableValue, StreamableValue } from 'ai/rsc';
+import { google } from '@ai-sdk/google';
+import { z } from 'zod';
+
+type AISuggestionActionResponse = {
+  message: string;
+};
+
+export async function getAISuggestionsAction(
+  title: string,
+  description: string,
+  partial: string
+): Promise<{
+  object: StreamableValue<AISuggestionActionResponse>;
+}> {
+  const prompt = \`Generate/complete a feedbak/message for an annonymus feedback form with the title \${title} and desription \${description}. User may have already filled a partial text - \${partial ?? ''}\`;
+  const stream = createStreamableValue();
+
+  (async () => {
+    const { partialObjectStream } = await streamObject({
+      model: google('gemini-1.5-flash'),
+      system:
+        'You generate three feedbacks/messages for a annonymus feedback form whih will suggest users what feedback/messages they can provide',
+      prompt,
+      schema: z.object({
+        message: z.string().describe('The feedback for the form'),
+      }),
+    });
+    for await (const partialObject of partialObjectStream) {
+      stream.update(partialObject);
+    }
+    stream.done();
+  })();
+
+  return { object: stream.value };
+}`}
+</CodeWindow>
+
+---
+
+#### Performance Enhancements
+- Reduced latency in AI response generation by optimizing prompt structure and streaming logic.  
+- Improved the responsiveness of the UI during feedback generation for a smoother experience.  
+

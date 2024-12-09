@@ -85,13 +85,13 @@ const ChangeLogDetailPage = async ({ params }: Props) => {
           </div>
         </Container>
       </div>
-      <Container className="max-w-screen-md px-8 pb-20 pt-16">
+      <Container className="relative max-w-screen-md px-8 pb-20 pt-16">
         <Image
-          src={changeItem.cover.src}
+          src={`/velite${changeItem.cover.src}`}
           alt={changeItem.title}
+          className="w-full rounded-lg"
+          height={changeItem.cover.height}
           width={changeItem.cover.width}
-          height={changeItem.cover.width}
-          className="rounded-lg"
         />
         <MDXContent code={changeItem.content} />
       </Container>
