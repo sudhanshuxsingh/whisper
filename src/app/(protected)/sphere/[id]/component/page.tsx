@@ -24,19 +24,18 @@ const Component = () => {
           </p>
         </Container>
       </div>
-      <Container className="my-8 mb-24 grid max-w-5xl gap-8">
-        <div className="">
-          <h4 className="py-4 text-xl font-medium">Installation</h4>
-          <CodeWindow
-            language="cli"
-            showLineNumbers={false}
-            className="h-fit"
-            codeWindowClassName="h-fit p-4"
-          >
-            {`npx shadcn@latest add https://whisper-widget.sudhanshuxsingh.in/widget/feedback-01.json`}
-          </CodeWindow>
-        </div>
-        <Tabs defaultValue="preview" className="relative mt-2 w-full">
+      <Container className="my-8 mb-24 grid max-w-5xl gap-8 overflow-x-auto">
+        <h4 className="-mb-8 py-4 text-xl font-medium">Installation</h4>
+        <CodeWindow
+          language="cli"
+          showLineNumbers={false}
+          className="h-fit overflow-auto"
+          codeWindowClassName="h-fit p-4"
+        >
+          npx shadcn@latest add
+          https://whisper-widget.sudhanshuxsingh.in/widget/feedback-01.json
+        </CodeWindow>
+        <Tabs defaultValue="preview" className="relative w-full overflow-auto">
           <TabsList className="mb-4 w-full justify-start rounded-none border-b bg-transparent p-0">
             <TabsTrigger
               value="preview"
@@ -63,7 +62,11 @@ const Component = () => {
             value="code"
             className="relative [&_h3.font-heading]:text-base [&_h3.font-heading]:font-semibold"
           >
-            <CodeWindow language="tsx" codeWindowClassName="h-[27.6rem]">
+            <CodeWindow
+              language="tsx"
+              codeWindowClassName="h-[27.6rem] overflow-x-auto"
+              className="overflow-auto"
+            >
               {codeBlock}
             </CodeWindow>
           </TabsContent>

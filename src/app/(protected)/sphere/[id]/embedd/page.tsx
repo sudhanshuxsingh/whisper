@@ -18,7 +18,10 @@ const Embedd = () => {
         </Container>
       </div>
       <Container className="my-8 mb-24 grid max-w-5xl gap-8">
-        <Tabs defaultValue="preview" className="relative mt-2 w-full">
+        <Tabs
+          defaultValue="preview"
+          className="relative mt-2 w-full overflow-auto"
+        >
           <TabsList className="mb-4 w-full justify-start rounded-none border-b bg-transparent p-0">
             <TabsTrigger
               value="preview"
