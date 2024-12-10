@@ -5,11 +5,7 @@ import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
 
 interface ViewTransitionDocument extends Document {
-  startViewTransition?: (callback: () => void) => {
-    finished: Promise<void>;
-    updateCallbackDone: Promise<void>;
-    ready: Promise<void>;
-  };
+  startViewTransition: (callback: () => void) => ViewTransition;
 }
 export function ThemeSwitcher() {
   const { setTheme, theme } = useTheme();
