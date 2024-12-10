@@ -46,14 +46,14 @@
     "hono": "^4.6.11",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.439.0",
-    "mongoose": "^8.6.1",
-    "nanoid": "^5.0.7",
+    "mongoose": "^8.8.4",
+    "nanoid": "^5.0.9",
     "next": "15.0.2",
     "next-themes": "^0.3.0",
     "prism-react-renderer": "^2.4.0",
     "query-string": "^9.1.0",
-    "react": "19.0.0-rc-02c0e824-20241028",
-    "react-dom": "19.0.0-rc-02c0e824-20241028",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "react-hook-form": "^7.53.0",
     "sharp": "^0.33.5",
     "sonner": "^1.5.0",
@@ -92,10 +92,7 @@
     "velite": "^0.1.1",
     "wrangler": "^3.78.11"
   },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "npm:types-react@19.0.0-rc.1",
-      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
-    }
+  "resolutions": {
+    "cross-spawn": "^7.0.5"
   }
 }
