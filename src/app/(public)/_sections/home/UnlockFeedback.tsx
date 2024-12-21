@@ -21,8 +21,8 @@ const UnlockFeedback = () => {
             <Browser
               url="whisher.com"
               className="size-full"
-              src="/feedback_light.PNG"
-              srcDark="/feedback_dark.PNG"
+              src="/feedback_light.webp"
+              srcDark="/feedback_dark.webp"
             />
           </div>
           <p className="mb-2 text-xl">Gorgeous out of the box</p>

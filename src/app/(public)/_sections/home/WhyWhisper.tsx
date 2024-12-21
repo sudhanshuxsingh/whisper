@@ -29,14 +29,14 @@ Designed to simplify and enhance your feedback collection process."
         image={
           <>
             <Image
-              src="/why_whisper_dark.png"
+              src="/why_whisper_dark.webp"
               alt="why-whisper"
               height={624}
               width={2331}
               className="hidden dark:block"
             />
             <Image
-              src="/why_whisper_light.png"
+              src="/why_whisper_light.webp"
               alt="why-whisper"
               height={624}
               width={2331}
