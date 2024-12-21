@@ -7,7 +7,27 @@ import UnlockFeedback from './_sections/home/UnlockFeedback';
 import WhyWhisper from './_sections/home/WhyWhisper';
 import Testimonial from './_sections/home/Testimonial';
 import CTA from './_sections/home/CTA';
+import { Metadata } from 'next';
+const title = 'Whisper | Go-to platform for anonymous feedback collection';
+const description =
+  'Organize feedback with spheres, get AI-driven suggestions, and integrate seamlessly into your website or app.';
 
+export const metadata: Metadata = {
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    images: [
+      {
+        url: '/feedback_dark.webp',
+      },
+    ],
+  },
+  alternates: {
+    canonical: '/',
+  },
+};
 export default function Home() {
   return (
     <main className="">
