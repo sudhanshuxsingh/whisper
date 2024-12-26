@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: '/feedback_dark.webp',
+        url: '/og/home.webp',
       },
     ],
   },

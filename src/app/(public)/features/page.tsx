@@ -3,7 +3,27 @@ import CTA from '../_sections/home/CTA';
 import UnlockFeedback from '../_sections/home/UnlockFeedback';
 import FeaturesHero from './_section/FeaturesHero';
 import WhisperIcon from '@/components/logo/whisper';
+import { Metadata } from 'next';
+const title = 'Whisper | Feature';
+const description =
+  'Experience Seamless Integration for Effortless User Engagement';
 
+export const metadata: Metadata = {
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    images: [
+      {
+        url: '/og/feature.webp',
+      },
+    ],
+  },
+  alternates: {
+    canonical: '/feature',
+  },
+};
 const Features = () => {
   return (
     <section className="mt-16">
