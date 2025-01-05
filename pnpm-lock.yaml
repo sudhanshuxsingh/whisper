@@ -71,6 +71,12 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.56.2
         version: 5.62.3(react@19.0.0)
+      '@upstash/ratelimit':
+        specifier: ^2.0.5
+        version: 2.0.5(@upstash/redis@1.34.3)
+      '@upstash/redis':
+        specifier: ^1.34.3
+        version: 1.34.3
       '@vercel/og':
         specifier: ^0.6.4
         version: 0.6.4
@@ -142,7 +148,7 @@ importers:
         version: 1.0.7(tailwindcss@3.4.16)
       whishper:
         specifier: 'file:'
-        version: file:(@opentelemetry/api@1.9.0)(tailwindcss@3.4.16)(types-react-dom@19.0.0-rc.1)(types-react@19.0.0-rc.1)
+        version: file:(@opentelemetry/api@1.9.0)(@upstash/redis@1.34.3)(tailwindcss@3.4.16)(types-react-dom@19.0.0-rc.1)(types-react@19.0.0-rc.1)
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -1763,6 +1769,18 @@ packages:
 
   '@ungap/structured-clone@1.2.1':
     resolution: {integrity: sha512-fEzPV3hSkSMltkw152tJKNARhOupqbH96MZWyRjNaYZOMIzbrTeQDG+MTc6Mr2pgzFQzFxAfmhGDNP5QK++2ZA==}
+
+  '@upstash/core-analytics@0.0.10':
+    resolution: {integrity: sha512-7qJHGxpQgQr9/vmeS1PktEwvNAF7TI4iJDi8Pu2CFZ9YUGHZH4fOP5TfYlZ4aVxfopnELiE4BS4FBjyK7V1/xQ==}
+    engines: {node: '>=16.0.0'}
+
+  '@upstash/ratelimit@2.0.5':
+    resolution: {integrity: sha512-1FRv0cs3ZlBjCNOCpCmKYmt9BYGIJf0J0R3pucOPE88R21rL7jNjXG+I+rN/BVOvYJhI9niRAS/JaSNjiSICxA==}
+    peerDependencies:
+      '@upstash/redis': ^1.34.3
+
+  '@upstash/redis@1.34.3':
+    resolution: {integrity: sha512-VT25TyODGy/8ljl7GADnJoMmtmJ1F8d84UXfGonRRF8fWYJz7+2J6GzW+a6ETGtk4OyuRTt7FRSvFG5GvrfSdQ==}
 
   '@vercel/og@0.6.4':
     resolution: {integrity: sha512-+IB8fYbVHEAtLfhCXSRS61Q/OfBJTaPCXhvGvXTBIUfs9lqZMDesZ2UnvKYbnEYHSMgCzBaj5BOq66iePl8mjw==}
@@ -6045,6 +6063,19 @@ snapshots:
 
   '@ungap/structured-clone@1.2.1': {}
 
+  '@upstash/core-analytics@0.0.10':
+    dependencies:
+      '@upstash/redis': 1.34.3
+
+  '@upstash/ratelimit@2.0.5(@upstash/redis@1.34.3)':
+    dependencies:
+      '@upstash/core-analytics': 0.0.10
+      '@upstash/redis': 1.34.3
+
+  '@upstash/redis@1.34.3':
+    dependencies:
+      crypto-js: 4.2.0
+
   '@vercel/og@0.6.4':
     dependencies:
       '@resvg/resvg-wasm': 2.4.0
@@ -9426,7 +9457,7 @@ snapshots:
     dependencies:
       isexe: 2.0.0
 
-  whishper@file:(@opentelemetry/api@1.9.0)(tailwindcss@3.4.16)(types-react-dom@19.0.0-rc.1)(types-react@19.0.0-rc.1):
+  whishper@file:(@opentelemetry/api@1.9.0)(@upstash/redis@1.34.3)(tailwindcss@3.4.16)(types-react-dom@19.0.0-rc.1)(types-react@19.0.0-rc.1):
     dependencies:
       '@ai-sdk/google': 1.0.6(zod@3.23.8)
       '@clerk/nextjs': 6.8.2(next@15.0.2(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -9448,6 +9479,7 @@ snapshots:
       '@radix-ui/react-toast': 1.2.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(types-react-dom@19.0.0-rc.1)(types-react@19.0.0-rc.1)
       '@react-hook/window-scroll': 1.3.0(react@19.0.0)
       '@tanstack/react-query': 5.62.3(react@19.0.0)
+      '@upstash/ratelimit': 2.0.5(@upstash/redis@1.34.3)
       '@vercel/og': 0.6.4
       ai: 4.0.13(react@19.0.0)(zod@3.23.8)
       canvas-confetti: 1.9.3
@@ -9481,6 +9513,7 @@ snapshots:
       - '@playwright/test'
       - '@types/react'
       - '@types/react-dom'
+      - '@upstash/redis'
       - babel-plugin-macros
       - babel-plugin-react-compiler
       - gcp-metadata
