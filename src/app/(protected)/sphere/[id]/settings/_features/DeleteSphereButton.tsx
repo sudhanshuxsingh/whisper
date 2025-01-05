@@ -29,7 +29,11 @@ const DeleteSphereButton = ({
 }) => {
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async () => {
-      return await deleteSphereAction(id);
+      const { data, error } = await deleteSphereAction(id);
+      if (error) {
+        throw new Error(error);
+      }
+      return data;
     },
   });
   const queryClient = useQueryClient();

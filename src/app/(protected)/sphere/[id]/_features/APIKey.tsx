@@ -16,10 +16,15 @@ const APIKey = () => {
     data: api,
     isLoading,
     isError,
+    error,
   } = useQuery({
     queryKey: ['sphere', 'spheres', id],
     queryFn: async () => {
-      return await getAPIKey(id as string);
+      const { data, error } = await getAPIKey(id as string);
+      if (error) {
+        throw Error(error);
+      }
+      return data;
     },
   });
 
@@ -29,7 +34,9 @@ const APIKey = () => {
     return (
       <Card className="border-red-800/50 bg-red-700/10">
         <Card.Title>Key</Card.Title>
-        <Card.Description>Failed to fetch API Key</Card.Description>
+        <Card.Description>
+          <p>Failed to fetch API Key - {error.message}</p>
+        </Card.Description>
       </Card>
     );
   }

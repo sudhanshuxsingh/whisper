@@ -12,6 +12,12 @@ type Props = {
 };
 const Whisper = async (props: Props) => {
   const params = await props.params;
+  const { data, error } = await getMinimalSphereDetailAction(params.id);
+
+  if (error) {
+    return error;
+  }
+
   const {
     _id: sphereId,
     title,
@@ -19,7 +25,7 @@ const Whisper = async (props: Props) => {
     type,
     showSuggestionToUser,
     isAcceptingMessage,
-  }: SphereProps = await getMinimalSphereDetailAction(params.id);
+  }: SphereProps = data;
 
   if (!isAcceptingMessage) {
     return 'User not accepting any messages for now';

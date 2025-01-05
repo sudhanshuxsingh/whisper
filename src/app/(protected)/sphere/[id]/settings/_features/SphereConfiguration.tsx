@@ -16,7 +16,12 @@ const SphereConfiguration = () => {
   const { data, isFetching, isError } = useQuery({
     queryKey: ['sphere', 'spheres', id],
     queryFn: async () => {
-      return await getSphereAction(id as string);
+      const { data, error, code } = await getSphereAction(id as string);
+      if (error) {
+        throw error;
+      }
+      console.log({ data, error, code });
+      return data;
     },
     refetchOnMount: 'always',
     refetchOnWindowFocus: true,

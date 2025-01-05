@@ -27,7 +27,11 @@ type ChangeSphereTitleProps = {
 const ChangeSphereTitle = ({ title, id }: ChangeSphereTitleProps) => {
   const { mutate, isPending } = useMutation({
     mutationFn: async (payload: z.infer<typeof updateSphereSchema>) => {
-      return await modifySphereAction(id, payload);
+      const { data, error } = await modifySphereAction(id, payload);
+      if (error) {
+        throw new Error(error);
+      }
+      return data;
     },
   });
   const queryClient = useQueryClient();

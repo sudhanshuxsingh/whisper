@@ -29,10 +29,11 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '../../../../components/ui/textarea';
 import { createSphereAction } from '@/lib/actions/sphere.actions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ReloadIcon } from '@radix-ui/react-icons';
 import { useToast } from '@/hooks/use-toast';
 import { SphereProps } from '@/types/sphere.types';
 import { useRouter } from 'next/navigation';
+import { ActionResponse } from '@/types/response.types';
+import { LoaderIcon } from 'lucide-react';
 
 const CreateSphereForm = () => {
   const router = useRouter();
@@ -57,13 +58,34 @@ const CreateSphereForm = () => {
 
   function onSubmit(values: z.infer<typeof sphereSchema>) {
     mutate(values, {
-      onSuccess(sphere: SphereProps) {
+      onSuccess({ data: sphere, error, code }: ActionResponse<SphereProps>) {
         setIsProcessing(true);
-        queryClient.invalidateQueries({
-          queryKey: ['spheres'],
-          refetchType: 'active',
-        });
-        router.push(`/sphere/${sphere._id}`);
+        if (error) {
+          const title =
+            code == 401
+              ? 'Please wait! You have exhausted your limit'
+              : 'Uh oh! Something went wrong.';
+          toast({
+            variant: 'destructive',
+            title,
+            description: error,
+            action: (
+              <ToastAction
+                altText="Try again"
+                onClick={() => onSubmit(form.getValues())}
+              >
+                Try again
+              </ToastAction>
+            ),
+          });
+        }
+        if (sphere) {
+          queryClient.invalidateQueries({
+            queryKey: ['spheres'],
+            refetchType: 'active',
+          });
+          router.push(`/sphere/${sphere._id}`);
+        }
         setIsProcessing(false);
       },
       onError(error: Error) {
@@ -162,7 +184,7 @@ const CreateSphereForm = () => {
           disabled={isPending || isProcessing}
         >
           {(isPending || isProcessing) && (
-            <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+            <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
           )}
           Submit
         </Button>

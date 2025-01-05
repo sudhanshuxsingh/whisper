@@ -15,9 +15,13 @@ const SphereList = () => {
     error,
   } = useQuery({
     queryKey: ['spheres'],
-    queryFn: async (): Promise<SphereProps[]> => {
-      const result = await getAllSphereAction();
-      return result;
+    queryFn: async (): Promise<SphereProps[] | undefined> => {
+      const { data, code, error } = await getAllSphereAction();
+      if (error) {
+        console.log({ code, error });
+        throw error;
+      }
+      return data;
     },
   });
   if (isLoading) {
@@ -26,7 +30,11 @@ const SphereList = () => {
     ));
   }
   if (isError) {
-    return <span>Error: {JSON.stringify(error)}</span>;
+    return (
+      <div className="grid h-full place-items-center rounded-xl bg-red-300 p-4 text-xs dark:bg-red-950">
+        Error : {JSON.stringify(error)}
+      </div>
+    );
   }
   return (
     <>

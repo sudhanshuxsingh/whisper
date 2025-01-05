@@ -21,9 +21,12 @@ const SphereDetailsHero = ({ sphereId }: SphereDetailsHeroParams) => {
     isError,
   } = useQuery({
     queryKey: ['sphere', 'spheres', sphereId],
-    queryFn: async (): Promise<SphereProps> => {
-      console.log('queryFn called with sphereId:', sphereId);
-      return await getSphereAction(sphereId);
+    queryFn: async (): Promise<SphereProps | undefined> => {
+      const { data, error } = await getSphereAction(sphereId as string);
+      if (error) {
+        throw new Error(error);
+      }
+      return data;
     },
     refetchOnMount: 'always',
     refetchOnWindowFocus: true,
@@ -34,13 +37,8 @@ const SphereDetailsHero = ({ sphereId }: SphereDetailsHeroParams) => {
     return <SphereDetailsHeroSkelton />;
   }
 
-  if (isError) {
-    console.log(sphere);
+  if (isError || !sphere) {
     notFound();
-  }
-
-  if (!sphere) {
-    return null;
   }
 
   return (
