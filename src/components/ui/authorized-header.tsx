@@ -1,5 +1,5 @@
 import { auth } from '@clerk/nextjs/server';
-import { HeaderSheet, MenuItem } from './header';
+import { MenuItem } from './header';
 import { MENU_ITEM_LIST } from '../data/header-data';
 import { ThemeSwitcher } from './theme-switcher';
 import UserProfileButton, { UserProfileInline } from './user-profile-button';
@@ -7,6 +7,7 @@ import { SlashIcon } from '@radix-ui/react-icons';
 import ChipTabNavigation from './chip-tabs';
 import { AuthorizedHeaderLogo } from './AuthorizedHeaderLogo';
 import { memo } from 'react';
+import { HeaderSheet } from './header-sheet';
 
 export default async function AutorizedHeader() {
   const { userId } = await auth();
@@ -43,11 +44,12 @@ export default async function AutorizedHeader() {
 }
 const MenuItems = memo(() => (
   <>
-    {MENU_ITEM_LIST.map(({ content, href }) => (
+    {MENU_ITEM_LIST.map(({ content, href, openInNew }) => (
       <li key={content}>
         <MenuItem
           content={content}
           href={href}
+          openInNew={openInNew}
           className="text-sm font-normal"
         />
       </li>

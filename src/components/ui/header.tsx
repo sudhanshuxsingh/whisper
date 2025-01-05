@@ -1,19 +1,19 @@
 import React from 'react';
 import WHISPER_LOGO_BLACK from '@/assets/logo/whisper_black.svg';
 import WHISPER_LOGO_WHITE from '@/assets/logo/whisper_white.svg';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+
 import Container from './container';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button, buttonVariants } from './button';
-import { HamburgerMenuIcon } from '@radix-ui/react-icons';
+import { buttonVariants } from './button';
 import { cn } from '@/lib/utils';
 import { auth } from '@clerk/nextjs/server';
-import UserProfileButton, { UserProfileCard } from './user-profile-button';
-import { ArrowRightIcon, EnterIcon } from '@radix-ui/react-icons';
+import UserProfileButton from './user-profile-button';
+import { ArrowRightIcon } from '@radix-ui/react-icons';
 import { MENU_ITEM_LIST } from '../data/header-data';
-import SignOutUser from './sign-out-user-button';
+
 import { ThemeSwitcher } from './theme-switcher';
+import { HeaderSheet } from './header-sheet';
 const Header = async () => {
   const { userId } = await auth();
   return (
@@ -23,9 +23,13 @@ const Header = async () => {
           <nav className="relative z-[1] flex items-center">
             <Logo />
             <ul className="hidden flex-1 justify-center gap-0.5 px-4 md:flex lg:flex-row">
-              {MENU_ITEM_LIST.map(({ content, href }) => (
+              {MENU_ITEM_LIST.map(({ content, href, openInNew }) => (
                 <li key={content}>
-                  <MenuItem content={content} href={href} />
+                  <MenuItem
+                    content={content}
+                    href={href}
+                    openInNew={openInNew}
+                  />
                 </li>
               ))}
             </ul>
@@ -56,7 +60,7 @@ const Header = async () => {
                 'Get Started'
               ) : (
                 <>
-                  <span className="text-sm">Get Started</span>
+                  <span className="text-sm">Dashboard</span>
                   <ArrowRightIcon />
                 </>
               )}
@@ -71,13 +75,19 @@ const Header = async () => {
   );
 };
 
-type MenuItemPropsType = {
+export type MenuItemPropsType = {
   content: string;
   href: string;
   className?: string;
+  openInNew?: boolean;
 };
 
-export const MenuItem = ({ content, href, className }: MenuItemPropsType) => {
+export const MenuItem = ({
+  content,
+  href,
+  className,
+  openInNew,
+}: MenuItemPropsType) => {
   return (
     <Link
       href={href}
@@ -85,6 +95,7 @@ export const MenuItem = ({ content, href, className }: MenuItemPropsType) => {
         'ring-control inline-flex h-6 shrink-0 items-center justify-center gap-1 rounded-full px-3 pb-px text-sm tracking-tight text-primary outline-none outline-0 hover:bg-secondary/20 hover:text-primary/80 focus-visible:ring-2 lg:h-7',
         className
       )}
+      target={openInNew ? '_blank' : '_self'}
     >
       {content}
     </Link>
@@ -116,78 +127,6 @@ export const LogoIcon = ({ className }: { className?: string }) => (
     />
     <Image alt="Whisper" src={WHISPER_LOGO_BLACK} className="h-7 dark:hidden" />
   </Link>
-);
-
-type HeaderSheetProps = {
-  userId: string | null;
-  menuItems: MenuItemPropsType[];
-  isProtectedRoute?: boolean;
-  className?: string;
-};
-
-export const HeaderSheet = ({
-  menuItems,
-  userId,
-  isProtectedRoute = false,
-  className,
-}: HeaderSheetProps) => (
-  <Sheet>
-    <SheetTrigger asChild>
-      <Button
-        variant="ghost"
-        size="icon"
-        className={cn('shrink-0 md:hidden', className)}
-      >
-        <HamburgerMenuIcon className="h-5 w-5" />
-        <span className="sr-only">Toggle navigation menu</span>
-      </Button>
-    </SheetTrigger>
-    <SheetContent side="left">
-      <nav className="flex h-full flex-col gap-4">
-        <Logo />
-        {menuItems.map(({ content, href }) => (
-          <Link
-            href={href}
-            key={content}
-            className="text-muted-foreground hover:text-foreground"
-          >
-            {content}
-          </Link>
-        ))}
-        <Link
-          href="/overview"
-          className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
-        >
-          {!userId
-            ? 'Get Started Today'
-            : !isProtectedRoute && (
-                <>
-                  <span>Get Started</span>
-                  <ArrowRightIcon />
-                </>
-              )}
-        </Link>
-        <div className="mt-auto space-y-2">
-          <UserProfileCard className="p-2 px-0" />
-          {!userId && (
-            <Link
-              className={cn(
-                buttonVariants({
-                  variant: 'ghost',
-                }),
-                'h-10 w-full justify-start gap-4 px-2 font-normal hover:bg-background/20'
-              )}
-              href="/sign-in"
-            >
-              <EnterIcon />
-              Sign In
-            </Link>
-          )}
-          {userId && <SignOutUser variant="ghost" className="px-0" />}
-        </div>
-      </nav>
-    </SheetContent>
-  </Sheet>
 );
 
 export default Header;

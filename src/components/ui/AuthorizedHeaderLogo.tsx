@@ -13,7 +13,7 @@ export const AuthorizedHeaderLogo = () => {
   const topPosition = useRange(y, 0, 50, 1, 0.8);
   return (
     <Link
-      href="/"
+      href="/overview"
       about="home"
       style={
         {
