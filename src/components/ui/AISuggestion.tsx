@@ -35,10 +35,11 @@ const AISuggestion = ({
         }
       }
     } catch (error) {
+      console.error(error);
       toast({
         variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: JSON.stringify(error),
+        title: 'Uh oh! AI suggestion limit excedded',
+        description: 'AI suggestion limit excedded for today.',
         action: (
           <ToastAction
             altText="Try again"
