@@ -1,6 +1,6 @@
 'use client';
 import { feedbackSchema } from '@/schema/feedbackSchema';
-import React from 'react';
+import React, { useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -22,9 +22,8 @@ import { submitFeedbackAction } from '@/lib/actions/feedback.actions';
 import { FeedbackSubmissionProps } from '@/types/feedback.types';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@radix-ui/react-toast';
-import { useRouter } from 'next/navigation';
 import Rating from './rating';
-import { LoaderIcon } from 'lucide-react';
+import { CircleCheck, LoaderIcon } from 'lucide-react';
 
 type FeedbackFormProps = {
   type: 'feedback' | 'message';
@@ -44,7 +43,7 @@ const FeedbackForm = ({
     resolver: zodResolver(feedbackSchema),
     defaultValues: {},
   });
-  const router = useRouter();
+  const [success, setSuccess] = useState(false);
   const { mutate, isPending } = useMutation({
     mutationFn: (values: FeedbackSubmissionProps) => {
       return submitFeedbackAction(values);
@@ -72,9 +71,11 @@ const FeedbackForm = ({
               </ToastAction>
             ),
           });
+          setSuccess(false);
         },
         onSuccess: () => {
-          router.push('success');
+          // router.push('success');
+          setSuccess(true);
         },
       }
     );
@@ -82,10 +83,10 @@ const FeedbackForm = ({
   return (
     <div className="rounded-lg border">
       <div
-        className={`flex items-center justify-between border-b text-sm ${showSuggestionToUser ? 'p-2 px-4' : 'p-4'}`}
+        className={`flex items-center justify-between border-b text-sm ${showSuggestionToUser && !success ? 'p-2 px-4' : 'p-4'}`}
       >
         <p>Send your annonymus {type}</p>
-        {showSuggestionToUser && (
+        {showSuggestionToUser && !success && (
           <AISuggestion
             setAISuggetions={handleAISuggestion}
             title={title}
@@ -94,91 +95,116 @@ const FeedbackForm = ({
           />
         )}
       </div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 p-4">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Sudhanshu Singh"
-                    {...field}
-                    className="rounded-sm bg-secondary/20"
-                  />
-                </FormControl>
-                <FormDescription>This field is optional</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="sudhanshuxsingh@gmail.com"
-                    {...field}
-                    className="rounded-sm bg-secondary/20"
-                  />
-                </FormControl>
-                <FormDescription>This field is optional</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="content"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Whishper is a best go to solution for getting annonymus feedbacks"
-                    {...field}
-                    className="rounded-sm bg-secondary/20"
-                    rows={4}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {type == 'feedback' && (
+      {success ? (
+        <SuccessResponse />
+      ) : (
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-2 p-4"
+          >
             <FormField
               control={form.control}
-              name="rating"
+              name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Rating</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Rating
-                      rating={Number(field.value)}
-                      setRating={field.onChange}
+                    <Input
+                      placeholder="Sudhanshu Singh"
+                      {...field}
+                      className="rounded-sm bg-secondary/20"
+                    />
+                  </FormControl>
+                  <FormDescription>This field is optional</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="sudhanshuxsingh@gmail.com"
+                      {...field}
+                      className="rounded-sm bg-secondary/20"
+                    />
+                  </FormControl>
+                  <FormDescription>This field is optional</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="content"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Whishper is a best go to solution for getting annonymus feedbacks"
+                      {...field}
+                      className="rounded-sm bg-secondary/20"
+                      rows={4}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-          )}
-          <Button
-            type="submit"
-            className="!mt-6 ml-auto w-full rounded-sm bg-indigo-500 text-white hover:bg-indigo-600"
-          >
-            {isPending && <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />}
-            Send Feedback
-          </Button>
-        </form>
-      </Form>
+            {type == 'feedback' && (
+              <FormField
+                control={form.control}
+                name="rating"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Rating</FormLabel>
+                    <FormControl>
+                      <Rating
+                        rating={Number(field.value)}
+                        setRating={field.onChange}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+            <Button
+              type="submit"
+              className="!mt-6 ml-auto w-full rounded-sm bg-indigo-500 text-white hover:bg-indigo-600"
+            >
+              {isPending && (
+                <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Send Feedback
+            </Button>
+          </form>
+        </Form>
+      )}
     </div>
   );
 };
+
+const SuccessResponse = () => (
+  <div className="grid min-h-96 place-items-center">
+    <div className="flex flex-col items-center gap-4 text-center">
+      <CircleCheck className="h-6 w-6 translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]" />
+      <div className="space-y-1 text-sm">
+        <p className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:400ms]">
+          Your feedback has been received!
+        </p>
+        <p className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:600ms]">
+          Thanks for the help
+        </p>
+      </div>
+    </div>
+  </div>
+);
 
 export default FeedbackForm;
