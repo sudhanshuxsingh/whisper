@@ -40,7 +40,7 @@ export const HeaderSheet = ({
       <nav className="flex h-full flex-col gap-4">
         <Logo />
         {menuItems.map(({ content, href, openInNew }) => (
-          <SheetClose asChild key={content}>
+          <SheetClose asChild key={href}>
             <Link
               href={href}
               className="text-muted-foreground hover:text-foreground"

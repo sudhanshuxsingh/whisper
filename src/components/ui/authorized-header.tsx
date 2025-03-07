@@ -45,7 +45,7 @@ export default async function AutorizedHeader() {
 const MenuItems = memo(() => (
   <>
     {MENU_ITEM_LIST.map(({ content, href, openInNew }) => (
-      <li key={content}>
+      <li key={href}>
         <MenuItem
           content={content}
           href={href}
